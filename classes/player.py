@@ -1,4 +1,5 @@
 import math
+import random
 
 class Util:
     def pick_class(self):
@@ -12,6 +13,12 @@ class Util:
             class_name = input(">> ")
             class_name = class_name.capitalize()
         return class_name
+
+    def roll(self, num, die):
+        total = 0
+        for i in range(0, num):
+            total += random.randrange(1, die + 1)
+        return round(total)
 
 # player hero class
 class Hero:
@@ -76,8 +83,10 @@ class Hero:
             print("\nPlease pick a stat whose value is less than 20")
             choice = input(">> ")
     
-        self.increase_stat(choice)
         self.increase_level()
+        self.increase_stat(choice)
+        util_functions = Util()
+        self.health += util_functions.roll(1, self.base_health)
     
     def gain_xp(self, xp):
         self.xp += xp

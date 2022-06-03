@@ -1,5 +1,4 @@
 import classes.player as player
-import classes.misc as misc
 
 print("Welcome, hero! What are you called?")
 name = input(">> ")
@@ -37,10 +36,10 @@ for stat in attr_dic2:
 input("[Enter]")
 print()
 
-misc_roll = misc.Misc()
+util_functions = player.Util()
 print("How many time would you like to roll 1d20?")
 num = input(">> ")
 print("Rolling 1d20 " + str(num) + " times: ")
 for i in range(int(num)):
-    print(str(misc_roll.roll(1, 20)))
+    print(str(util_functions.roll(1, 20)))
 
