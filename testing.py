@@ -4,27 +4,16 @@ import classes.misc as misc
 print("Welcome, hero! What are you called?")
 name = input(">> ")
 
-print("\nNext, pick a class:")
-class_list = ["Fighter", "Rogue", "Wizard"]
-
-class_name = "Null"
-while class_name not in class_list:
-    print(", ".join(class_list))
-    class_name = input(">> ")
-    class_name = class_name.capitalize()
+util = player.Util()
+class_name = util.pick_class()
 
 hero = player.Hero(name=name, class_name=class_name)
 
 print() 
 
 attr_dic = {"Name": hero.name, "Class": hero.class_name,
-            "Level": hero.level, "HP": hero.health,
+            "Level": hero.class_level, "HP": hero.health,
             "str": hero.str, "dex": hero.dex, "con": hero.con}
-
-for stat in attr_dic:
-    print(stat + " : " + str(attr_dic[stat]))
-
-hero.level_up()
 
 print()
 
@@ -34,13 +23,16 @@ for stat in attr_dic:
 input("[Enter]")
 print()
 
-hero2 = player.Hero(name="Sean", class_name="Fighter", con=18)
+hero.gain_xp(25)
 
-attr_dic = {"Name": hero2.name, "Class": hero2.class_name,
-            "HP": hero2.health, "str": hero2.str, "dex": hero2.dex, "con": hero2.con}
+print()
 
-for stat in attr_dic:
-    print(stat + " : " + str(attr_dic[stat]))
+attr_dic2 = {"Name": hero.name, "Class": hero.class_name,
+            "Level": hero.class_level, "HP": hero.health,
+            "str": hero.str, "dex": hero.dex, "con": hero.con}
+
+for stat in attr_dic2:
+    print(stat + " : " + str(attr_dic2[stat]))
 
 input("[Enter]")
 print()
