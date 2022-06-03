@@ -3,7 +3,7 @@ from unittest import case
 
 # player hero class
 class Hero:
-    def __init__(self, name="Hero", class_name="fighter", str=10, dex=10, con=10, int=10, wis=10, cha=10):
+    def __init__(self, name="Hero", class_name="fighter", xp=0, str=10, dex=10, con=10, int=10, wis=10, cha=10):
         self.health_by_class = {
             "Fighter": 10,
             "Rogue": 6,
@@ -11,7 +11,8 @@ class Hero:
         }
         self.name = name
         self.class_name = class_name
-        self.level = 1
+        self.class_level = 1
+        self.xp = xp
         self.str = str
         self.dex = dex
         self.con = con
@@ -27,13 +28,26 @@ class Hero:
 
     def level_up_stat(self, stat):
         stat += 1
-        if stat == self.con:
-            self.update_health()
     
     def update_health(self):
         self.health = (round(
                         (self.stat_mod(self.con))
-                        * (self.level))) + self.base_health
+                        * (self.class_level))) + self.base_health
+
+    def increase_stat(self, choice):
+        if choice == "str":
+            self.level_up_stat(self.str)
+        elif choice == "dex":
+            self.level_up_stat(self.dex)
+        elif choice == "con":
+            self.level_up_stat(self.con)
+            self.update_health()
+        elif choice == "int":
+            self.level_up_stat(self.int)
+        elif choice == "wis":
+            self.level_up_stat(self.wis)
+        elif choice == "cha":
+            self.level_up_stat(self.cha)
 
     def level_up(self):
         print("Pick a stat to increase:")
@@ -50,7 +64,20 @@ class Hero:
         while choice not in stat_dic or attr_dic[choice] == 20:
             print("\nPlease pick a stat whose value is less than 20")
             choice = input(">> ")
+    
+        self.level_up_stat(self.class_level)
+        self.increase_stat(choice)
+    
+    def gain_xp(self, xp):
+        self.xp += xp
+        while self.check_for_level_up():
+            self.level_up()
 
-        self.level_up_stat(self.level)
-        # self.level_up_stat(self.choice)
-        
+    def check_for_level_up(self):
+        if self.xp >= 7 + self.class_level:
+            return True
+        else:
+            return False
+
+    def gain_xp(self, amount):
+        self.xp += amount

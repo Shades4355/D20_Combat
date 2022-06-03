@@ -12,7 +12,4 @@ while class_name not in class_list:
     class_name = input(">> ")
     class_name = class_name.capitalize()
 
-
-
-
 player = player.Hero(name=name, class_name=class_name)
