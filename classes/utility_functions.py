@@ -1,8 +1,8 @@
 import random
-
+import classes.hero as hero
 
 class Util:
-    def pick_class(self):
+    def pick_class(self, name):
         print("\nNext, pick a class:")
 
         class_list = ["Fighter", "Rogue", "Wizard", "Wanderer"]
@@ -12,7 +12,17 @@ class Util:
             print(", ".join(class_list))
             class_name = input(">> ")
             class_name = class_name.capitalize()
-        return class_name
+        if class_name == "Fighter":
+            return hero.Fighter(name=name)
+        elif class_name == "Rogue":
+            return hero.Rogue(name=name)
+        elif class_name == "Wizard":
+            return hero.Wizard(name=name)
+        elif class_name == "Wanderer":
+            return hero.Wanderer(name=name)
+        else:
+            print("Class Picking Error")
+            exit(1)
 
     def roll(self, num, die):
         total = 0
