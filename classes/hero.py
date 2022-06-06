@@ -90,19 +90,7 @@ class Hero:
 # tank based class
 class Fighter(Hero):
     def __init__(self, name="Hero", class_name="Fighter", base_health=10, xp=0, str=15, dex=12, con=13, int=9, wis=10, cha=11):
-        self.name = name
-        self.class_name = class_name
-        self.class_level = 1
-        self.xp = xp
-        self.str = str
-        self.dex = dex
-        self.con = con
-        self.int = int
-        self.wis = wis
-        self.cha = cha
-        self.base_health = base_health
-        self.health = self.base_health
-        self.update_health()
+        super().__init__(name, class_name, base_health, xp, str, dex, con, int, wis, cha)
 
 
 # evasion and critical damage based class
