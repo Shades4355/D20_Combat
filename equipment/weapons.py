@@ -1,7 +1,4 @@
 
-from array import array
-
-
 class Weapon():
     def __init__(self, name="Weapon", magic=0, num_damage_dice=1, damage_die=4, special=[]):
         self.name = name
