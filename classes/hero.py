@@ -87,6 +87,7 @@ class Hero:
         return util_functions.roll(1,20) + self.stat_mod(stat)
 
 
+# tank based class
 class Fighter(Hero):
     def __init__(self, name="Hero", class_name="Fighter", base_health=10, xp=0, str=15, dex=12, con=13, int=9, wis=10, cha=11):
         self.name = name
@@ -104,9 +105,11 @@ class Fighter(Hero):
         self.update_health()
 
 
+# evasion and critical damage based class
 class Rogue(Hero):
     def __init__(self, name="Hero", class_name="Rogue", base_health=6, xp=0, str=9, dex=15, con=13, int=11, wis=10, cha=12):
         super().__init__(name, class_name, base_health, xp, str, dex, con, int, wis, cha)
+   
     def take_damage(self, damage):
         util_func = utils.Util()
         dodge_chance = util_func.roll(1, 100)
@@ -115,11 +118,14 @@ class Rogue(Hero):
             if self.health < 0:
                 self.health = 0
 
+
+# AoE based class
 class Wizard(Hero):
     def __init__(self, name="Hero", class_name="Wizard", base_health=4, xp=0, str=10, dex=10, con=10, int=10, wis=10, cha=10):
         super().__init__(name, class_name, base_health, xp, str, dex, con, int, wis, cha)
 
 
+# basic blank slate
 class Wanderer(Hero):
-    def __init__(self, name="Hero", class_name="Wanderer", base_health=10, xp=0, str=10, dex=10, con=10, int=10, wis=10, cha=10):
+    def __init__(self, name="Hero", class_name="Wanderer", base_health=8, xp=0, str=10, dex=10, con=10, int=10, wis=10, cha=10):
         super().__init__(name, class_name, base_health, xp, str, dex, con, int, wis, cha)
