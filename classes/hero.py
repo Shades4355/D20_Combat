@@ -82,9 +82,16 @@ class Hero:
         if self.health < 0:
             self.health = 0
 
-    def attack(self, stat):
+    def attack(self, player_stat, enemy_AC):
         util_functions = utils.Util()
-        return util_functions.roll(1,20) + self.stat_mod(stat)
+        roll = util_functions.roll(1, 20) 
+        attack_roll = roll + self.stat_mod(player_stat)
+        if roll == 20:
+            # deal double damage
+            pass 
+        elif attack_roll > enemy_AC:
+            # deal normal damage
+            pass
 
 
 # tank based class
@@ -106,12 +113,33 @@ class Rogue(Hero):
             if self.health < 0:
                 self.health = 0
 
+    def attack(self, player_stat, enemy_AC):
+        util_functions = utils.Util()
+        roll = util_functions.roll(1, 20)
+        attack_roll = roll + self.stat_mod(player_stat)
+        if roll >= 18:
+            # deal double damage
+            pass
+        elif attack_roll > enemy_AC:
+            # deal normal damage
+            pass
 
 # AoE based class
 class Wizard(Hero):
     def __init__(self, name="Hero", class_name="Wizard", base_health=4, xp=0, str=10, dex=10, con=10, int=10, wis=10, cha=10):
         super().__init__(name, class_name, base_health, xp, str, dex, con, int, wis, cha)
 
+    def attack(self, player_stat, enemy_AC):
+        util_functions = utils.Util()
+        # for target plus each adjacent enemies
+        roll = util_functions.roll(1, 20)
+        attack_roll = roll + self.stat_mod(player_stat)
+        if roll >= 18:
+            # deal double damage
+            pass
+        elif attack_roll > enemy_AC:
+            # deal normal damage
+            pass
 
 # basic blank slate
 class Wanderer(Hero):
