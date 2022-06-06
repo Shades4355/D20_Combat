@@ -1,9 +1,9 @@
 import math
-from unittest import case
+import utility_functions as util
 
 # player hero class
 class Hero:
-    def __init__(self, name="Hero", class_name="fighter", str=10, dex=10, con=10, int=10, wis=10, cha=10):
+    def __init__(self, name="Hero", class_name="fighter", xp=0, str=10, dex=10, con=10, int=10, wis=10, cha=10):
         self.health_by_class = {
             "Fighter": 10,
             "Rogue": 6,
@@ -11,7 +11,8 @@ class Hero:
         }
         self.name = name
         self.class_name = class_name
-        self.level = 1
+        self.class_level = 1
+        self.xp = xp
         self.str = str
         self.dex = dex
         self.con = con
@@ -23,19 +24,32 @@ class Hero:
         self.update_health()
     
     def stat_mod (self, stat):
-        return (stat - 10)/2
+        return math.floor((stat - 10)/2)
 
-    def level_up_stat(self, stat):
-        stat += 1
-        if stat == self.con:
-            self.update_health()
+    def increase_level(self):
+        self.class_level += 1
     
     def update_health(self):
-        self.health = (round(
-                        (self.stat_mod(self.con))
-                        * (self.level))) + self.base_health
+        self.health = (self.stat_mod(self.con)
+                        * self.class_level) + self.base_health
+
+    def increase_stat(self, choice):
+        if choice == "str":
+            self.str += 1
+        elif choice == "dex":
+            self.dex += 1
+        elif choice == "con":
+            self.con += 1
+            self.update_health()
+        elif choice == "int":
+            self.int += 1
+        elif choice == "wis":
+            self.wis += 1
+        elif choice == "cha":
+            self.cha += 1
 
     def level_up(self):
+        print("\n\nLevel Up!")
         print("Pick a stat to increase:")
         attr_dic = {"str": self.str, "dex": self.dex,
                     "con": self.con, "int": self.int,
@@ -43,14 +57,28 @@ class Hero:
 
         for stat in attr_dic:
             print(stat + ": " + str(attr_dic[stat]))
-            print(stat + " mod: " + str(round(self.stat_mod(attr_dic[stat]))))
+            print(stat + " mod: " + str(self.stat_mod(attr_dic[stat])))
         
         choice = "null"
-        stat_dic = {"con": self.con}
-        while choice not in stat_dic or attr_dic[choice] == 20:
+        while choice not in attr_dic or attr_dic[choice] >= 20:
             print("\nPlease pick a stat whose value is less than 20")
             choice = input(">> ")
+    
+        self.increase_level()
+        self.increase_stat(choice)
+        util_functions = util.Util()
+        self.health += util_functions.roll(1, self.base_health)
+    
+    def gain_xp(self, xp):
+        self.xp += xp
+        threshold = 7 + self.class_level
+        while self.check_for_level_up(threshold):
+            self.level_up()
+            self.xp -= threshold
 
-        self.level_up_stat(self.level)
-        # self.level_up_stat(self.choice)
-        
+    def check_for_level_up(self, threshold):
+        if self.xp >= threshold:
+            return True
+        else:
+            return False
+    
