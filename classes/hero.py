@@ -1,6 +1,9 @@
 import math
 import classes.utility_functions as utils
 
+# TODO: add inventory (array of objects) to all classes
+# TODO: add special_abilities (array) to all classes
+
 # player hero classes
 class Hero:
     def __init__(self, name="Hero", class_name="Fighter", base_health=10, xp=0, str=10, dex=10, con=10, int=10, wis=10, cha=10):
