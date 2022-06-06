@@ -1,14 +1,9 @@
 import math
-import utility_functions as util
+import classes.utility_functions as utils
 
-# player hero class
+# player hero classes
 class Hero:
-    def __init__(self, name="Hero", class_name="fighter", xp=0, str=10, dex=10, con=10, int=10, wis=10, cha=10):
-        self.health_by_class = {
-            "Fighter": 10,
-            "Rogue": 6,
-            "Wizard": 4
-        }
+    def __init__(self, name="Hero", class_name="Fighter", base_health=10, xp=0, str=10, dex=10, con=10, int=10, wis=10, cha=10):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -19,7 +14,7 @@ class Hero:
         self.int = int
         self.wis = wis
         self.cha = cha
-        self.base_health = self.health_by_class[class_name]
+        self.base_health = base_health
         self.health = self.base_health
         self.update_health()
     
@@ -66,7 +61,7 @@ class Hero:
     
         self.increase_level()
         self.increase_stat(choice)
-        util_functions = util.Util()
+        util_functions = utils.Util()
         self.health += util_functions.roll(1, self.base_health)
     
     def gain_xp(self, xp):
@@ -82,3 +77,43 @@ class Hero:
         else:
             return False
     
+    def take_damage(self, damage):
+        self.health -= damage
+        if self.health < 0:
+            self.health = 0
+
+    def attack(self, stat):
+        util_functions = utils.Util()
+        return util_functions.roll(1,20) + self.stat_mod(stat)
+
+
+class Fighter(Hero):
+    def __init__(self, name="Hero", class_name="Fighter", base_health=10, xp=0, str=15, dex=12, con=13, int=9, wis=10, cha=11):
+        self.name = name
+        self.class_name = class_name
+        self.class_level = 1
+        self.xp = xp
+        self.str = str
+        self.dex = dex
+        self.con = con
+        self.int = int
+        self.wis = wis
+        self.cha = cha
+        self.base_health = base_health
+        self.health = self.base_health
+        self.update_health()
+
+
+class Rogue(Hero):
+    def __init__(self, name="Hero", class_name="Rogue", base_health=6, xp=0, str=9, dex=15, con=13, int=11, wis=10, cha=12):
+        super().__init__(name, class_name, base_health, xp, str, dex, con, int, wis, cha)
+
+
+class Wizard(Hero):
+    def __init__(self, name="Hero", class_name="Wizard", base_health=4, xp=0, str=10, dex=10, con=10, int=10, wis=10, cha=10):
+        super().__init__(name, class_name, base_health, xp, str, dex, con, int, wis, cha)
+
+
+class Wanderer(Hero):
+    def __init__(self, name="Hero", class_name="Wanderer", base_health=10, xp=0, str=10, dex=10, con=10, int=10, wis=10, cha=10):
+        super().__init__(name, class_name, base_health, xp, str, dex, con, int, wis, cha)
