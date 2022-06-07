@@ -63,3 +63,14 @@ def player_turn(player:object, enemies_in_fight:list):
             print("{0.name} reached level {0.level}".format(player))
             sys.exit()
 
+    # Checks if enemies are dead
+    for i in range(len(enemies_in_fight) - 1, -1, -1):
+        enemy = enemies_in_fight[i]
+        if not enemy.alive:
+            player.xp += enemy.grantXP
+            player.gold += enemy.loot
+            del enemies_in_fight[i]
+            equipment_drop(player)
+
+def equipment_drop(player: object):
+    pass

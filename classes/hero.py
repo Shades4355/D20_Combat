@@ -7,7 +7,7 @@ dice = utils.Util()
 
 class Hero:
     """basic player hero class"""
-    def __init__(self, name="Hero", class_name="Fighter", base_health=10, xp=0, weapon=w.Unarmed(), inventory=[], special=[], str=10, dex=10, con=10, int=10, wis=10, cha=10):
+    def __init__(self, name="Hero", class_name="Fighter", base_health=10, xp=0, weapon=w.Unarmed(), inventory=[], special=[], str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -22,8 +22,10 @@ class Hero:
         self.wis = wis
         self.cha = cha
         self.base_health = base_health
-        self.health = self.base_health
+        self.max_health
         self.update_health()
+        self.health = self.max_health
+        self.gold = gold
         self.alive = True
     
     def stat_mod (self, stat: int):
@@ -33,8 +35,9 @@ class Hero:
         self.class_level += 1
     
     def update_health(self):
-        self.health = (self.stat_mod(self.con)
+        self.max_health = (self.stat_mod(self.con)
                         * self.class_level) + self.base_health
+        self.health = self.max_health
 
     def increase_stat(self, choice: str):
         if choice == "str":
