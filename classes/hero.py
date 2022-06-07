@@ -89,6 +89,18 @@ class Hero:
         self.health -= damage
         if self.health < 0:
             self.health = 0
+        print("{} took {} damage, and have {} hit points left".format(self.name, damage, self.current_health))
+
+    def attack(self, enemy: object, enemies_in_fight: list):
+        roll = dice.roll(1, 20)
+        attack_roll = roll + self.stat_mod(self.str)
+
+        if roll == 20:
+            enemy.take_damage(self.do_damage(True))
+        elif attack_roll > enemy.ac:
+            enemy.take_damage(self.do_damage(False))
+        else:
+            print(self.name, "missed")
 
     def do_damage(self, crit):
         damage = 0
@@ -118,15 +130,16 @@ class Rogue(Hero):
             if self.health < 0:
                 self.health = 0
 
-    def attack(self, player_stat, enemy_AC):
+    def attack(self, enemy: object, enemies_in_fight: list):
         roll = dice.roll(1, 20)
-        attack_roll = roll + self.stat_mod(player_stat)
+        attack_roll = roll + self.stat_mod(self.str)
+
         if roll >= 18:
-            # deal double damage
-            pass
-        elif attack_roll > enemy_AC:
-            # deal normal damage
-            pass
+            enemy.take_damage(self.do_damage(True))
+        elif attack_roll > enemy.ac:
+            enemy.take_damage(self.do_damage(False))
+        else:
+            print(self.name, "missed")
 
 
 class Wizard(Hero):
