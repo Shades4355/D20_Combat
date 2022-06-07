@@ -4,7 +4,7 @@ dice = utils.Util()
 
 
 class Enemy():
-    def __init__(self, name='template', hit_die=4, attack_bonus=0, armor=0, number_of_damage_die=1, damage_die=4, level=1, lives=1, grantXP=1, damage_reduction=0, str_mod=0, dex_mod=0, con_mod=0):
+    def __init__(self, name='template', hit_die=4, attack_bonus=0, armor=0, number_of_damage_die=1, damage_die=4, level=1, lives=1, grantXP=1, damage_reduction=0, str_mod=0, dex_mod=0, con_mod=0, loot=1):
         self.name = name
         self.level = level
         self.hit_die = hit_die
@@ -21,6 +21,7 @@ class Enemy():
         self.str_mod = str_mod
         self.dex_mod = dex_mod
         self.con_mod = con_mod
+        self.loot = loot
 
     def do_damage(self, crit:bool):
         if crit == True:
