@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import math
 from equipment import weapons as w
 import classes.utility_functions as utils
@@ -26,6 +27,7 @@ class Hero:
         self.base_health = base_health
         self.health = self.base_health
         self.update_health()
+        self.alive = True
     
     def stat_mod (self, stat):
         return math.floor((stat - 10)/2)
@@ -89,6 +91,7 @@ class Hero:
         self.health -= damage
         if self.health < 0:
             self.health = 0
+            self.alive = False
         print("{} took {} damage, and have {} hit points left".format(self.name, damage, self.current_health))
 
     def attack(self, enemy: object, enemies_in_fight: list):
@@ -100,7 +103,7 @@ class Hero:
         elif attack_roll > enemy.ac:
             enemy.take_damage(self.do_damage(False))
         else:
-            print(self.name, "missed")
+            print(self.name, "missed", enemy.name)
 
     def do_damage(self, crit):
         damage = 0
@@ -129,6 +132,7 @@ class Rogue(Hero):
             self.health -= damage
             if self.health < 0:
                 self.health = 0
+                self.alive = False
 
     def attack(self, enemy: object, enemies_in_fight: list):
         roll = dice.roll(1, 20)
@@ -139,7 +143,7 @@ class Rogue(Hero):
         elif attack_roll > enemy.ac:
             enemy.take_damage(self.do_damage(False))
         else:
-            print(self.name, "missed")
+            print(self.name, "missed", enemy.name)
 
 
 class Wizard(Hero):
@@ -147,16 +151,45 @@ class Wizard(Hero):
     def __init__(self, name="Hero", class_name="Wizard", base_health=4, str=10, dex=10, con=10, int=10, wis=10, cha=10):
         super().__init__(name, class_name, base_health, str, dex, con, int, wis, cha)
 
-    def attack(self, player_stat, enemy_AC):
-        # for target plus each adjacent enemies
-        roll = dice.roll(1, 20)
-        attack_roll = roll + self.stat_mod(player_stat)
-        if roll >= 18:
-            # deal double damage
-            pass
-        elif attack_roll > enemy_AC:
-            # deal normal damage
-            pass
+    def attack(self, enemy: object, enemies_in_fight: list):
+        """target up to 3 enemies"""
+        targets = []
+
+        # if 3 or fewer foes, attack all foes
+        if len(enemies_in_fight) < 4: 
+            targets = enemies_in_fight
+        else:
+            enemy_index = enemies_in_fight.index(enemy)
+
+            # first target
+            enemy1 = NULL
+            if enemy_index - 1 >= 0:
+                enemy1 = enemies_in_fight[enemy_index - 1]
+            else:
+                enemy1 = enemies_in_fight[-1]
+            
+            # second target
+            enemy2 = enemy
+
+            # third target
+            enemy3 = NULL
+            if enemy_index + 1 <= len(enemies_in_fight) - 1:
+                enemy3 = enemies_in_fight[enemy_index + 1]
+            else:
+                enemy3 = enemies_in_fight[0]
+            
+            targets = [enemy1, enemy2, enemy3]
+            
+        # attack the enemies
+        for enemies in targets:
+            roll = dice.roll(1, 20)
+            attack_roll = roll + self.stat_mod(self.str)
+            if roll == 20:
+                enemies.take_damage(self.do_damage(True))
+            elif attack_roll > enemy.ac:
+                enemies.take_damage(self.do_damage(False))
+            else:
+                print(self.name, "missed", enemy.name)
 
 # basic blank slate
 class Wanderer(Hero):
