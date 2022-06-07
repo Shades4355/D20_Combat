@@ -5,9 +5,6 @@ import classes.utility_functions as utils
 dice = utils.Util()
 
 
-# TODO: add inventory (array of objects) to all classes
-# TODO: add special_abilities (array) to all classes
-
 class Hero:
     """basic player hero class"""
     def __init__(self, name="Hero", class_name="Fighter", base_health=10, xp=0, weapon=w.Unarmed(), inventory=[], special=[], str=10, dex=10, con=10, int=10, wis=10, cha=10):
@@ -29,7 +26,7 @@ class Hero:
         self.update_health()
         self.alive = True
     
-    def stat_mod (self, stat):
+    def stat_mod (self, stat: int):
         return math.floor((stat - 10)/2)
 
     def increase_level(self):
@@ -39,7 +36,7 @@ class Hero:
         self.health = (self.stat_mod(self.con)
                         * self.class_level) + self.base_health
 
-    def increase_stat(self, choice):
+    def increase_stat(self, choice: str):
         if choice == "str":
             self.str += 1
         elif choice == "dex":
@@ -74,20 +71,20 @@ class Hero:
         self.increase_stat(choice)
         self.health += dice.roll(1, self.base_health)
     
-    def gain_xp(self, xp):
+    def gain_xp(self, xp: int):
         self.xp += xp
         threshold = 7 + self.class_level
         while self.check_for_level_up(threshold):
             self.level_up()
             self.xp -= threshold
 
-    def check_for_level_up(self, threshold):
+    def check_for_level_up(self, threshold: int):
         if self.xp >= threshold:
             return True
         else:
             return False
     
-    def take_damage(self, damage):
+    def take_damage(self, damage: int):
         self.health -= damage
         if self.health < 0:
             self.health = 0
@@ -105,12 +102,12 @@ class Hero:
         else:
             print(self.name, "missed", enemy.name)
 
-    def do_damage(self, crit):
+    def do_damage(self, crit: bool):
         damage = 0
         if crit == True:
             damage = dice.roll(self.weapon.num_damage_dice, self.weapon.damage_die) + dice.roll(self.weapon.num_damage_dice, self.weapon.damage_die) + self.stat_mod(self.str)
         else:
-            damage = dice.roll(self.weapon.num_damage_dice, self.weapon.damage_die) + self.stat_mod(str)
+            damage = dice.roll(self.weapon.num_damage_dice, self.weapon.damage_die) + self.stat_mod(self.str)
         
         return damage
 
@@ -126,7 +123,7 @@ class Rogue(Hero):
     def __init__(self, name="Hero", class_name="Rogue", base_health=6, str=9, dex=15, con=13, int=11, wis=10, cha=12):
         super().__init__(name, class_name, base_health, str, dex, con, int, wis, cha)
    
-    def take_damage(self, damage):
+    def take_damage(self, damage: int):
         dodge_chance = dice.roll(1, 100)
         if dodge_chance > 25:
             self.health -= damage
@@ -148,8 +145,9 @@ class Rogue(Hero):
 
 class Wizard(Hero):
     """AoE based class"""
-    def __init__(self, name="Hero", class_name="Wizard", base_health=4, str=10, dex=10, con=10, int=10, wis=10, cha=10):
-        super().__init__(name, class_name, base_health, str, dex, con, int, wis, cha)
+
+    def __init__(self, name="Hero", class_name="Wizard", weapon=w.Unarmed(), base_health=4, str=10, dex=10, con=10, int=10, wis=10, cha=10):
+        super().__init__(name, class_name, base_health, weapon, str, dex, con, int, wis, cha)
 
     def attack(self, enemy: object, enemies_in_fight: list):
         """target up to 3 enemies"""
