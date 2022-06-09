@@ -3,6 +3,28 @@ from equipment import weapons as w
 import classes.utility_functions as utils
 dice = utils.Util()
 
+class Pick_Class:
+    def pick_class(self, name):
+        print("\nNext, pick a class:")
+
+        class_list = ["Fighter", "Rogue", "Wizard", "Wanderer"]
+
+        class_name = "Null"
+        while class_name not in class_list:
+            print(", ".join(class_list))
+            class_name = input(">> ")
+            class_name = class_name.capitalize()
+        if class_name == "Fighter":
+            return Fighter(name=name)
+        elif class_name == "Rogue":
+            return Rogue(name=name)
+        elif class_name == "Wizard":
+            return Wizard(name=name)
+        elif class_name == "Wanderer":
+            return Wanderer(name=name)
+        else:
+            print("Class Picking Error")
+            exit(1)
 
 class Hero:
     """basic player hero class"""
@@ -22,8 +44,8 @@ class Hero:
         self.cha = cha
         self.base_health = base_health
         self.max_health
+        self.health
         self.update_health()
-        self.health = self.max_health
         self.gold = gold
         self.alive = True
     
@@ -116,14 +138,32 @@ class Hero:
 
 class Fighter(Hero):
     """tank based class"""
-    def __init__(self, name="Hero", class_name="Fighter", base_health=10, str=15, dex=12, con=13, int=9, wis=10, cha=11):
-        super().__init__(name, class_name, base_health, str, dex, con, int, wis, cha)
+    def __init__(self, name="Hero", class_name="Fighter", base_health=10, xp=0, weapon=w.LongSword(), inventory=[], special=[], str=15, dex=12, con=13, int=10, wis=11, cha=9, gold=0):
+        self.name = name
+        self.class_name = class_name
+        self.class_level = 1
+        self.xp = xp
+        self.weapon = weapon
+        self.inventory = inventory
+        self.special = special
+        self.str = str
+        self.dex = dex
+        self.con = con
+        self.int = int
+        self.wis = wis
+        self.cha = cha
+        self.base_health = base_health
+        self.max_health
+        self.health
+        self.update_health()
+        self.gold = gold
+        self.alive = True
 
 
 class Rogue(Hero):
     """evasion and critical damage based class"""
-    def __init__(self, name="Hero", class_name="Rogue", base_health=6, str=9, dex=15, con=13, int=11, wis=10, cha=12):
-        super().__init__(name, class_name, base_health, str, dex, con, int, wis, cha)
+    def __init__(self, name="Hero", class_name="Rogue", base_health=6, weapon=w.ShortSword, str=9, dex=15, con=13, int=11, wis=10, cha=12):
+        super().__init__(name, class_name, weapon, base_health, str, dex, con, int, wis, cha)
    
     def take_damage(self, damage: int):
         dodge_chance = dice.roll(1, 100)
@@ -148,7 +188,7 @@ class Rogue(Hero):
 class Wizard(Hero):
     """AoE based class"""
 
-    def __init__(self, name="Hero", class_name="Wizard", weapon=w.Unarmed(), base_health=4, str=10, dex=10, con=10, int=10, wis=10, cha=10):
+    def __init__(self, name="Hero", class_name="Wizard", weapon=w.Staff(), base_health=4, str=10, dex=10, con=10, int=10, wis=10, cha=10):
         super().__init__(name, class_name, base_health, weapon, str, dex, con, int, wis, cha)
 
     def attack(self, enemy: object, enemies_in_fight: list):
