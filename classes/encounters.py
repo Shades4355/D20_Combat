@@ -8,12 +8,12 @@ def random_encounter(num_combatants: int, player: object):
     encounters = []
 
     if player.level <= 3:
-        encounters = [shop, goblin_encounter, wolf_encounter]
+        encounters = [goblin_encounter, wolf_encounter]
     elif player.level <= 6:
-        encounters = [shop, goblin_encounter, wolf_encounter,
+        encounters = [goblin_encounter, wolf_encounter,
                       undead_encounter, zombie_encounter]
     else:
-        encounters = [shop, goblin_encounter, wolf_encounter,
+        encounters = [goblin_encounter, wolf_encounter,
                       undead_encounter, zombie_encounter, vampire_encounter]
 
     randomChoice = random.choices(encounters)[0]
