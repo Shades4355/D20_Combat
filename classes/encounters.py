@@ -7,9 +7,9 @@ dice = utils.Util()
 def random_encounter(num_combatants: int, player: object):
     encounters = []
 
-    if player.level <= 3:
+    if player.class_level <= 3:
         encounters = [goblin_encounter, wolf_encounter]
-    elif player.level <= 6:
+    elif player.class_level <= 6:
         encounters = [goblin_encounter, wolf_encounter,
                       undead_encounter, zombie_encounter]
     else:

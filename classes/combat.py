@@ -4,16 +4,7 @@ dice = utils.Util()
 
 def enemy_turn(player:object, enemies_in_fight:list):
     for enemy in enemies_in_fight:
-        roll = dice.roll(1, 20)
-        attack_roll = roll + enemy.str_mod + enemy.attack_bonus
-
-        if roll == 20:
-            damage = enemy.do_damage(True)
-        elif attack_roll > player.ac:
-            damage = enemy.do_damage(False)
-            player.take_damage(damage)
-        else:
-            print(enemy.name, "missed")
+        enemy.attack(player)
 
 def player_turn(player:object, enemies_in_fight:list):
     _COMBAT_ACTIONS = ["attack", "inventory", "special", "quit"]

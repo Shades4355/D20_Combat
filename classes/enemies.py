@@ -8,6 +8,9 @@ class Enemy():
         self.name = name
         self.level = level
         self.hit_die = hit_die
+        self.str_mod = str_mod
+        self.dex_mod = dex_mod
+        self.con_mod = con_mod
         self.max_hit_points = self.get_max_health()
         self.current_hit_points = self.max_hit_points
         self.attack_bonus = attack_bonus
@@ -18,9 +21,6 @@ class Enemy():
         self.grantXP = grantXP
         self.lives = lives
         self.alive = True
-        self.str_mod = str_mod
-        self.dex_mod = dex_mod
-        self.con_mod = con_mod
         self.loot = loot
 
     def do_damage(self, crit:bool):
@@ -32,7 +32,7 @@ class Enemy():
     def take_damage(self, damage:int):
         post_DR_damage = damage - self.damage_reduction
         if post_DR_damage > 0:
-            hurt = self.current_hit_points - post_DR_damage
+            hurt = post_DR_damage
         else:
             hurt = 0
 
@@ -57,17 +57,19 @@ class Enemy():
             hit_points += dice.roll(1, self.hit_die) + self.con_mod
         return hit_points
 
-    def attack(self, player_ac:int):
+    def attack(self, player: object):
         roll = dice.roll(1, 20)
         attack_roll = roll + self.attack_bonus + self.str_mod
 
         damage = 0
         if roll == 20:
             damage = self.do_damage(True)
-        elif attack_roll > player_ac:
+            player.take_damage(damage)
+        elif attack_roll > player.ac:
             damage = self.do_damage(False)
-        
-        return damage
+            player.take_damage(damage)
+        else:
+            print(self.name, "missed", player.name)
 
 
 class Goblin(Enemy):
