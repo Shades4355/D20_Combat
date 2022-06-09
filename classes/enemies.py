@@ -64,6 +64,7 @@ class Enemy():
         damage = 0
         if roll == 20:
             damage = self.do_damage(True)
+            print("Critical!")
             player.take_damage(damage)
         elif attack_roll > player.ac:
             damage = self.do_damage(False)
@@ -90,7 +91,7 @@ class Wolf(Enemy):
 
 
 class DireWolf(Wolf):
-    def __init__(self, name='Dire Wolf', health=4, attack_bonus=5, armor=0, number_of_damage_die=2, damage_die=4, level=4, lives=1, grantXP=2, damage_reduction=0, str_mod=3, dex_mod=2, con_mod=2):
+    def __init__(self, name='Dire Wolf', health=4, attack_bonus=2, armor=0, number_of_damage_die=2, damage_die=4, level=4, lives=1, grantXP=2, damage_reduction=0, str_mod=3, dex_mod=2, con_mod=2):
         super().__init__(name, health, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
 

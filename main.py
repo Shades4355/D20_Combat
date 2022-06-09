@@ -29,5 +29,5 @@ while hero.alive:
         hero.health = hero.max_health
     else:
         hero.health += heal
-print("{0.name} died at level {0.class_level}".format(hero))
+print("{0.name} died at level {0.class_level} with {0.xp} XP".format(hero))
 print("Goodbye")
