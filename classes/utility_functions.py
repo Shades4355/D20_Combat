@@ -2,7 +2,7 @@ import random
 import classes.hero as hero
 
 
-class Util:
+class Util():
     def pick_class(self, name):
         print("\nNext, pick a class:")
 

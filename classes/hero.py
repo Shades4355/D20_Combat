@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import math
 from equipment import weapons as w
 import classes.utility_functions as utils
@@ -163,7 +162,7 @@ class Wizard(Hero):
             enemy_index = enemies_in_fight.index(enemy)
 
             # first target
-            enemy1 = NULL
+            enemy1 = None
             if enemy_index - 1 >= 0:
                 enemy1 = enemies_in_fight[enemy_index - 1]
             else:
@@ -173,7 +172,7 @@ class Wizard(Hero):
             enemy2 = enemy
 
             # third target
-            enemy3 = NULL
+            enemy3 = None
             if enemy_index + 1 <= len(enemies_in_fight) - 1:
                 enemy3 = enemies_in_fight[enemy_index + 1]
             else:
@@ -192,7 +191,8 @@ class Wizard(Hero):
             else:
                 print(self.name, "missed", enemy.name)
 
-# basic blank slate
+
 class Wanderer(Hero):
+    """basic blank slate"""
     def __init__(self, name="Hero", class_name="Wanderer", base_health=8, str=10, dex=10, con=10, int=10, wis=10, cha=10):
         super().__init__(name, class_name, base_health, str, dex, con, int, wis, cha)
