@@ -1,5 +1,7 @@
 import math
 from equipment import weapons as w
+from equipment import potions
+from equipment import scrolls
 import classes.utility_functions as utils
 dice = utils.Util()
 
@@ -29,7 +31,7 @@ class Pick_Class:
 
 class Hero:
     """basic player hero class"""
-    def __init__(self, name="Hero", class_name="Hero", base_health=10, xp=0, weapon=w.Unarmed(), inventory=[], armor=0, special=[], str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0):
+    def __init__(self, name="Hero", class_name="Hero", base_health=10, xp=0, weapon=w.Unarmed(), inventory=[], armor=0, special=[], str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, in_fight=False):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -50,6 +52,7 @@ class Hero:
         self.initial_health()
         self.gold = gold
         self.alive = True
+        self.in_fight = in_fight
     
     def stat_mod (self, stat: int):
         return math.floor((stat - 10)/2)
@@ -155,6 +158,33 @@ class Hero:
             while choice not in self.inventory:
                 choice = input(">> ")
             self.inventory.remove(choice)
+
+    def show_inventory(self, player_turn, enemies_in_fight: list):
+        cure_light = potions.Cure_Light()
+        cure_moderate = potions.Cure_Moderate()
+        cure_serious = potions.Cure_Serious()
+        scroll_escape = scrolls.Escape()
+
+        print("\nInventory", end=": ")
+        print(", ".join(self.inventory))
+
+        choice = None
+        while choice not in self.inventory and choice.lower() != "back":
+            choice = input(">> ")
+        
+        if choice in self.inventory:
+            if choice == "cure light potion":
+                cure_light.heal(self)
+            elif choice == "cure moderate potion":
+                cure_moderate.heal(self)
+            elif choice == "cure serious potion":
+                cure_serious.heal(self)
+            elif choice == "scroll of escape":
+                scroll_escape.escape(self)
+            self.inventory.remove(choice)
+        elif choice == "back":
+            player_turn(self, enemies_in_fight)
+
 
 class Fighter(Hero):
     """tank based class"""
