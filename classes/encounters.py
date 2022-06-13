@@ -12,10 +12,10 @@ def random_encounter(num_combatants: int, player: object):
         encounters = [goblin_encounter, wolf_encounter]
     elif player.class_level <= 6:
         encounters = [goblin_encounter, wolf_encounter,
-                      undead_encounter, zombie_encounter]
+                      undead_encounter, zombie_encounter, zombie_horde_encounter]
     else:
         encounters = [goblin_encounter, wolf_encounter,
-                      undead_encounter, zombie_encounter, vampire_encounter]
+                      undead_encounter, zombie_horde_encounter, vampire_encounter]
 
     randomChoice = random.choices(encounters)[0]
 
@@ -40,15 +40,27 @@ def shop(player: object):
         {"name": "leather",
          "type": "armor",
          "armor": 1,
-         "price": 5},
-        {"name": "chain",
+         "price": 2},
+        {"name": "hide",
          "type": "armor",
          "armor": 2,
+         "price": 4},
+        {"name": "chain",
+         "type": "armor",
+         "armor": 3,
+         "price": 6},
+        {"name": "scale",
+         "type": "armor",
+         "armor": 4,
+         "price": 8},
+        {"name": "half plate",
+         "type": "armor",
+         "armor": 5,
          "price": 10},
         {"name": "full-plate",
          "type": "armor",
-         "armor": 4,
-         "price": 25},
+         "armor": 6,
+         "price": 12},
 
         {"name": w.LongSword().name,
          "type": "weapon",
@@ -72,8 +84,10 @@ def shop(player: object):
          "equip": w.Poleaxe()},
         {"name": w.HandAxe().name,
         "type": "weapon",
-        "price": 3}
+        "price": 3,
+         "equip": w.HandAxe()}
     ]
+
     back = {
         "name": "back",
         "type": "back",
@@ -90,7 +104,7 @@ def shop(player: object):
         choice = ''
         while choice not in [i["name"] for i in forSaleList]:
             print()
-            print("Player gold: " + str(player.gold))
+            print("Player gold: " + str(player.gold) + "\n")
             for item in forSaleList:
                 print(item["name"] + "\n\tPrice: " + str(item["price"]))
             choice = input("What would you like to buy?\n>> ")
@@ -112,7 +126,7 @@ def shop(player: object):
         else:
             print("You can't afford that.\n")
             choice = ''
-        player.checkInventory()
+        player.check_inventory()
 
 
 def goblin_encounter(num_of_foes: int):

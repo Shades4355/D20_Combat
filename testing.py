@@ -67,6 +67,7 @@ while hero.alive:
             c.player_turn(hero, enemies_in_fight)
             c.enemy_turn(hero, enemies_in_fight)
     else:
+        hero.gold = 25
         e.shop(hero)
 
     # heal between fights
