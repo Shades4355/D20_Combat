@@ -42,7 +42,7 @@ def player_turn(player:object, enemies_in_fight:list):
 
         if "inventory" in choice.lower():
             # show inventory
-            pass
+            player.show_inventory(player_turn, player, enemies_in_fight)
         elif "special" in choice.lower():
             # show special moves
             pass
@@ -51,7 +51,7 @@ def player_turn(player:object, enemies_in_fight:list):
             break
         elif choice == "quit":
             print("Goodbye")
-            print("{0.name} reached level {0.level}".format(player))
+            print("{0.name} reached level {0.class_level}".format(player))
             sys.exit()
 
     # Checks if enemies are dead

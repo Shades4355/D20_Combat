@@ -61,10 +61,14 @@ while hero.alive:
     num_combatants = dice.roll(1, math.ceil(hero.class_level/2))
 
     # pick random encounter (fight or shop)
-    enemies_in_fight = e.random_encounter(num_combatants, hero)
-    while len(enemies_in_fight) > 0 and hero.alive:
-        c.player_turn(hero, enemies_in_fight)
-        c.enemy_turn(hero, enemies_in_fight)
+    if dice.roll(1, 3) > 1:
+        enemies_in_fight = e.random_encounter(num_combatants, hero)
+        while len(enemies_in_fight) > 0 and hero.alive:
+            c.player_turn(hero, enemies_in_fight)
+            c.enemy_turn(hero, enemies_in_fight)
+    else:
+        hero.gold = 25
+        e.shop(hero)
 
     # heal between fights
     heal = math.floor(hero.max_health/2)
