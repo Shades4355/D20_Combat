@@ -146,6 +146,15 @@ class Hero:
         
         return damage
 
+    def check_inventory(self):
+        while len(self.inventory) > 5:
+            print("\nToo many items, pick one to discard:")
+            print(", ".join(self.inventory))
+
+            choice = ""
+            while choice not in self.inventory:
+                choice = input(">> ")
+            self.inventory.remove(choice)
 
 class Fighter(Hero):
     """tank based class"""

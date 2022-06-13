@@ -1,5 +1,6 @@
 import random
 import classes.enemies as e
+from equipment import weapons as w
 import classes.utility_functions as utils
 dice = utils.Util()
 
@@ -21,8 +22,94 @@ def random_encounter(num_combatants: int, player: object):
     return randomChoice(num_combatants)
 
 
-def shop(num_of_foes: int):
-    pass
+def shop(player: object):
+    items = [
+        {"name": "cure light potion",
+         "type": "item",
+         "price": 1},
+        {"name": "cure moderate potion",
+         "type": "item",
+         "price": 3},
+        {"name": "scroll of escape",
+         "type": "item",
+         "price": 2},
+
+        {"name": "leather",
+         "type": "armor",
+         "armor": 1,
+         "price": 5},
+        {"name": "chain",
+         "type": "armor",
+         "armor": 2,
+         "price": 10},
+        {"name": "full-plate",
+         "type": "armor",
+         "armor": 4,
+         "price": 25},
+
+        {"name": w.LongSword().name,
+         "type": "weapon",
+         "price": 3,
+         "equip": w.LongSword()},
+        {"name": w.ShortSword().name,
+         "type": "weapon",
+         "price": 3,
+         "equip": w.ShortSword()},
+        {"name": w.Unarmed().name,
+         "type": "weapon",
+         "price": 0,
+         "equip": w.Unarmed()},
+        {"name": w.Staff().name,
+         "type": "weapon",
+         "price": 10,
+         "equip": w.Staff()},
+        {"name": w.Poleaxe().name,
+         "type": "weapon",
+         "price": 5,
+         "equip": w.Poleaxe()},
+        {"name": w.HandAxe().name,
+        "type": "weapon",
+        "price": 3}
+    ]
+    back = {
+        "name": "back",
+        "type": "back",
+        "price": 0
+    }
+
+    # pick items for sale
+    forSaleList = random.choices(items, k=3)
+    forSaleList.append(back)
+
+    # choose an item to buy; or leave
+    inShop = True
+    while inShop == True:
+        choice = ''
+        while choice not in [i["name"] for i in forSaleList]:
+            print()
+            print("Player gold: " + str(player.gold))
+            for item in forSaleList:
+                print(item["name"] + "\n\tPrice: " + str(item["price"]))
+            choice = input("What would you like to buy?\n>> ")
+
+        index = [i["name"] for i in forSaleList].index(choice)
+        choice = forSaleList[index]
+
+        if choice["name"] == "back":  # leave shop
+            inShop = False
+        elif player.gold >= choice["price"]:
+            player.gold -= choice["price"]
+            if choice["type"] == "item":
+                player.inventory.append(choice["name"])
+            elif choice["type"] == "armor":
+                player.armor = choice["armor"]
+            elif choice["type"] == "weapon":
+                player.weapon = choice["equip"]
+            forSaleList.remove(choice)
+        else:
+            print("You can't afford that.\n")
+            choice = ''
+        player.checkInventory()
 
 
 def goblin_encounter(num_of_foes: int):
