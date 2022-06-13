@@ -168,7 +168,7 @@ class Hero:
         print("\nInventory", end=": ")
         print(", ".join(self.inventory))
 
-        choice = None
+        choice = ""
         while choice not in self.inventory and choice.lower() != "back":
             choice = input(">> ")
         

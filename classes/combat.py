@@ -42,7 +42,7 @@ def player_turn(player:object, enemies_in_fight:list):
 
         if "inventory" in choice.lower():
             # show inventory
-            player.show_inventory(player_turn, player, enemies_in_fight)
+            player.show_inventory(player_turn, enemies_in_fight)
         elif "special" in choice.lower():
             # show special moves
             pass

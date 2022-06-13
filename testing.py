@@ -25,6 +25,8 @@ for stat in attr_dic:
 input("[Enter]")
 print()
 
+hero.inventory.append("cure light potion")
+
 # begin dungeon crawl
 while hero.alive:
     # pick number of enemies
@@ -34,7 +36,7 @@ while hero.alive:
     if dice.roll(1, 3) > 1:
         enemies_in_fight = e.random_encounter(num_combatants, hero)
         hero.in_fight = True
-        while len(enemies_in_fight) > 0 and hero.in_fight:
+        while len(enemies_in_fight) > 0 and hero.in_fight and hero.alive:
             c.player_turn(hero, enemies_in_fight)
             c.enemy_turn(hero, enemies_in_fight)
         hero.in_fight = False
