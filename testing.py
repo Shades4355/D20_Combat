@@ -25,35 +25,7 @@ for stat in attr_dic:
 input("[Enter]")
 print()
 
-# # hero.gain_xp(25)
-
-# # print()
-
-# # attr_dic2 = {"Name": hero.name, "Class": hero.class_name,
-# #             "Level": hero.class_level, "HP": hero.health,
-# #             "str": hero.str, "dex": hero.dex, "con": hero.con}
-
-# # for stat in attr_dic2:
-# #     print(stat + " : " + str(attr_dic2[stat]))
-
-# # input("[Enter]")
-# # print()
-
-# # fighter = heros.Fighter(name="Fighter")
-
-# # fighter_attr_dic = {"Name": fighter.name, "Class": fighter.class_name,
-# #             "Level": fighter.class_level, "HP": fighter.health,
-# #             "str": fighter.str, "dex": fighter.dex, "con": fighter.con}
-
-# # print()
-
-# # for stat in fighter_attr_dic:
-# #     print(stat + " : " + str(fighter_attr_dic[stat]))
-
-
-# # input("[Enter]")
-# # print()
-
+hero.inventory.append("cure light potion")
 
 # begin dungeon crawl
 while hero.alive:
@@ -63,9 +35,11 @@ while hero.alive:
     # pick random encounter (fight or shop)
     if dice.roll(1, 3) > 1:
         enemies_in_fight = e.random_encounter(num_combatants, hero)
-        while len(enemies_in_fight) > 0 and hero.alive:
+        hero.in_fight = True
+        while len(enemies_in_fight) > 0 and hero.in_fight and hero.alive:
             c.player_turn(hero, enemies_in_fight)
             c.enemy_turn(hero, enemies_in_fight)
+        hero.in_fight = False
     else:
         hero.gold = 25
         e.shop(hero)
