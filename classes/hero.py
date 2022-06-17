@@ -197,6 +197,7 @@ class Hero:
     def update_ac(self):
         self.ac = 10 + self.stat_mod(self.dex) + self.armor
 
+
 class Fighter(Hero):
     """tank based class"""
 
