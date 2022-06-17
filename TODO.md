@@ -10,3 +10,17 @@
     * new armor is worn
     * dex increases
 * [ ] reorder Hero functions to be alphabetical
+
+* Add skill encounters:
+    * [ ] perception (wis) check:
+        * success: "You hear a fight ahead. Do you wait for the victory to leave, or attack them while they're weak?
+            * attack: easy fight
+            * wait: loot drop (gold or items) & xp
+        * failure: tough encounter
+    * [ ] Mysterious Fungus: Identify Mushroom (int) or Eat It:
+        * Eat: sometimes heal, sometimes take damage
+    * [ ] Rubble blocks your path:
+        * Dig Your way out (str) or Climb Over (dex)
+            * success: gain xp + shop
+            * failure: find a different path (new random encounter)
+    * [ ] 
