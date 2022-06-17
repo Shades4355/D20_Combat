@@ -105,7 +105,7 @@ def shop(player: object):
         choice = ''
         while choice not in [i["name"] for i in forSaleList]:
             print()
-            print("Player gold: " + str(player.gold) + "\n")
+            print("Player gold: " + str(player.gold))
             print("Equipped Weapon: {}".format(player.weapon.name))
             print("Worn Armor: {}".format(player.armor.name))
             print()
@@ -114,11 +114,11 @@ def shop(player: object):
             for item in forSaleList:
                 if item["name"] != "back":
                     price = item["price"] - player.stat_mod(player.cha)
+                    if price <= 1:
+                        price = 1
                 else:
                     price = item["price"]
 
-                if price <= 1:
-                    price = 1
                 item["price"] = price
 
                 print(item["name"] + "\n\tPrice: " + str(price))
