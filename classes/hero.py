@@ -114,7 +114,12 @@ class Hero:
         self.update_prof_bonus()
     
     def gain_xp(self, xp: int):
-        self.xp += xp
+        mod = self.stat_mod(self.int)
+        if mod >= 0:
+            self.xp += xp + mod
+        else:
+            self.xp += xp
+        
         threshold = 7 + self.class_level
         while self.check_for_level_up(threshold):
             self.xp -= threshold
@@ -157,7 +162,8 @@ class Hero:
         return damage
 
     def check_inventory(self):
-        while len(self.inventory) > 5:
+        inventory_cap = 5 + self.stat_mod(self.str)
+        while len(self.inventory) > inventory_cap:
             print("\nToo many items, pick one to discard:")
             print(", ".join(self.inventory))
 
@@ -372,9 +378,4 @@ class Wanderer(Hero):
         self.gold = gold
         self.alive = True
 
-    def gain_xp(self, xp: int):
-        self.xp += xp
-        threshold = 5 + self.class_level
-        while self.check_for_level_up(threshold):
-            self.xp -= threshold
-            self.level_up()
+
