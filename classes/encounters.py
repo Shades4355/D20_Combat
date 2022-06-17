@@ -1,4 +1,4 @@
-import random
+import random, time
 import classes.enemies as e
 from equipment import weapons as w
 import classes.utility_functions as utils
@@ -9,10 +9,10 @@ def random_encounter(num_combatants: int, player: object):
     encounters = []
 
     if player.class_level <= 3:
-        encounters = [goblin_encounter, wolf_encounter]
+        encounters = [goblin_encounter, goblin_horde_encounter]
     elif player.class_level <= 6:
         encounters = [goblin_encounter, wolf_encounter,
-                      undead_encounter, zombie_encounter, zombie_horde_encounter]
+                      undead_encounter, zombie_encounter]
     else:
         encounters = [goblin_encounter, wolf_encounter,
                       undead_encounter, zombie_horde_encounter, vampire_encounter]
@@ -23,6 +23,8 @@ def random_encounter(num_combatants: int, player: object):
 
 
 def shop(player: object):
+    # TODO: add printout for current armor/weapon
+    
     items = [
         {"name": "cure light potion",
          "type": "item",
@@ -37,19 +39,19 @@ def shop(player: object):
          "type": "item",
          "price": 2},
 
-        {"name": "leather",
+        {"name": "leather armor",
          "type": "armor",
          "armor": 1,
          "price": 2},
-        {"name": "hide",
+        {"name": "hide armor",
          "type": "armor",
          "armor": 2,
          "price": 4},
-        {"name": "chain",
+        {"name": "chain armor",
          "type": "armor",
          "armor": 3,
          "price": 6},
-        {"name": "scale",
+        {"name": "scale armor",
          "type": "armor",
          "armor": 4,
          "price": 8},
@@ -105,6 +107,8 @@ def shop(player: object):
         while choice not in [i["name"] for i in forSaleList]:
             print()
             print("Player gold: " + str(player.gold) + "\n")
+            time.sleep(1)
+            
             for item in forSaleList:
                 print(item["name"] + "\n\tPrice: " + str(item["price"]))
             choice = input("What would you like to buy?\n>> ")
@@ -120,6 +124,7 @@ def shop(player: object):
                 player.inventory.append(choice["name"])
             elif choice["type"] == "armor":
                 player.armor = choice["armor"]
+                player.update_ac()
             elif choice["type"] == "weapon":
                 player.weapon = choice["equip"]
             forSaleList.remove(choice)
@@ -151,6 +156,17 @@ def goblin_encounter(num_of_foes: int):
             w += 1
             encounter.append(e.Wolf(name="Wolf {}".format(w)))
     
+    return encounter
+
+
+def goblin_horde_encounter(num_of_foes: int):
+    g = 0
+
+    encounter = []
+
+    for i in range(num_of_foes * 2):
+        g += 1
+        encounter.append(e.Goblin(name="Goblin {}".format(g)))
     return encounter
 
 

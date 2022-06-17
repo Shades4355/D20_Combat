@@ -74,7 +74,7 @@ class Enemy():
 
 
 class Goblin(Enemy):
-    def __init__(self, name='Goblin', health=1, attack_bonus=0, armor=0, number_of_damage_die=1, damage_die=4, level=1, lives=1, grantXP=1, damage_reduction=0, str_mod=-1, dex_mod=2, con_mod=0):
+    def __init__(self, name='Goblin', health=3, attack_bonus=0, armor=0, number_of_damage_die=1, damage_die=4, level=1, lives=1, grantXP=1, damage_reduction=0, str_mod=-1, dex_mod=2, con_mod=0):
         super().__init__(name, health, attack_bonus, armor, number_of_damage_die, damage_die,
                          level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
@@ -86,12 +86,12 @@ class Hobgoblin(Goblin):
 
 
 class Wolf(Enemy):
-    def __init__(self, name='Wolf', health=4, attack_bonus=1, armor=0, number_of_damage_die=2, damage_die=4, level=2, lives=1, grantXP=2, damage_reduction=0, str_mod=1, dex_mod=2, con_mod=1):
+    def __init__(self, name='Wolf', health=4, attack_bonus=1, armor=0, number_of_damage_die=1, damage_die=6, level=2, lives=1, grantXP=2, damage_reduction=0, str_mod=1, dex_mod=2, con_mod=1):
         super().__init__(name, health, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
 
 class DireWolf(Wolf):
-    def __init__(self, name='Dire Wolf', health=4, attack_bonus=2, armor=0, number_of_damage_die=2, damage_die=4, level=4, lives=1, grantXP=2, damage_reduction=0, str_mod=3, dex_mod=2, con_mod=2):
+    def __init__(self, name='Dire Wolf', health=4, attack_bonus=2, armor=0, number_of_damage_die=2, damage_die=4, level=3, lives=1, grantXP=2, damage_reduction=0, str_mod=3, dex_mod=2, con_mod=2):
         super().__init__(name, health, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
 
@@ -128,7 +128,7 @@ class Zombie(Undead):
 
 
 class Skeleton(Undead):
-    def __init__(self, name='Undead Template', hit_die=8, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=6, level=3, lives=2, grantXP=2, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
+    def __init__(self, name='Undead Template', hit_die=8, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=6, level=3, lives=2, grantXP=3, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
 
