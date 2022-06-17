@@ -1,6 +1,7 @@
 import random, time
 import classes.enemies as e
 from equipment import weapons as w
+from equipment import armor as a
 import classes.utility_functions as utils
 dice = utils.Util()
 
@@ -22,9 +23,7 @@ def random_encounter(num_combatants: int, player: object):
     return randomChoice(num_combatants)
 
 
-def shop(player: object):
-    # TODO: add printout for current armor/weapon
-    
+def shop(player: object):    
     items = [
         {"name": "cure light potion",
          "type": "item",
@@ -39,30 +38,30 @@ def shop(player: object):
          "type": "item",
          "price": 2},
 
-        {"name": "leather armor",
+        {"name": a.Leather().name,
          "type": "armor",
-         "armor": 1,
-         "price": 2},
-        {"name": "hide armor",
+         "armor": a.Leather(),
+         "price": a.Leather().price},
+        {"name": a.Hide().name,
          "type": "armor",
-         "armor": 2,
-         "price": 4},
-        {"name": "chain armor",
+         "armor": a.Hide(),
+         "price": a.Hide().price},
+        {"name": a.Chain().name,
          "type": "armor",
-         "armor": 3,
-         "price": 6},
-        {"name": "scale armor",
+         "armor": a.Chain(),
+         "price": a.Chain().price},
+        {"name": a.Scale().name,
          "type": "armor",
-         "armor": 4,
-         "price": 8},
-        {"name": "half plate",
+         "armor": a.Scale(),
+         "price": a.Scale().price},
+        {"name": a.HalfPlate().name,
          "type": "armor",
-         "armor": 5,
-         "price": 10},
-        {"name": "full-plate",
+         "armor": a.HalfPlate(),
+         "price": a.HalfPlate().price},
+        {"name": a.FullPlate().name,
          "type": "armor",
-         "armor": 6,
-         "price": 12},
+         "armor": a.FullPlate(),
+         "price": a.FullPlate().price},
 
         {"name": w.LongSword().name,
          "type": "weapon",
@@ -107,6 +106,9 @@ def shop(player: object):
         while choice not in [i["name"] for i in forSaleList]:
             print()
             print("Player gold: " + str(player.gold) + "\n")
+            print("Equipped Weapon: {}".format(player.weapon.name))
+            print("Worn Armor: {}".format(player.armor.name))
+            print()
             time.sleep(1)
             
             for item in forSaleList:
