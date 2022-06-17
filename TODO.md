@@ -5,6 +5,7 @@
 * [x] Int bonus to xp gain
     *  self.xp += xp + self.stat_mod(self.int)
 * [ ] Display worn armor in shop
+    * [ ] Change armor to be an object
 * [ ] Display equipped weapon in shop
 * [x] Update ac when:
     * new armor is worn
