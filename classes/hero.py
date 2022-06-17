@@ -59,22 +59,62 @@ class Hero:
         self.prof = 0
         self.update_prof_bonus()
         self.in_fight = in_fight
-    
-    def stat_mod (self, stat: int):
-        return math.floor((stat - 10)/2)
+
+    def attack(self, enemy: object, enemies_in_fight: list):
+        roll = dice.roll(1, 20)
+        attack_roll = roll + self.stat_mod(self.str) + self.prof
+
+        if roll == 20:
+            print("Critical!")
+            enemy.take_damage(self.do_damage(True))
+        elif attack_roll > enemy.ac:
+            enemy.take_damage(self.do_damage(False))
+        else:
+            print(self.name, "missed", enemy.name)
+  
+    def check_for_level_up(self, threshold: int):
+        if self.xp >= threshold:
+            return True
+        else:
+            return False
+
+    def check_inventory(self):
+        inventory_cap = 5 + self.stat_mod(self.str)
+        while len(self.inventory) > inventory_cap:
+            print("\nToo many items, pick one to discard:")
+            print(", ".join(self.inventory))
+
+            choice = ""
+            while choice not in self.inventory:
+                choice = input(">> ")
+            self.inventory.remove(choice)
+
+    def do_damage(self, crit: bool):
+        damage = 0
+        if crit == True:
+            damage = dice.roll(self.weapon.num_damage_dice, self.weapon.damage_die) + dice.roll(
+                self.weapon.num_damage_dice, self.weapon.damage_die) + self.stat_mod(self.str)
+        else:
+            damage = dice.roll(self.weapon.num_damage_dice,
+                               self.weapon.damage_die) + self.stat_mod(self.str)
+
+        return damage
+
+    def gain_xp(self, xp: int):
+        mod = self.stat_mod(self.int)
+        if mod >= 0:
+            self.xp += xp + mod
+        else:
+            self.xp += xp
+
+        threshold = 7 + self.class_level
+        while self.check_for_level_up(threshold):
+            self.xp -= threshold
+            self.level_up()
 
     def increase_level(self):
         self.class_level += 1
     
-    def initial_health(self):
-        self.max_health = (self.stat_mod(self.con)
-                        * self.class_level) + self.base_health
-        self.health = self.max_health
-
-    def update_health(self, amount: int):
-        self.max_health += amount
-        self.health = self.max_health
-        
     def increase_stat(self, choice: str):
         if choice == "str":
             self.str += 1
@@ -92,6 +132,11 @@ class Hero:
         elif choice == "cha":
             self.cha += 1
 
+    def initial_health(self):
+        self.max_health = (self.stat_mod(self.con)
+                        * self.class_level) + self.base_health
+        self.health = self.max_health
+
     def level_up(self):
         print("\n\nLevel Up!")
         print("Pick a stat to increase:")
@@ -102,76 +147,17 @@ class Hero:
         for stat in attr_dic:
             print(stat + ": " + str(attr_dic[stat]))
             print(stat + " mod: " + str(self.stat_mod(attr_dic[stat])))
-        
+
         choice = "null"
         while choice not in attr_dic or attr_dic[choice] >= 20:
             print("\nPlease pick a stat whose value is less than 20")
             choice = input(">> ")
-    
+
         self.increase_stat(choice)
         self.increase_level()
         self.update_health(dice.roll(1, self.base_health) +
                            self.stat_mod(self.con))
         self.update_prof_bonus()
-    
-    def gain_xp(self, xp: int):
-        mod = self.stat_mod(self.int)
-        if mod >= 0:
-            self.xp += xp + mod
-        else:
-            self.xp += xp
-        
-        threshold = 7 + self.class_level
-        while self.check_for_level_up(threshold):
-            self.xp -= threshold
-            self.level_up()
-
-    def check_for_level_up(self, threshold: int):
-        if self.xp >= threshold:
-            return True
-        else:
-            return False
-    
-    def take_damage(self, damage: int):
-        self.health -= damage
-        if self.health <= 0:
-            self.health = 0
-            self.alive = False
-        print("{0.name} took {1} damage, and have {0.health} hit points left".format(self, damage))
-
-    def attack(self, enemy: object, enemies_in_fight: list):
-        roll = dice.roll(1, 20)
-        attack_roll = roll + self.stat_mod(self.str) + self.prof
-
-        if roll == 20:
-            print("Critical!")
-            enemy.take_damage(self.do_damage(True))
-        elif attack_roll > enemy.ac:
-            enemy.take_damage(self.do_damage(False))
-        else:
-            print(self.name, "missed", enemy.name)
-
-    def do_damage(self, crit: bool):
-        damage = 0
-        if crit == True:
-            damage = dice.roll(self.weapon.num_damage_dice, self.weapon.damage_die) + dice.roll(
-                self.weapon.num_damage_dice, self.weapon.damage_die) + self.stat_mod(self.str)
-        else:
-            damage = dice.roll(self.weapon.num_damage_dice,
-                               self.weapon.damage_die) + self.stat_mod(self.str)
-        
-        return damage
-
-    def check_inventory(self):
-        inventory_cap = 5 + self.stat_mod(self.str)
-        while len(self.inventory) > inventory_cap:
-            print("\nToo many items, pick one to discard:")
-            print(", ".join(self.inventory))
-
-            choice = ""
-            while choice not in self.inventory:
-                choice = input(">> ")
-            self.inventory.remove(choice)
 
     def show_inventory(self, player_turn, enemies_in_fight: list):
         cure_light = potions.Cure_Light()
@@ -185,7 +171,7 @@ class Hero:
         choice = ""
         while choice not in self.inventory and choice.lower() != "back":
             choice = input(">> ")
-        
+
         if choice in self.inventory:
             if choice == "cure light potion":
                 cure_light.heal(self)
@@ -199,11 +185,27 @@ class Hero:
         elif choice == "back":
             player_turn(self, enemies_in_fight)
 
-    def update_prof_bonus(self):
-        self.prof = math.floor(self.class_level/4)+2
+    def stat_mod (self, stat: int):
+        return math.floor((stat - 10)/2)
+
+    def take_damage(self, damage: int):
+        self.health -= damage
+        if self.health <= 0:
+            self.health = 0
+            self.alive = False
+        print("{0.name} took {1} damage, and have {0.health} hit points left".format(
+            self, damage))
 
     def update_ac(self):
-        self.ac = 10 + self.stat_mod(self.dex) + self.armor.value + self.armor.magic
+        self.ac = 10 + self.stat_mod(self.dex) + \
+            self.armor.value + self.armor.magic
+
+    def update_health(self, amount: int):
+        self.max_health += amount
+        self.health = self.max_health
+        
+    def update_prof_bonus(self):
+        self.prof = math.floor(self.class_level/4)+2
 
 
 class Fighter(Hero):
@@ -264,17 +266,6 @@ class Rogue(Hero):
         self.update_prof_bonus()
         self.gold = gold
         self.alive = True
-   
-    def take_damage(self, damage: int):
-        dodge_chance = dice.roll(1, 100)
-        if dodge_chance > 30:
-            self.health -= damage
-            if self.health <= 0:
-                self.health = 0
-                self.alive = False
-            print("{0.name} took {1} damage, and have {0.health} hit points left".format(self, damage))
-        else:
-            print(self.name, "dodged the attack")
 
     def attack(self, enemy: object, enemies_in_fight: list):
         roll = dice.roll(1, 20)
@@ -287,6 +278,17 @@ class Rogue(Hero):
             enemy.take_damage(self.do_damage(False))
         else:
             print(self.name, "missed", enemy.name)
+
+    def take_damage(self, damage: int):
+        dodge_chance = dice.roll(1, 100)
+        if dodge_chance > 30:
+            self.health -= damage
+            if self.health <= 0:
+                self.health = 0
+                self.alive = False
+            print("{0.name} took {1} damage, and have {0.health} hit points left".format(self, damage))
+        else:
+            print(self.name, "dodged the attack")
 
 
 class Wizard(Hero):
