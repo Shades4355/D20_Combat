@@ -58,7 +58,7 @@ def player_turn(player:object, enemies_in_fight:list):
     for i in range(len(enemies_in_fight) - 1, -1, -1):
         enemy = enemies_in_fight[i]
         if not enemy.alive:
-            player.xp += enemy.grantXP
+            player.gain_xp(enemy.grantXP)
             player.gold += enemy.loot
             del enemies_in_fight[i]
             equipment_drop(player)

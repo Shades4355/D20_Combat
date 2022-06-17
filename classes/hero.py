@@ -31,6 +31,7 @@ class Pick_Class:
 
 class Hero:
     """basic player hero class"""
+
     def __init__(self, name="Hero", class_name="Hero", base_health=10, xp=0, weapon=w.Unarmed(), inventory=[], armor=0, special=[], str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, in_fight=False):
         self.name = name
         self.class_name = class_name
@@ -45,13 +46,17 @@ class Hero:
         self.int = int
         self.wis = wis
         self.cha = cha
-        self.ac = 10 + self.stat_mod(dex) + armor
+        self.armor = armor
+        self.ac = 0
+        self.update_ac()
         self.base_health = base_health
         self.max_health = 0
         self.health = 0
         self.initial_health()
         self.gold = gold
         self.alive = True
+        self.prof = 0
+        self.update_prof_bonus()
         self.in_fight = in_fight
     
     def stat_mod (self, stat: int):
@@ -74,6 +79,7 @@ class Hero:
             self.str += 1
         elif choice == "dex":
             self.dex += 1
+            self.update_ac()
         elif choice == "con":
             self.con += 1
             if self.con % 2 == 0:
@@ -124,11 +130,11 @@ class Hero:
         if self.health <= 0:
             self.health = 0
             self.alive = False
-        print("{} took {} damage, and have {} hit points left".format(self.name, damage, self.health))
+        print("{0.name} took {1} damage, and have {0.health} hit points left".format(self, damage))
 
     def attack(self, enemy: object, enemies_in_fight: list):
         roll = dice.roll(1, 20)
-        attack_roll = roll + self.stat_mod(self.str)
+        attack_roll = roll + self.stat_mod(self.str) + self.prof
 
         if roll == 20:
             print("Critical!")
@@ -185,10 +191,16 @@ class Hero:
         elif choice == "back":
             player_turn(self, enemies_in_fight)
 
+    def update_prof_bonus(self):
+        self.prof = math.floor(self.class_level/4)+2
+
+    def update_ac(self):
+        self.ac = 10 + self.stat_mod(self.dex) + self.armor
 
 class Fighter(Hero):
     """tank based class"""
-    def __init__(self, name="Hero", class_name="Fighter", base_health=10, weapon=w.LongSword(), inventory=[], special=[], armor=0, str=15, dex=12, con=13, int=10, wis=11, cha=9, gold=0):
+
+    def __init__(self, name="Hero", class_name="Fighter", base_health=10, weapon=w.LongSword(), inventory=["cure light potion"], special=[], armor=0, str=15, dex=12, con=13, int=10, wis=11, cha=9, gold=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -207,13 +219,16 @@ class Fighter(Hero):
         self.max_health = 0
         self.health = 0
         self.initial_health()
+        self.prof = 0
+        self.update_prof_bonus()
         self.gold = gold
         self.alive = True
 
 
 class Rogue(Hero):
     """evasion and critical damage based class"""
-    def __init__(self, name="Hero", class_name="Rogue", base_health=6, weapon=w.ShortSword(), inventory=[], special=[], armor=0, str=9, dex=15, con=13, int=11, wis=10, cha=12, gold=0):
+
+    def __init__(self, name="Hero", class_name="Rogue", base_health=6, weapon=w.ShortSword(), inventory=["cure light potion", "scroll of escape"], special=[], armor=0, str=9, dex=15, con=13, int=11, wis=10, cha=12, gold=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -232,23 +247,25 @@ class Rogue(Hero):
         self.max_health = 0
         self.health = 0
         self.initial_health()
+        self.prof = 0
+        self.update_prof_bonus()
         self.gold = gold
         self.alive = True
    
     def take_damage(self, damage: int):
         dodge_chance = dice.roll(1, 100)
-        if dodge_chance > 25:
+        if dodge_chance > 30:
             self.health -= damage
-            if self.health < 0:
+            if self.health <= 0:
                 self.health = 0
                 self.alive = False
-            print("{} took {} damage, and have {} hit points left".format(self.name, damage, self.health))
+            print("{0.name} took {1} damage, and have {0.health} hit points left".format(self, damage))
         else:
             print(self.name, "dodged the attack")
 
     def attack(self, enemy: object, enemies_in_fight: list):
         roll = dice.roll(1, 20)
-        attack_roll = roll + self.stat_mod(self.str)
+        attack_roll = roll + self.stat_mod(self.dex)
 
         if roll >= 18:
             print("Critical!")
@@ -262,7 +279,7 @@ class Rogue(Hero):
 class Wizard(Hero):
     """AoE based class"""
 
-    def __init__(self, name="Hero", class_name="Wizard", weapon=w.Staff(), inventory=[], special=[], armor=0, base_health=4, str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0):
+    def __init__(self, name="Hero", class_name="Wizard", weapon=w.Staff(), inventory=["cure light potion", "scroll of escape"], special=[], armor=0, base_health=4, str=9, dex=12, con=13, int=15, wis=11, cha=10, gold=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -281,6 +298,8 @@ class Wizard(Hero):
         self.max_health = 0
         self.health = 0
         self.initial_health()
+        self.prof = 0
+        self.update_prof_bonus()
         self.gold = gold
         self.alive = True
 
@@ -316,7 +335,7 @@ class Wizard(Hero):
         # attack the enemies
         for enemies in targets:
             roll = dice.roll(1, 20)
-            attack_roll = roll + self.stat_mod(self.str)
+            attack_roll = roll + self.stat_mod(self.int)
             if roll == 20:
                 enemies.take_damage(self.do_damage(True))
             elif attack_roll > enemy.ac:
@@ -327,7 +346,7 @@ class Wizard(Hero):
 
 class Wanderer(Hero):
     """basic blank slate"""
-    def __init__(self, name="Hero", class_name="Wanderer", weapon=w.Unarmed(), special=[], inventory=[], armor=0, base_health=8, str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0):
+    def __init__(self, name="Hero", class_name="Wanderer", weapon=w.Unarmed(), special=[], inventory=["cure moderate potion"], armor=0, base_health=8, str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -346,5 +365,14 @@ class Wanderer(Hero):
         self.max_health = 0
         self.health = 0
         self.initial_health()
+        self.prof = 0
+        self.update_prof_bonus()
         self.gold = gold
         self.alive = True
+
+    def gain_xp(self, xp: int):
+        self.xp += xp
+        threshold = 5 + self.class_level
+        while self.check_for_level_up(threshold):
+            self.xp -= threshold
+            self.level_up()
