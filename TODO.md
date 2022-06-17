@@ -10,8 +10,8 @@
 * [x] Update ac when:
     * new armor is worn
     * dex increases
-* [ ] reorder Hero functions to be alphabetical
-* [ ] Wanderer picks starting stats
+* [x] reorder Hero functions to be alphabetical
+* [x] Wanderer picks starting stats
 
 * Add skill encounters:
     * [ ] perception (wis) check:
