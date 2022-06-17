@@ -111,6 +111,7 @@ class Hero:
         self.increase_level()
         self.update_health(dice.roll(1, self.base_health) +
                            self.stat_mod(self.con))
+        self.update_prof_bonus()
     
     def gain_xp(self, xp: int):
         self.xp += xp
