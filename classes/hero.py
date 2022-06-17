@@ -39,6 +39,7 @@ class Hero:
         self.class_level = 1
         self.xp = xp
         self.weapon=weapon
+        self.armor = armor
         self.inventory = inventory
         self.special = special
         self.str = str
@@ -47,7 +48,6 @@ class Hero:
         self.int = int
         self.wis = wis
         self.cha = cha
-        self.armor = armor
         self.ac = 0
         self.update_ac()
         self.base_health = base_health
@@ -215,6 +215,7 @@ class Fighter(Hero):
         self.class_level = 1
         self.xp = 0
         self.weapon = weapon
+        self.armor = armor
         self.inventory = inventory
         self.special = special
         self.str = str
@@ -223,7 +224,8 @@ class Fighter(Hero):
         self.int = int
         self.wis = wis
         self.cha = cha
-        self.ac = 10 + self.stat_mod(dex) + armor
+        self.ac = 0
+        self.update_ac()
         self.base_health = base_health
         self.max_health = 0
         self.health = 0
@@ -243,6 +245,7 @@ class Rogue(Hero):
         self.class_level = 1
         self.xp = 0
         self.weapon = weapon
+        self.armor = armor
         self.inventory = inventory
         self.special = special
         self.str = str
@@ -251,7 +254,8 @@ class Rogue(Hero):
         self.int = int
         self.wis = wis
         self.cha = cha
-        self.ac = 10 + self.stat_mod(dex) + armor
+        self.ac = 0
+        self.update_ac()
         self.base_health = base_health
         self.max_health = 0
         self.health = 0
@@ -294,6 +298,7 @@ class Wizard(Hero):
         self.class_level = 1
         self.xp = 0
         self.weapon = weapon
+        self.armor = armor
         self.inventory = inventory
         self.special = special
         self.str = str
@@ -302,7 +307,8 @@ class Wizard(Hero):
         self.int = int
         self.wis = wis
         self.cha = cha
-        self.ac = 10 + self.stat_mod(dex) + armor
+        self.ac = 0
+        self.update_ac()
         self.base_health = base_health
         self.max_health = 0
         self.health = 0
@@ -355,12 +361,13 @@ class Wizard(Hero):
 
 class Wanderer(Hero):
     """basic blank slate"""
-    def __init__(self, name="Hero", class_name="Wanderer", weapon=w.Unarmed(), special=[], inventory=["cure moderate potion"], armor=0, base_health=8, str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0):
+    def __init__(self, name="Hero", class_name="Wanderer", weapon=w.Unarmed(), special=[], inventory=["cure moderate potion"], armor=a.Leather(), base_health=8, str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
         self.xp = 0
         self.weapon = weapon
+        self.armor = armor
         self.inventory = inventory
         self.special = special
         self.str = str
@@ -369,7 +376,8 @@ class Wanderer(Hero):
         self.int = int
         self.wis = wis
         self.cha = cha
-        self.ac = 10 + self.stat_mod(dex) + armor
+        self.ac = 0
+        self.update_ac()
         self.base_health = base_health
         self.max_health = 0
         self.health = 0

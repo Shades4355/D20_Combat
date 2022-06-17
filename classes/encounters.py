@@ -108,6 +108,7 @@ def shop(player: object):
             print("Player gold: " + str(player.gold) + "\n")
             print("Equipped Weapon: {}".format(player.weapon.name))
             print("Worn Armor: {}".format(player.armor.name))
+            print()
             time.sleep(1)
             
             for item in forSaleList:
