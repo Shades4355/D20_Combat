@@ -11,8 +11,8 @@ def random_encounter(num_combatants: int, player: object):
     if player.class_level <= 3:
         encounters = [goblin_encounter, goblin_horde_encounter]
     elif player.class_level <= 6:
-        encounters = [goblin_encounter, wolf_encounter,
-                      undead_encounter, zombie_encounter]
+        encounters = [goblin_encounter, goblin_horde_encounter, 
+                      wolf_encounter, undead_encounter, zombie_encounter]
     else:
         encounters = [goblin_encounter, wolf_encounter,
                       undead_encounter, zombie_horde_encounter, vampire_encounter]
@@ -97,7 +97,7 @@ def shop(player: object):
     }
 
     # pick items for sale
-    forSaleList = random.choices(items, k=3)
+    forSaleList = random.choices(items, k= 3 + player.stat_mod(player.wis))
     forSaleList.append(back)
 
     # choose an item to buy; or leave
@@ -110,7 +110,16 @@ def shop(player: object):
             time.sleep(1)
             
             for item in forSaleList:
-                print(item["name"] + "\n\tPrice: " + str(item["price"]))
+                if item["name"] != "back":
+                    price = item["price"] - player.stat_mod(player.cha)
+                else:
+                    price = item["price"]
+
+                if price <= 1:
+                    price = 1
+                item["price"] = price
+
+                print(item["name"] + "\n\tPrice: " + str(price))
             choice = input("What would you like to buy?\n>> ")
 
         index = [i["name"] for i in forSaleList].index(choice)
