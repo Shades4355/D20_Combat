@@ -234,7 +234,8 @@ def zombie_encounter(num_of_foes: int):
     for i in range(num_of_foes):
         z += 1
         encounter.append(e.Zombie(name="Zombie {}".format(z)))
-
+    return encounter
+    
 
 def zombie_horde_encounter(num_of_foes: int):
     return zombie_encounter(num_of_foes * 2)
@@ -260,3 +261,4 @@ def vampire_encounter(num_of_foes: int):
         else:
             v += 1
             encounter.append(e.Vampire(name="Vampire {}".format(v)))
+    return encounter
