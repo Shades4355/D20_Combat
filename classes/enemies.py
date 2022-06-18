@@ -164,6 +164,7 @@ class Vampire(Undead):
         damage = 0
         if roll == 20:
             damage = self.do_damage(True)
+            print("Critical!")
             player.take_damage(damage)
         elif attack_roll > player.ac:
             damage = self.do_damage(False)
@@ -183,6 +184,7 @@ class VampireLord(Vampire):
         damage = 0
         if roll == 20:
             damage = self.do_damage(True)
+            print("Critical!")
             player.take_damage(damage)
         elif attack_roll > player.ac:
             damage = self.do_damage(False)
