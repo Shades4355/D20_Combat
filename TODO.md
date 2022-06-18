@@ -16,12 +16,13 @@
 * [x] special cooldown
 * [x] add special attacks to weapons
 * [ ] make wizards more survivable
-    * resistant to criticals?
-    * start with better armor?
-    * special: regen?
+    * [ ] resistant to criticals?
+    * [x] start with better armor?
+    * [ ] special: regen?
         * if cooldown > 0, heal 1/4 max health
         * can't heal above max
-* [ ] fix Zombie bug - zombie can take negative damage
+* [x] fix Zombie bug - zombie can take negative damage
+* [ ] fix vampire attack()
 
 * Add skill encounters:
     * [ ] perception (wis) check:
