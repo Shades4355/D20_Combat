@@ -32,7 +32,10 @@ class Enemy():
     def take_damage(self, damage:int):
         post_DR_damage = damage - self.damage_reduction
         if post_DR_damage > 0:
-            hurt = post_DR_damage
+            if self.current_hit_points - post_DR_damage > 0:
+                hurt = self.current_hit_points - post_DR_damage
+            else:
+                hurt = self.current_hit_points
         else:
             hurt = 0
 
@@ -107,7 +110,10 @@ class Zombie(Undead):
     def take_damage(self, damage: int):
         post_DR_damage = damage - self.damage_reduction
         if post_DR_damage > 0:
-            hurt = self.current_hit_points - post_DR_damage
+            if self.current_hit_points - post_DR_damage > 0:
+                hurt = self.current_hit_points - post_DR_damage
+            else:
+                hurt = self.current_hit_points
         else:
             hurt = 0
 
