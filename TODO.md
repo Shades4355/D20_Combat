@@ -21,6 +21,7 @@
     * special: regen?
         * if cooldown > 0, heal 1/4 max health
         * can't heal above max
+* [ ] fix Zombie bug - zombie can take negative damage
 
 * Add skill encounters:
     * [ ] perception (wis) check:
