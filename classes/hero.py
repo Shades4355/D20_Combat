@@ -371,9 +371,9 @@ class Rogue(Hero):
 
 
 class Wizard(Hero):
-    """AoE based class"""
+    """Fast leveling, AoE based class"""
 
-    def __init__(self, name="Hero", class_name="Wizard", weapon=w.Staff(), inventory=["cure light potion", "scroll of escape"], armor=a.Leather(), base_health=4, str=9, dex=12, con=13, int=15, wis=11, cha=10, gold=0, cooldown=0):
+    def __init__(self, name="Hero", class_name="Wizard", weapon=w.Staff(), inventory=["cure light potion", "scroll of escape"], armor=a.Hide(), base_health=4, str=9, dex=12, con=13, int=15, wis=11, cha=10, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1

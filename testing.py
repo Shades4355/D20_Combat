@@ -24,10 +24,7 @@ for stat in attr_dic:
 input("[Enter]")
 print()
 
-
-hero.gold = 25
-e.shop(hero)
-
+hero.gold = 10
 # begin dungeon crawl
 while hero.alive:
     # pick number of enemies
