@@ -1,4 +1,4 @@
-import math
+import math, time
 from equipment import weapons as w
 from equipment import armor as a
 from equipment import potions
@@ -24,10 +24,61 @@ class Pick_Class:
         elif class_name == "Wizard":
             return Wizard(name=name)
         elif class_name == "Wanderer":
-            return Wanderer(name=name)
+            return WandererStats(name)
         else:
             print("Class Picking Error")
             exit(1)
+
+
+def WandererStats(name):
+    print("\nWelcome, Wanderer. Let's assign your stats:")
+    stats = ["15", "13", "12", "11", "10", "9"]
+
+    time.sleep(1)
+    
+    strength = ''
+    while strength not in stats:
+        print("\nWhat is your Strength?")
+        print(", ".join(stats))
+        strength = input(">> ")
+    stats.remove(strength)
+
+    dex = ''
+    while dex not in stats:
+        print("\nWhat is your Dexterity?")
+        print(", ".join(stats))
+        dex = input(">> ")
+    stats.remove(dex)
+
+    con = ''
+    while con not in stats:
+        print("\nWhat is your Constitution?")
+        print(", ".join(stats))
+        con = input(">> ")
+    stats.remove(con)
+
+    wis = ''
+    while wis not in stats:
+        print("\nWhat is your Wisdom?")
+        print(", ".join(stats))
+        wis = input(">> ")
+    stats.remove(wis)
+
+    intelligence = ''
+    while intelligence not in stats:
+        print("\nWhat is your Intelligence?")
+        print(", ".join(stats))
+        intelligence = input(">> ")
+    stats.remove(intelligence)
+
+    cha = ''
+    while cha not in stats:
+        print("\nWhat is your Charisma?")
+        print(", ".join(stats))
+        cha = input(">> ")
+    stats.remove(cha)
+
+    return Wanderer(name=name, str=int(strength), dex=int(dex), con=int(con), wis=int(wis), int=int(intelligence), cha=int(cha))
 
 
 class Hero:
