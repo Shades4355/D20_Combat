@@ -45,7 +45,7 @@ def player_turn(player:object, enemies_in_fight:list):
             player.show_inventory(player_turn, enemies_in_fight)
         elif "special" in choice.lower():
             # show special moves
-            pass
+            player.show_specials(enemy, enemies_in_fight, player_turn)
         elif choice == "attack":
             player.attack(enemy, enemies_in_fight)
             break

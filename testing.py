@@ -46,11 +46,14 @@ while hero.alive:
 
         while hero.in_fight and hero.alive:
             c.player_turn(hero, enemies_in_fight)
+            if hero.cooldown > 0:
+                hero.cooldown -= 1
             c.enemy_turn(hero, enemies_in_fight)
             if len(enemies_in_fight) <= 0:
               hero.in_fight = False
     else:
         e.shop(hero)
+        hero.cooldown = 0
 
     # heal between fights
     heal = math.floor(hero.max_health/2)

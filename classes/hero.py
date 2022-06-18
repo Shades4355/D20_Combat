@@ -1,6 +1,7 @@
 import math, time
 from equipment import weapons as w
 from equipment import armor as a
+from equipment import specials as s
 from equipment import potions
 from equipment import scrolls
 import classes.utility_functions as utils
@@ -83,7 +84,7 @@ def WandererStats(name):
 class Hero:
     """basic player hero class"""
 
-    def __init__(self, name="Hero", class_name="Hero", base_health=10, xp=0, weapon=w.Unarmed(), inventory=[], armor=a.Leather(), special=[], str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, in_fight=False):
+    def __init__(self, name="Hero", class_name="Hero", base_health=10, xp=0, weapon=w.Unarmed(), inventory=[], armor=a.Leather(), str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, in_fight=False, cooldown=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -91,7 +92,6 @@ class Hero:
         self.weapon=weapon
         self.armor = armor
         self.inventory = inventory
-        self.special = special
         self.str = str
         self.dex = dex
         self.con = con
@@ -109,6 +109,7 @@ class Hero:
         self.prof = 0
         self.update_prof_bonus()
         self.in_fight = in_fight
+        self.cooldown = cooldown
 
     def attack(self, enemy: object, enemies_in_fight: list):
         roll = dice.roll(1, 20)
@@ -116,9 +117,9 @@ class Hero:
 
         if roll == 20:
             print("Critical!")
-            enemy.take_damage(self.do_damage(True))
+            enemy.take_damage(self.do_damage(True, self.stat_mod(self.str)))
         elif attack_roll > enemy.ac:
-            enemy.take_damage(self.do_damage(False))
+            enemy.take_damage(self.do_damage(False, self.stat_mod(self.str)))
         else:
             print(self.name, "missed", enemy.name)
   
@@ -139,14 +140,14 @@ class Hero:
                 choice = input(">> ")
             self.inventory.remove(choice)
 
-    def do_damage(self, crit: bool):
+    def do_damage(self, crit: bool, stat_mod: int):
         damage = 0
         if crit == True:
             damage = dice.roll(self.weapon.num_damage_dice, self.weapon.damage_die) + dice.roll(
-                self.weapon.num_damage_dice, self.weapon.damage_die) + self.stat_mod(self.str)
+                self.weapon.num_damage_dice, self.weapon.damage_die) + stat_mod
         else:
             damage = dice.roll(self.weapon.num_damage_dice,
-                               self.weapon.damage_die) + self.stat_mod(self.str)
+                               self.weapon.damage_die) + stat_mod
 
         return damage
 
@@ -235,6 +236,34 @@ class Hero:
         elif choice == "back":
             player_turn(self, enemies_in_fight)
 
+    def show_specials(self, enemy: object, enemies_in_fight: list, player_turn):
+        if self.cooldown <= 0:
+            print("Special Moves:")
+            print("\n".join(self.weapon.special))
+            print("back")
+
+            choice = ''
+            while choice not in self.weapon.special and choice != "back":
+                choice = input(">> ")
+            
+            if choice.lower() == "cleave":
+                s.cleave(self, enemy, enemies_in_fight)
+                self.cooldown = 4
+            elif choice.lower() == "fireball":
+                s.fireball(self, enemies_in_fight)
+                self.cooldown = 4
+            elif choice.lower() == "double strike":
+                s.double_strike(self, enemy, enemies_in_fight)
+                self.cooldown = 4
+            elif choice.lower() == "flurry":
+                s.flurry(self, enemies_in_fight)
+            elif choice.lower() == "back":
+                player_turn(self, enemies_in_fight)
+        else:
+            print("Special on cooldown for {} more turns".format(
+                self.cooldown))
+            player_turn(self, enemies_in_fight)
+
     def stat_mod (self, stat: int):
         return math.floor((stat - 10)/2)
 
@@ -261,7 +290,7 @@ class Hero:
 class Fighter(Hero):
     """tank based class"""
 
-    def __init__(self, name="Hero", class_name="Fighter", base_health=10, weapon=w.LongSword(), inventory=["cure light potion"], special=[], armor=a.Leather(), str=15, dex=12, con=13, int=10, wis=11, cha=9, gold=0):
+    def __init__(self, name="Hero", class_name="Fighter", base_health=10, weapon=w.LongSword(), inventory=["cure light potion"], armor=a.Leather(), str=15, dex=12, con=13, int=10, wis=11, cha=9, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -269,7 +298,6 @@ class Fighter(Hero):
         self.weapon = weapon
         self.armor = armor
         self.inventory = inventory
-        self.special = special
         self.str = str
         self.dex = dex
         self.con = con
@@ -286,12 +314,13 @@ class Fighter(Hero):
         self.update_prof_bonus()
         self.gold = gold
         self.alive = True
+        self.cooldown = cooldown
 
 
 class Rogue(Hero):
     """evasion and critical damage based class"""
 
-    def __init__(self, name="Hero", class_name="Rogue", base_health=6, weapon=w.ShortSword(), inventory=["cure light potion", "scroll of escape"], special=[], armor=a.Leather(), str=9, dex=15, con=13, int=11, wis=10, cha=12, gold=0):
+    def __init__(self, name="Hero", class_name="Rogue", base_health=6, weapon=w.ShortSword(), inventory=["cure light potion", "scroll of escape"], armor=a.Leather(), str=9, dex=15, con=13, int=11, wis=10, cha=12, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -299,7 +328,6 @@ class Rogue(Hero):
         self.weapon = weapon
         self.armor = armor
         self.inventory = inventory
-        self.special = special
         self.str = str
         self.dex = dex
         self.con = con
@@ -316,6 +344,7 @@ class Rogue(Hero):
         self.update_prof_bonus()
         self.gold = gold
         self.alive = True
+        self.cooldown = cooldown
 
     def attack(self, enemy: object, enemies_in_fight: list):
         roll = dice.roll(1, 20)
@@ -323,9 +352,9 @@ class Rogue(Hero):
 
         if roll >= 18:
             print("Critical!")
-            enemy.take_damage(self.do_damage(True))
+            enemy.take_damage(self.do_damage(True, self.stat_mod(self.str)))
         elif attack_roll > enemy.ac:
-            enemy.take_damage(self.do_damage(False))
+            enemy.take_damage(self.do_damage(False, self.stat_mod(self.str)))
         else:
             print(self.name, "missed", enemy.name)
 
@@ -344,7 +373,7 @@ class Rogue(Hero):
 class Wizard(Hero):
     """AoE based class"""
 
-    def __init__(self, name="Hero", class_name="Wizard", weapon=w.Staff(), inventory=["cure light potion", "scroll of escape"], special=[], armor=a.Leather(), base_health=4, str=9, dex=12, con=13, int=15, wis=11, cha=10, gold=0):
+    def __init__(self, name="Hero", class_name="Wizard", weapon=w.Staff(), inventory=["cure light potion", "scroll of escape"], armor=a.Leather(), base_health=4, str=9, dex=12, con=13, int=15, wis=11, cha=10, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -352,7 +381,6 @@ class Wizard(Hero):
         self.weapon = weapon
         self.armor = armor
         self.inventory = inventory
-        self.special = special
         self.str = str
         self.dex = dex
         self.con = con
@@ -369,6 +397,7 @@ class Wizard(Hero):
         self.update_prof_bonus()
         self.gold = gold
         self.alive = True
+        self.cooldown = cooldown
 
     def attack(self, enemy: object, enemies_in_fight: list):
         """target up to 3 enemies"""
@@ -400,20 +429,22 @@ class Wizard(Hero):
             targets = [enemy1, enemy2, enemy3]
             
         # attack the enemies
-        for enemies in targets:
+        for target in targets:
             roll = dice.roll(1, 20)
             attack_roll = roll + self.stat_mod(self.int)
             if roll == 20:
-                enemies.take_damage(self.do_damage(True))
-            elif attack_roll > enemy.ac:
-                enemies.take_damage(self.do_damage(False))
+                target.take_damage(self.do_damage(
+                    True, self.stat_mod(self.str)))
+            elif attack_roll > target.ac:
+                target.take_damage(self.do_damage(
+                    False, self.stat_mod(self.str)))
             else:
-                print(self.name, "missed", enemy.name)
+                print(self.name, "missed", target.name)
 
 
 class Wanderer(Hero):
     """basic blank slate"""
-    def __init__(self, name="Hero", class_name="Wanderer", weapon=w.Unarmed(), special=[], inventory=["cure moderate potion"], armor=a.Leather(), base_health=8, str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0):
+    def __init__(self, name="Hero", class_name="Wanderer", weapon=w.Unarmed(), inventory=["cure moderate potion"], armor=a.Leather(), base_health=8, str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -421,7 +452,6 @@ class Wanderer(Hero):
         self.weapon = weapon
         self.armor = armor
         self.inventory = inventory
-        self.special = special
         self.str = str
         self.dex = dex
         self.con = con
@@ -438,5 +468,6 @@ class Wanderer(Hero):
         self.update_prof_bonus()
         self.gold = gold
         self.alive = True
+        self.cooldown = cooldown
 
 

@@ -9,12 +9,12 @@ class Weapon():
 
 
 class Unarmed(Weapon):
-    def __init__(self, name="unarmed strikes", magic=2, num_damage_dice=1, damage_die=4, special=[]):
+    def __init__(self, name="unarmed strikes", magic=2, num_damage_dice=1, damage_die=4, special=["double strike", "flurry"]):
         super().__init__(name, magic, num_damage_dice, damage_die, special)
 
 
 class ShortSword(Weapon):
-    def __init__(self, name="short sword", magic=1, num_damage_dice=1, damage_die=6, special=[]):
+    def __init__(self, name="short sword", magic=1, num_damage_dice=1, damage_die=6, special=["cleave"]):
         super().__init__(name, magic, num_damage_dice, damage_die, special)
 
 
