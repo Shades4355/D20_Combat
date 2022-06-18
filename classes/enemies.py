@@ -157,33 +157,35 @@ class Vampire(Undead):
 
         print("{0} healed {1} HP from drinking your blood".format(self.name, amount))
 
-    def attack(self, player_ac:int):
+    def attack(self, player: object):
         roll = dice.roll(1, 20)
         attack_roll = roll + self.attack_bonus + self.str_mod
 
         damage = 0
         if roll == 20:
             damage = self.do_damage(True)
-        elif attack_roll > player_ac:
+            player.take_damage(damage)
+        elif attack_roll > player.ac:
             damage = self.do_damage(False)
+            player.take_damage(damage)
 
         self.heal_self(math.floor(damage/2))
-        return damage
 
 
 class VampireLord(Vampire):
     def __init__(self, name='Undead Template', hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=4, level=5, lives=3, grantXP=4, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
-    def attack(self, player_ac: int):
+    def attack(self, player: object):
         roll = dice.roll(1, 20)
         attack_roll = roll + self.attack_bonus + self.str_mod
 
         damage = 0
         if roll == 20:
             damage = self.do_damage(True)
-        elif attack_roll > player_ac:
+            player.take_damage(damage)
+        elif attack_roll > player.ac:
             damage = self.do_damage(False)
+            player.take_damage(damage)
 
         self.heal_self(damage)
-        return damage
