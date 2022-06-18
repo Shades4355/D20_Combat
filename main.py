@@ -1,27 +1,43 @@
-import math
+import math, time
 import classes.combat as c
 import classes.encounters as e
 import classes.hero as player
 import classes.utility_functions as utils
 dice = utils.Util()
-pc = player.Pick_Class()
 
 
 print("Welcome, hero! What are you called?")
 name = input('>> ')
 
-hero = pc.pick_class(name)
+hero = player.pick_class(name)
 
+hero.gold = 10
 # begin dungeon crawl
 while hero.alive:
     # pick number of enemies
     num_combatants = dice.roll(1, math.ceil(hero.class_level/2))
 
     # pick random encounter (fight or shop)
-    enemies_in_fight = e.random_encounter(num_combatants, hero)
-    while len(enemies_in_fight) > 0 and hero.alive:
-        c.player_turn(hero, enemies_in_fight)
-        c.enemy_turn(hero, enemies_in_fight)
+    if dice.roll(1, 4) > 1:
+        enemies_in_fight = e.random_encounter(num_combatants, hero)
+        hero.in_fight = True
+
+        #print player health and level
+        time.sleep(1)
+        print("\n### New Encounter ###")
+        print("\n{0.name}\nHealth: {0.health}\nLevel: {0.class_level}".format(hero))
+        time.sleep(1)
+
+        while hero.in_fight and hero.alive:
+            c.player_turn(hero, enemies_in_fight)
+            if hero.cooldown > 0:
+                hero.cooldown -= 1
+            c.enemy_turn(hero, enemies_in_fight)
+            if len(enemies_in_fight) <= 0:
+              hero.in_fight = False
+    else:
+        e.shop(hero)
+        hero.cooldown = 0
 
     # heal between fights
     heal = math.floor(hero.max_health/2)
