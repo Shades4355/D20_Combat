@@ -12,6 +12,8 @@
     * dex increases
 * [x] reorder Hero functions to be alphabetical
 * [x] Wanderer picks starting stats
+* [ ] show_special()
+* [ ] special cooldown
 
 * Add skill encounters:
     * [ ] perception (wis) check:

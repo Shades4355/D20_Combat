@@ -6,28 +6,27 @@ from equipment import scrolls
 import classes.utility_functions as utils
 dice = utils.Util()
 
-class Pick_Class:
-    def pick_class(self, name):
-        print("\nNext, pick a class:")
+def pick_class(self, name):
+    print("\nNext, pick a class:")
 
-        class_list = ["Fighter", "Rogue", "Wizard", "Wanderer"]
+    class_list = ["Fighter", "Rogue", "Wizard", "Wanderer"]
 
-        class_name = "Null"
-        while class_name not in class_list:
-            print(", ".join(class_list))
-            class_name = input(">> ")
-            class_name = class_name.capitalize()
-        if class_name == "Fighter":
-            return Fighter(name=name)
-        elif class_name == "Rogue":
-            return Rogue(name=name)
-        elif class_name == "Wizard":
-            return Wizard(name=name)
-        elif class_name == "Wanderer":
-            return WandererStats(name)
-        else:
-            print("Class Picking Error")
-            exit(1)
+    class_name = "Null"
+    while class_name not in class_list:
+        print(", ".join(class_list))
+        class_name = input(">> ")
+        class_name = class_name.capitalize()
+    if class_name == "Fighter":
+        return Fighter(name=name)
+    elif class_name == "Rogue":
+        return Rogue(name=name)
+    elif class_name == "Wizard":
+        return Wizard(name=name)
+    elif class_name == "Wanderer":
+        return WandererStats(name)
+    else:
+        print("Class Picking Error")
+        exit(1)
 
 
 def WandererStats(name):
