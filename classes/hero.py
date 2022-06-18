@@ -6,7 +6,7 @@ from equipment import scrolls
 import classes.utility_functions as utils
 dice = utils.Util()
 
-def pick_class(self, name):
+def pick_class(name):
     print("\nNext, pick a class:")
 
     class_list = ["Fighter", "Rogue", "Wizard", "Wanderer"]

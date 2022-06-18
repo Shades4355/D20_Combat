@@ -4,12 +4,11 @@ import classes.encounters as e
 import classes.hero as player
 import classes.utility_functions as utils
 dice = utils.Util()
-pc = player.Pick_Class()
 
 print("Welcome, hero! What are you called?")
 name = input(">> ")
 
-hero = pc.pick_class(name)
+hero = player.pick_class(name)
 
 print() 
 
