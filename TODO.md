@@ -12,8 +12,15 @@
     * dex increases
 * [x] reorder Hero functions to be alphabetical
 * [x] Wanderer picks starting stats
-* [ ] show_special()
-* [ ] special cooldown
+* [x] show_special()
+* [x] special cooldown
+* [x] add special attacks to weapons
+* [ ] make wizards more survivable
+    * resistant to criticals?
+    * start with better armor?
+    * special: regen?
+        * if cooldown > 0, heal 1/4 max health
+        * can't heal above max
 
 * Add skill encounters:
     * [ ] perception (wis) check:
