@@ -257,6 +257,8 @@ class Hero:
                 self.cooldown = 4
             elif choice.lower() == "flurry":
                 s.flurry(self, enemies_in_fight)
+            elif choice.lower() == "magic missile":
+                s.magic_missile(self, enemy)
             elif choice.lower() == "back":
                 player_turn(self, enemies_in_fight)
         else:

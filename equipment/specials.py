@@ -43,6 +43,11 @@ def cleave(player: object, enemy: object, enemies_in_fight: list):
         else:
             print(player.name, "missed", target.name)
 
+def double_strike(player: object, enemy: object,
+                  enemies_in_fight: list):
+    player.attack(enemy, enemies_in_fight)
+    player.attack(enemy, enemies_in_fight)
+
 def fireball(player: object, enemies_in_fight: list):
     # attack the enemies
     for target in enemies_in_fight:
@@ -54,13 +59,13 @@ def fireball(player: object, enemies_in_fight: list):
             target.take_damage(player.do_damage(
                 False, player.stat_mod(player.int)))
 
-def double_strike(player: object, enemy: object,
-                  enemies_in_fight: list):
-    player.attack(enemy, enemies_in_fight)
-    player.attack(enemy, enemies_in_fight)
-
 def flurry(player: object, enemies_in_fight: list):
     num_of_attacks = math.floor(player.class_level / 3) + 3
     for i in range(num_of_attacks):
         enemy = random.choice(enemies_in_fight)
         player.attack(enemy, enemies_in_fight)
+
+def magic_missile(player: object, enemy: object):
+    num_of_missiles = math.floor(player.class_level/4) + 3
+    damage = dice.roll(num_of_missiles, 4) + num_of_missiles
+    enemy.take_damage(damage)
