@@ -47,3 +47,4 @@ while hero.alive:
         hero.health += heal
 print("{0.name} died at level {0.class_level} with {0.xp} XP".format(hero))
 print("Goodbye")
+input("[Enter]")

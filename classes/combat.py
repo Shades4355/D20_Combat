@@ -12,8 +12,8 @@ def player_turn(player:object, enemies_in_fight:list):
     MAIN_COMBAT_DISPLAY_PIC = '''
     ########################
     #  attack  # inventory #
-    #  special #   quit    #
-    ########################
+    #  special #   back    #
+    ######### quit #########
     '''
     
     print("\nPick Target:")
@@ -49,9 +49,12 @@ def player_turn(player:object, enemies_in_fight:list):
         elif choice == "attack":
             player.attack(enemy, enemies_in_fight)
             break
+        elif choice == "back":
+            player_turn(player, enemies_in_fight)
+            break
         elif choice == "quit":
             print("Goodbye")
-            print("{0.name} reached level {0.class_level}".format(player))
+            print("{0.name} reached level {0.class_level} with {0.xp} XP".format(player))
             sys.exit()
 
     # Checks if enemies are dead
