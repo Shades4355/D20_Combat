@@ -15,7 +15,7 @@
 * [x] show_special()
 * [x] special cooldown
 * [x] add special attacks to weapons
-* [ ] add 'magic missile' special attack
+* [x] add 'magic missile' special attack
 * [ ] make wizards more survivable
     * [ ] resistant to criticals?
     * [x] start with better armor?
