@@ -1,4 +1,5 @@
 import sys
+from equipment import weapons as w
 import classes.utility_functions as utils
 dice = utils.Util()
 
@@ -68,4 +69,22 @@ def player_turn(player:object, enemies_in_fight:list):
             equipment_drop(player)
 
 def equipment_drop(player: object):
+    # drop nothing: 3 weight
+    # drop gold:    3 weight
+    # drop armor:   1 weight
+    # drop weapon:  1 weight
+    weapon_table = [
+        {"name": w.Unarmed().name,
+        "type": "weapon",
+        "equip": w.Unarmed()},
+        {"name":w.HandAxe().name,
+        "type": "weapon",
+        "equip": w.HandAxe()},
+        {"name": w.ShortSword().name,
+        "type": "weapon",
+        "equip": w.ShortSword()},
+        {"name": w.LongSword().name,
+        "type": "weapon",
+        "equip": w.LongSword()},
+        {}]
     pass
