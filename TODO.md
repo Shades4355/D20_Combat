@@ -15,7 +15,7 @@
 * [x] show_special()
 * [x] special cooldown
 * [x] add special attacks to weapons
-* [ ] add 'magic missile' special attack
+* [x] add 'magic missile' special attack
 * [ ] make wizards more survivable
     * [ ] resistant to criticals?
     * [x] start with better armor?
@@ -24,6 +24,11 @@
         * can't heal above max
 * [x] fix Zombie bug - zombie can take negative damage
 * [x] fix vampire attack()
+* [ ] implement equipment_drop()
+    * chance for nothing (3/8)
+    * chance for weapon (1/8)
+    * chance for armor (1/8)
+    * chance for gold (3/8)
 
 * Add skill encounters:
     * [ ] perception (wis) check:

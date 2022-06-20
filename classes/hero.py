@@ -217,7 +217,8 @@ class Hero:
         scroll_escape = scrolls.Escape()
 
         print("\nInventory", end=": ")
-        print(", ".join(self.inventory))
+        print("\n".join(self.inventory))
+        print("back")
 
         choice = ""
         while choice not in self.inventory and choice.lower() != "back":
