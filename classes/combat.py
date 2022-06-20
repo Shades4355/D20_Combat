@@ -1,4 +1,4 @@
-import sys
+import sys, random
 from equipment import weapons as w
 from equipment import armor as a
 import classes.utility_functions as utils
@@ -71,8 +71,11 @@ def player_turn(player:object, enemies_in_fight:list):
 
 def equipment_drop(player: object):
     # drop nothing: 3 weight
-    # drop gold:    3 weight
-    # drop armor:   1 weight
+    nothing_table = [
+        {"name": "nothing",
+        "type": "nothing",
+        "equip": None}]
+    
     # drop weapon:  1 weight
     weapon_table = [
         {"name": w.Unarmed().name,
@@ -94,5 +97,53 @@ def equipment_drop(player: object):
         "type": "weapon",
         "equip": w.Staff()}]
 
+    # drop armor:   1 weight
+    armor_table = [
+        {"name": a.Leather().name,
+         "type": "armor",
+         "equip": a.Leather()},
+         {"name": a.Hide().name,
+         "type": "armor",
+         "equip": a.Hide()},
+         {"name": a.Chain().name,
+         "type": "armor",
+         "equip": a.Chain()},
+         {"name": a.Scale().name,
+         "type": "armor",
+         "equip": a.Scale()},
+         {"name": a.HalfPlate().name,
+          "type": "armor",
+          "equip": a.HalfPlate()},
+        {"name": a.FullPlate().name,
+         "type": "armor",
+         "equip": a.FullPlate()}]
+
+    # drop gold:    3 weight
+    gold_drop = [
+        {"name": "gold",
+         "type": "gold",
+         "equip": dice.roll(1, 3)},
+        {"name": "gold",
+        "type": "gold",
+        "equip": dice.roll(1,4)},
+        {"name": "gold",
+         "type": "gold",
+         "equip": dice.roll(1, 6)}]
+
+    drop_table = random.choice([nothing_table, weapon_table, armor_table, gold_drop], 3, 1, 1, 3, k=1)
+
+    drop = random.choice(drop_table, k=1)
+
+    print("Monster drop: {}".format(drop["name"]))
     
-    pass
+    if drop["type"] != "nothing":
+        print("take or pass?")
+        choice = ""
+        while choice.lower() not in ["take", "pass"]:
+            choice = input(">> ")
+        
+        if choice.lower() == "take":
+            # equip weapon
+            # equip armor
+            # acquire gold
+            pass
