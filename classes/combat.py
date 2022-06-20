@@ -1,5 +1,6 @@
 import sys
 from equipment import weapons as w
+from equipment import armor as a
 import classes.utility_functions as utils
 dice = utils.Util()
 
@@ -86,5 +87,12 @@ def equipment_drop(player: object):
         {"name": w.LongSword().name,
         "type": "weapon",
         "equip": w.LongSword()},
-        {}]
+        {"name": w.Poleaxe().name,
+        "type": "weapon",
+        "equip": w.Poleaxe()},
+        {"name": w.Staff().name,
+        "type": "weapon",
+        "equip": w.Staff()}]
+
+    
     pass
