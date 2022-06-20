@@ -46,23 +46,24 @@ def player_turn(player:object, enemies_in_fight:list):
         elif "special" in choice.lower():
             # show special moves
             player.show_specials(enemy, enemies_in_fight, player_turn)
-        elif choice == "attack":
+        elif choice.lower() == "attack":
             player.attack(enemy, enemies_in_fight)
             break
-        elif choice == "back":
+        elif choice.lower() == "back":
             player_turn(player, enemies_in_fight)
             break
         elif choice == "quit":
             print("Goodbye")
             print("{0.name} reached level {0.class_level} with {0.xp} XP".format(player))
-            sys.exit()
+            input("[Enter]")
+            sys.exit(0)
 
     # Checks if enemies are dead
     for i in range(len(enemies_in_fight) - 1, -1, -1):
-        enemy = enemies_in_fight[i]
-        if not enemy.alive:
-            player.gain_xp(enemy.grantXP)
-            player.gold += enemy.loot
+        target = enemies_in_fight[i]
+        if not target.alive:
+            player.gain_xp(target.grantXP)
+            player.gold += target.loot
             del enemies_in_fight[i]
             equipment_drop(player)
 
