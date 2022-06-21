@@ -130,9 +130,10 @@ def equipment_drop(player: object):
          "type": "gold",
          "equip": dice.roll(1, 6)}]
 
-    drop_table = random.choice([nothing_table, weapon_table, armor_table, gold_drop], 3, 1, 1, 3, k=1)
+    drop_table = random.choices(
+        [nothing_table, weapon_table, armor_table, gold_drop], weights=(3, 1, 1, 3), k=1)[0]
 
-    drop = random.choice(drop_table, k=1)
+    drop = random.choice(drop_table)
 
     print("Monster drop: {}".format(drop["name"]))
     
@@ -151,5 +152,5 @@ def equipment_drop(player: object):
                 player.armor = choice["equip"]
             # acquire gold
             elif choice["type"] == "gold":
-                player.gold += choice["equip"]
+                player.gold += int(choice["equip"])
 
