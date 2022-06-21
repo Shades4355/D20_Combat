@@ -1,4 +1,6 @@
-import sys
+import sys, random
+from equipment import weapons as w
+from equipment import armor as a
 import classes.utility_functions as utils
 dice = utils.Util()
 
@@ -68,4 +70,91 @@ def player_turn(player:object, enemies_in_fight:list):
             equipment_drop(player)
 
 def equipment_drop(player: object):
-    pass
+    # drop nothing: 3 weight
+    nothing_table = [
+        {"name": "nothing",
+        "type": "nothing",
+        "equip": None}]
+    
+    # drop weapon:  1 weight
+    weapon_table = [
+        {"name": w.Unarmed().name,
+        "type": "weapon",
+        "equip": w.Unarmed()},
+        {"name":w.HandAxe().name,
+        "type": "weapon",
+        "equip": w.HandAxe()},
+        {"name": w.ShortSword().name,
+        "type": "weapon",
+        "equip": w.ShortSword()},
+        {"name": w.LongSword().name,
+        "type": "weapon",
+        "equip": w.LongSword()},
+        {"name": w.Poleaxe().name,
+        "type": "weapon",
+        "equip": w.Poleaxe()},
+        {"name": w.Staff().name,
+        "type": "weapon",
+        "equip": w.Staff()}]
+
+    # drop armor:   1 weight
+    armor_table = [
+        {"name": a.Leather().name,
+         "type": "armor",
+         "equip": a.Leather()},
+         {"name": a.Hide().name,
+         "type": "armor",
+         "equip": a.Hide()},
+         {"name": a.Chain().name,
+         "type": "armor",
+         "equip": a.Chain()},
+         {"name": a.Scale().name,
+         "type": "armor",
+         "equip": a.Scale()},
+         {"name": a.HalfPlate().name,
+          "type": "armor",
+          "equip": a.HalfPlate()},
+        {"name": a.FullPlate().name,
+         "type": "armor",
+         "equip": a.FullPlate()}]
+
+    # drop gold:    3 weight
+    gold_drop = [
+        {"name": "gold",
+         "type": "gold",
+         "equip": dice.roll(1, 3)},
+        {"name": "gold",
+        "type": "gold",
+        "equip": dice.roll(1,4)},
+        {"name": "gold",
+         "type": "gold",
+         "equip": dice.roll(1, 6)}]
+
+    drop_table = random.choices(
+        [nothing_table, weapon_table, armor_table, gold_drop], weights=(3, 1, 1, 3), k=1)[0]
+
+    drop = random.choice(drop_table)
+
+    print("Monster drop: {}".format(drop["name"]))
+    
+    if drop["type"] != "nothing":
+        print("take or pass?")
+        choice = ""
+        while choice.lower() not in ["take", "pass"]:
+            choice = input(">> ")
+        
+        if choice.lower() == "take":
+            # equip weapon
+            if drop["type"] == "weapon":
+                player.weapon = drop["equip"]
+            # equip armor
+            elif drop["type"] == "armor":
+                player.armor = drop["equip"]
+            # acquire gold
+            elif drop["type"] == "gold":
+                gold_dropped = drop["equip"]
+                print("gold dropped {}".format(gold_dropped))
+                player.gold += gold_dropped
+
+
+

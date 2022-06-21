@@ -24,7 +24,7 @@
         * can't heal above max
 * [x] fix Zombie bug - zombie can take negative damage
 * [x] fix vampire attack()
-* [ ] implement equipment_drop()
+* [x] implement equipment_drop()
     * chance for nothing (3/8)
     * chance for weapon (1/8)
     * chance for armor (1/8)
