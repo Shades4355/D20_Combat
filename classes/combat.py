@@ -144,6 +144,12 @@ def equipment_drop(player: object):
         
         if choice.lower() == "take":
             # equip weapon
+            if choice["type"] == "weapon":
+                player.weapon = choice["equip"]
             # equip armor
+            elif choice["type"] == "armor":
+                player.armor = choice["equip"]
             # acquire gold
-            pass
+            elif choice["type"] == "gold":
+                player.gold += choice["equip"]
+
