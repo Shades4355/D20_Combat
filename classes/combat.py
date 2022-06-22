@@ -1,4 +1,4 @@
-import sys, random
+import sys, random, time
 from equipment import weapons as w
 from equipment import armor as a
 import classes.utility_functions as utils
@@ -135,6 +135,11 @@ def equipment_drop(player: object):
 
     drop = random.choice(drop_table)
 
+    time.sleep(1)
+    print()
+    print("Equipped Weapon: {}".format(player.weapon.name))
+    print("Worn Armor: {0.name} (+{0.value})".format(player.armor))
+    print()
     print("Monster drop: {}".format(drop["name"]))
     
     if drop["type"] != "nothing":
@@ -155,6 +160,6 @@ def equipment_drop(player: object):
                 gold_dropped = drop["equip"]
                 print("gold dropped {}".format(gold_dropped))
                 player.gold += gold_dropped
-
+    time.sleep(1)
 
 

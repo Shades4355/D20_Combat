@@ -38,27 +38,27 @@ def shop(player: object):
          "type": "item",
          "price": 2},
 
-        {"name": a.Leather().name,
+        {"name": "{0.name} (+{0.value})".format(a.Leather()),
          "type": "armor",
          "armor": a.Leather(),
          "price": a.Leather().price},
-        {"name": a.Hide().name,
+        {"name": "{0.name} (+{0.value})".format(a.Hide()),
          "type": "armor",
          "armor": a.Hide(),
          "price": a.Hide().price},
-        {"name": a.Chain().name,
+        {"name": "{0.name} (+{0.value})".format(a.Chain()),
          "type": "armor",
          "armor": a.Chain(),
          "price": a.Chain().price},
-        {"name": a.Scale().name,
+        {"name": "{0.name} (+{0.value})".format(a.Scale()),
          "type": "armor",
          "armor": a.Scale(),
          "price": a.Scale().price},
-        {"name": a.HalfPlate().name,
+        {"name": "{0.name} (+{0.value})".format(a.HalfPlate()),
          "type": "armor",
          "armor": a.HalfPlate(),
          "price": a.HalfPlate().price},
-        {"name": a.FullPlate().name,
+        {"name": "{0.name} (+{0.value})".format(a.FullPlate()),
          "type": "armor",
          "armor": a.FullPlate(),
          "price": a.FullPlate().price},
@@ -107,7 +107,7 @@ def shop(player: object):
             print()
             print("Player gold: " + str(player.gold))
             print("Equipped Weapon: {}".format(player.weapon.name))
-            print("Worn Armor: {}".format(player.armor.name))
+            print("Worn Armor: {0.name} (+{0.value})".format(player.armor))
             print()
             time.sleep(1)
             

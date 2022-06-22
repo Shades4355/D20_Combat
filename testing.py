@@ -26,6 +26,10 @@ input("[Enter]")
 print()
 
 hero.gold = 10
+
+for i in range(1):
+    e.shop(hero)
+
 # begin dungeon crawl
 while hero.alive:
     # pick number of enemies
