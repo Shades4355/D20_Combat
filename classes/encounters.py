@@ -6,24 +6,7 @@ import classes.utility_functions as utils
 dice = utils.Util()
 
 
-def random_encounter(num_combatants: int, player: object):
-    encounters = []
-
-    if player.class_level <= 3:
-        encounters = [goblin_encounter, goblin_horde_encounter]
-    elif player.class_level <= 6:
-        encounters = [goblin_encounter, goblin_horde_encounter, 
-                      wolf_encounter, undead_encounter, zombie_encounter]
-    else:
-        encounters = [goblin_encounter, wolf_encounter,
-                      undead_encounter, zombie_horde_encounter, vampire_encounter]
-
-    randomChoice = random.choices(encounters)[0]
-
-    return randomChoice(num_combatants)
-
-
-def shop(player: object):    
+def shop(player: object):
     items = [
         {"name": "cure light potion",
          "type": "item",
@@ -31,7 +14,7 @@ def shop(player: object):
         {"name": "cure moderate potion",
          "type": "item",
          "price": 4},
-         {"name": "cure serious potion",
+        {"name": "cure serious potion",
          "type": "item",
          "price": 8},
         {"name": "scroll of escape",
@@ -84,8 +67,8 @@ def shop(player: object):
          "price": 5,
          "equip": w.Poleaxe()},
         {"name": w.HandAxe().name,
-        "type": "weapon",
-        "price": 3,
+         "type": "weapon",
+         "price": 3,
          "equip": w.HandAxe()}
     ]
 
@@ -96,7 +79,7 @@ def shop(player: object):
     }
 
     # pick items for sale
-    forSaleList = random.choices(items, k= 3 + player.stat_mod(player.wis))
+    forSaleList = random.choices(items, k=3 + player.stat_mod(player.wis))
     forSaleList.append(back)
 
     # choose an item to buy; or leave
@@ -110,7 +93,7 @@ def shop(player: object):
             print("Worn Armor: {0.name} (+{0.value})".format(player.armor))
             print()
             time.sleep(1)
-            
+
             for item in forSaleList:
                 if item["name"] != "back":
                     price = item["price"] - player.stat_mod(player.cha)
@@ -143,6 +126,23 @@ def shop(player: object):
             print("You can't afford that.\n")
             choice = ''
         player.check_inventory()
+
+
+def random_encounter(num_combatants: int, player: object):
+    encounters = []
+
+    if player.class_level <= 3:
+        encounters = [goblin_encounter, goblin_horde_encounter]
+    elif player.class_level <= 6:
+        encounters = [goblin_encounter, goblin_horde_encounter, 
+                      wolf_encounter, undead_encounter, zombie_encounter]
+    else:
+        encounters = [goblin_encounter, wolf_encounter,
+                      undead_encounter, zombie_horde_encounter, vampire_encounter]
+
+    randomChoice = random.choices(encounters)[0]
+
+    return randomChoice(num_combatants)
 
 
 def goblin_encounter(num_of_foes: int):
