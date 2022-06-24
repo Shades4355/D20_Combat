@@ -29,6 +29,8 @@
     * chance for weapon (1/8)
     * chance for armor (1/8)
     * chance for gold (3/8)
+* [ ] protect against shop() being rolled too many times in a row
+    * add encounters to a list, if 'shop' is previous, re-roll?
 
 * Add skill encounters:
     * [ ] perception (wis) check:
