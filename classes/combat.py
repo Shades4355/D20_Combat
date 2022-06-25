@@ -9,6 +9,7 @@ def enemy_turn(player:object, enemies_in_fight:list):
     for enemy in enemies_in_fight:
         enemy.attack(player)
 
+
 def player_turn(player:object, enemies_in_fight:list):
     _COMBAT_ACTIONS = ["attack", "inventory", "special", "quit"]
 
@@ -69,6 +70,7 @@ def player_turn(player:object, enemies_in_fight:list):
             player.gold += target.loot
             del enemies_in_fight[i]
             equipment_drop(player)
+
 
 def equipment_drop(player: object):
     # drop nothing: 3 weight
