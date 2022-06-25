@@ -26,23 +26,8 @@ while hero.alive:
             e.skill_encounter(hero)
 
         elif chance in [2, 3, 4]:
-            enemies_in_fight = e.random_encounter(num_combatants, hero)
             encounters = "fight"
-            hero.in_fight = True
-
-            #print player health and level
-            time.sleep(1)
-            print("\n### New Encounter ###")
-            print("\n{0.name}\nHealth: {0.health}\nLevel: {0.class_level}".format(hero))
-            time.sleep(1)
-
-            while hero.in_fight and hero.alive:
-                c.player_turn(hero, enemies_in_fight)
-                if hero.cooldown > 0:
-                    hero.cooldown -= 1
-                c.enemy_turn(hero, enemies_in_fight)
-                if len(enemies_in_fight) <= 0:
-                    hero.in_fight = False
+            c.fight(hero, num_combatants)
        
         elif chance in [5, 6]: # skill check encounter
             encounters = "skill"
