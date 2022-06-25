@@ -164,7 +164,7 @@ def listen_check(player: object):
         
         if choice.lower() == "attack":
             print("You wait for the sounds of combat to cease, and then you attack!")
-            num_of_enemies = dice.roll(1, math.ceil(player.level/4))
+            num_of_enemies = dice.roll(1, math.ceil(player.class_level/4))
             c.fight(player, num_of_enemies)
         
         elif choice.lower() == "wait":
@@ -176,7 +176,7 @@ def listen_check(player: object):
     else: # failure
         print("It's probably just your imagination...")
         print("You round the corner to find yourself in the middle of a fight!")
-        num_of_enemies = dice.roll(1, player.level)
+        num_of_enemies = dice.roll(1, player.class_level)
         c.fight(player, num_of_enemies)
 
 

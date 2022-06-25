@@ -37,10 +37,6 @@
 * [x] Adjust skill check damages (more damage? scaled by level?)
 * [x] lower between fight healing 
     * heal less between fights; heal more in shops
-* [ ] bug: 
-    * File "/[...]/D20_combat/classes/encounters.py", line 179, in listen_check
-    num_of_enemies = dice.roll(1, player.level)
-    * AttributeError: 'Fighter' object has no attribute 'level'
 
 * Add skill encounters:
     * [x] perception (wis) check:

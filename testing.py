@@ -26,7 +26,7 @@ input("[Enter]")
 print()
 
 hero.gold = 10
-
+e.listen_check(hero)
 for i in range(1):
     e.shop(hero)
 
