@@ -34,10 +34,13 @@
 * [ ] bug: armor name (for purchasing) includes armor bonus
 * [x] create fight(player: object) function
     * create a function to wrap combat logic in
-* [ ] Adjust skill check damages (more damage? scaled by level?)
-* [ ] lower between fight healing 
-    * only heal in shops?
-    * heal less between fights; heal more in shops?
+* [x] Adjust skill check damages (more damage? scaled by level?)
+* [x] lower between fight healing 
+    * heal less between fights; heal more in shops
+* [ ] bug: 
+    * File "/[...]/D20_combat/classes/encounters.py", line 179, in listen_check
+    num_of_enemies = dice.roll(1, player.level)
+    * AttributeError: 'Fighter' object has no attribute 'level'
 
 * Add skill encounters:
     * [x] perception (wis) check:
