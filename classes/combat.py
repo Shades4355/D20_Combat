@@ -182,7 +182,8 @@ def fight(player: object, num_combatants: int):
             player.cooldown -= 1
         time.sleep(1)
         enemy_turn(player, enemies_in_fight)
-
+        time.sleep(1)
+        
         if len(enemies_in_fight) <= 0:
             player.in_fight = False
     

@@ -216,7 +216,7 @@ class Hero:
         cure_serious = potions.Cure_Serious()
         scroll_escape = scrolls.Escape()
 
-        print("\nInventory", end=": ")
+        print("\nInventory:")
         print("\n".join(self.inventory))
         print("back")
 
