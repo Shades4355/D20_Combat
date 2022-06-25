@@ -37,6 +37,16 @@
 * [x] Adjust skill check damages (more damage? scaled by level?)
 * [x] lower between fight healing 
     * heal less between fights; heal more in shops
+* [ ] fix inventory display
+* [ ] add special attacks to classes (in addition to weapons)
+    * [ ] move 'magic missile' from staff to Wizard
+    * [ ] move double strike from unarmed strike to Wanderer
+* [ ] need a rod weapon
+    * [ ] special ability: ____
+* [ ] bug: shop can proc 2x in a row
+* [ ] bug: Fighter doing 8+ damage with a Staff, on a non-Crit hit
+    * enemy take_damage logic error
+* [ ] 
 
 * Add skill encounters:
     * [x] perception (wis) check:
