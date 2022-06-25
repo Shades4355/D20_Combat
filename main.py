@@ -1,4 +1,4 @@
-import math, time
+import math
 import classes.combat as c
 import classes.encounters as e
 import classes.hero as player
@@ -34,9 +34,8 @@ while hero.alive:
             e.skill_encounter(hero)
 
     else:
-        e.shop(hero)
         encounters = "shop"
-        hero.cooldown = 0
+        e.shop(hero)
     
     # heal between fights
     heal = math.floor(hero.max_health/2)

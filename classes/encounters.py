@@ -79,6 +79,16 @@ def shop(player: object):
         "price": 0
     }
 
+    # heal on entering shop
+    heal = math.floor(player.max_health/2)
+    if player.health + heal >= player.max_health:
+        player.health = player.max_health
+    else:
+        player.health += heal
+    
+    # reset cooldown on entering shop
+    player.cooldown = 0
+
     # pick items for sale
     forSaleList = random.choices(items, k=3 + player.stat_mod(player.wis))
     forSaleList.append(back)
@@ -297,6 +307,7 @@ def random_encounter(num_combatants: int, player: object):
         encounters = [goblin_encounter, wolf_encounter,
                       undead_encounter, zombie_horde_encounter, vampire_encounter]
 
+    # pick encounter
     randomChoice = random.choices(encounters)[0]
 
     return randomChoice(num_combatants)

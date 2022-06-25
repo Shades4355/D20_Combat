@@ -1,4 +1,4 @@
-import sys, random, time
+import sys, random, time, math
 from classes import encounters as e
 from equipment import weapons as w
 from equipment import armor as a
@@ -185,3 +185,14 @@ def fight(player: object, num_combatants: int):
 
         if len(enemies_in_fight) <= 0:
             player.in_fight = False
+    
+    # heal after combat
+    print("\nAfter the fight, you bandage yourself up")
+    heal = math.floor(player.max_health/4)
+
+    if player.health + heal >= player.max_health:
+        heal = player.max_health - player.health
+    
+    print("You recover {} HP".format(heal))
+    player.health += heal
+    time.sleep(2)
