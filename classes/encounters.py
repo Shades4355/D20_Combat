@@ -79,12 +79,17 @@ def shop(player: object):
         "price": 0
     }
 
-    # heal on entering shop
-    heal = math.floor(player.max_health/2)
+    # heal after combat
+    print("\nEntering the clearing, you see a safe place to rest, and a traveling merchant")
+    heal = math.floor(player.max_health/4)
+
     if player.health + heal >= player.max_health:
-        player.health = player.max_health
-    else:
-        player.health += heal
+        heal = player.max_health - player.health
+
+    print("You recover {} HP, bringing you to {} HP".format(heal, player.health))
+    player.health += heal
+    print()
+    time.sleep(1)
     
     # reset cooldown on entering shop
     player.cooldown = 0
