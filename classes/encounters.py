@@ -83,11 +83,11 @@ def shop(player: object):
     print("\nEntering the clearing, you see a safe place to rest, and a traveling merchant")
     heal = math.floor(player.max_health/4)
 
-    if player.health + heal >= player.max_health:
+    if player.health + heal > player.max_health:
         heal = player.max_health - player.health
 
-    print("You recover {} HP, bringing you to {} HP".format(heal, player.health))
     player.health += heal
+    print("You recover {} HP, bringing you to {} HP".format(heal, player.health))
     print()
     time.sleep(1)
     

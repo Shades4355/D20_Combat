@@ -33,7 +33,7 @@ class Enemy():
         post_DR_damage = damage - self.damage_reduction
         if post_DR_damage > 0:
             if self.current_hit_points - post_DR_damage > 0:
-                hurt = self.current_hit_points - post_DR_damage
+                hurt = post_DR_damage
             else:
                 hurt = self.current_hit_points
         else:
