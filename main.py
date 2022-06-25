@@ -18,16 +18,13 @@ while hero.alive:
     # pick number of enemies
     num_combatants = dice.roll(1, math.ceil(hero.class_level/2))
 
-    # pick random encounter (fight or shop)
+    # pick random encounter (fight or shop or skill check)
     chance = dice.roll(1, 6)
-    print("Chance roll:", chance) # TODO: remove
     if chance > 1 or encounters == "shop":
-        if encounters == "shop":
-            # skill check encounter
-            # TODO: implement skill encounters
+        if encounters == "shop": # skill check encounter
             encounters = "skill"
-            print("skipping shop encounter") # TODO: remove
-            pass
+            e.skill_encounter(hero)
+
         elif chance in [2, 3, 4]:
             enemies_in_fight = e.random_encounter(num_combatants, hero)
             encounters = "fight"
@@ -46,11 +43,11 @@ while hero.alive:
                 c.enemy_turn(hero, enemies_in_fight)
                 if len(enemies_in_fight) <= 0:
                     hero.in_fight = False
+       
         elif chance in [5, 6]: # skill check encounter
-            # TODO: implement skill encounters
-            print("skipping skill encounter") # TODO: remove
             encounters = "skill"
-            pass
+            e.skill_encounter(hero)
+
     else:
         e.shop(hero)
         encounters = "shop"

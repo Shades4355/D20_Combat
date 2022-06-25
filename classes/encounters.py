@@ -1,5 +1,6 @@
 import random, time
-import classes.enemies as e
+from classes import enemies as e
+from classes import combat as c
 from equipment import weapons as w
 from equipment import armor as a
 import classes.utility_functions as utils
@@ -126,6 +127,162 @@ def shop(player: object):
             print("You can't afford that.\n")
             choice = ''
         player.check_inventory()
+
+
+def skill_encounter(player: object):
+    encounters = [listen_check, mysterious_mushroom, rubble_encounter]
+
+    random_encounter = random.choices(encounters)[0]
+    return random_encounter(player)
+
+
+def listen_check(player: object):
+    dc = 15
+    print("\nYour senses tingle; did you just hear something?")
+    roll = dice.roll(1, 20) + player.stat_mod(player.wis)
+    time.sleep(1)
+    print("Perception check:", roll)
+    time.sleep(1)
+
+    if roll >= dc: # success
+        print("You hear a fight ahead. Do you wait for the victory to leave, or attack them while they're weak?")
+
+        choice = ""
+        while choice.lower() not in ["wait", "attack"]:
+            print('"wait" or "attack"?')
+            choice = input(">> ")
+        
+        if choice.lower() == "attack":
+            print("You wait for the sounds of combat to cease, and then you attack!")
+            # TODO: get in an easy fight
+            # num_of_enemies = dice.roll(1, math.ceil(player.level/4))
+        
+        elif choice.lower() == "wait":
+            print("You wait for the sounds of combat to cease, and then a minute more")
+            print("You round the corner to see the carnage of battle")
+            print("Let's see if there's any loot left behind!")
+            c.equipment_drop(player)
+    
+    else: # failure
+        print("It's probably just your imagination...")
+        print("You round the corner to find yourself in the middle of a fight!")
+        # TODO: get in a tough fight
+        # num_of_enemies = dice.roll(1, player.level)
+
+
+def mysterious_mushroom(player: object):
+    luck = dice.roll(1,2) # 1 = good; 2 = bad
+    dc = 15
+    roll = dice.roll(1,20) + player.stat_mod(player.int)
+
+    print("\nYou come across a mysterious mushroom")
+    print("Looks tasty...")
+    time.sleep(1)
+    print("Identify the mushroom? Or just eat it?")
+    choice = ""
+
+    while choice.lower() not in ["identify", "eat"]:
+        print('"identify" or "eat"?')
+        choice = input(">> ")
+    
+    if choice.lower() == "eat":
+        if luck == 1:
+            print("Delicious!")
+            time.sleep(1)
+            xp = dice.roll(1, 4)
+            print("You gained {} XP".format(xp))
+            player.gain_xp(xp)
+        else:
+            print("You eat the mushroom...")
+            time.sleep(2)
+            print("Your stomach doesn't feel so good...")
+            damage = dice.roll(1, 6)
+            player.take_damage(damage)
+    else:
+        if roll >= dc:
+            if luck == 1: # good option
+                print("Seems safe; bottoms up!")
+                time.sleep(1)
+                print("Delicious!")
+                xp = dice.roll(1, 4)
+                print("You gained {} XP".format(xp))
+                player.gain_xp(xp)
+            else: # bad mushroom
+                print("This mushroom is no good!")
+                print("You throw the mushroom away")
+        else:
+            print("Eh, it's probably safe")
+            if luck == 1:
+                print("Delicious!")
+                time.sleep(1)
+                xp = dice.roll(1, 4)
+                print("You gained {} XP".format(xp))
+                player.gain_xp(xp)
+            else:
+                print("You eat the mushroom...")
+                time.sleep(2)
+                print("Your stomach doesn't feel so good...")
+                damage = dice.roll(1, 6)
+                player.take_damage(damage)
+
+
+def rubble_encounter(player):
+    dc = 17
+
+    print("\nBefore you a wall of fallen rubble blocks your path")
+    print("Will you dig your way through, climb over, or turn around?")
+
+    choice = ""
+    while choice.lower() not in ["dig", "climb", "leave"]:
+        print('"dig", "climb", "leave"')
+        choice = input(">> ")
+
+    if choice.lower() == "dig":
+        print("You start digging through the rubble...")
+        time.sleep(2)
+        roll = dice.roll(1, 20) + player.stat_mod(player.str)
+        if roll >= dc: # success
+            print("You finish digging your way through, and see a shop ahead")
+            time.sleep(1)
+            xp = dice.roll(1, 4)
+            print("You gain {} XP".format(xp))
+            player.gain_xp(xp)
+            time.sleep(2)
+            shop(player)
+        else: # fail
+            print("You dig until your hands hurt...")
+            damage = dice.roll(1,6)
+            player.take_damage(damage)
+            time.sleep(1)
+            print("But you've made almost no progress.")
+            print("It's time to call it quits and find another route")
+            time.sleep(2)
+    elif choice.lower() == "climb":
+        print("You begin climbing the rubble")
+        print("The rubble starts shifting under your feet")
+        time.sleep(2)
+        roll = dice.roll(1,20) + player.stat_mod(player.dex)
+        if roll >= dc: # success
+            print("But your surefootedness carries you through!")
+            time.sleep(1)
+            print("On the other side you see a shop!")
+            time.sleep(1)
+            xp = dice.roll(1, 4)
+            print("You gain {} XP".format(xp))
+            player.gain_xp(xp)
+            time.sleep(2)
+            shop(player)
+        else: # fail
+            print("The rubble goes out from under you and you fall")
+            damage = dice.roll(1, 6)
+            player.take_damage(damage)
+            time.sleep(1)
+            print("You decide not to try that again,")
+            print("and instead look for another route")
+            time.sleep(2)
+    elif choice.lower() == "leave":
+        print("You turn around and leave")
+        time.sleep(2)
 
 
 def random_encounter(num_combatants: int, player: object):
