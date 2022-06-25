@@ -1,4 +1,4 @@
-import random, time
+import random, time, math
 from classes import enemies as e
 from classes import combat as c
 from equipment import weapons as w
@@ -154,8 +154,8 @@ def listen_check(player: object):
         
         if choice.lower() == "attack":
             print("You wait for the sounds of combat to cease, and then you attack!")
-            # TODO: get in an easy fight
-            # num_of_enemies = dice.roll(1, math.ceil(player.level/4))
+            num_of_enemies = dice.roll(1, math.ceil(player.level/4))
+            c.fight(player, num_of_enemies)
         
         elif choice.lower() == "wait":
             print("You wait for the sounds of combat to cease, and then a minute more")
@@ -166,8 +166,8 @@ def listen_check(player: object):
     else: # failure
         print("It's probably just your imagination...")
         print("You round the corner to find yourself in the middle of a fight!")
-        # TODO: get in a tough fight
-        # num_of_enemies = dice.roll(1, player.level)
+        num_of_enemies = dice.roll(1, player.level)
+        c.fight(player, num_of_enemies)
 
 
 def mysterious_mushroom(player: object):

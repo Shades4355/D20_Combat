@@ -1,4 +1,5 @@
 import sys, random, time
+from classes import encounters as e
 from equipment import weapons as w
 from equipment import armor as a
 import classes.utility_functions as utils
@@ -7,6 +8,7 @@ dice = utils.Util()
 def enemy_turn(player:object, enemies_in_fight:list):
     for enemy in enemies_in_fight:
         enemy.attack(player)
+
 
 def player_turn(player:object, enemies_in_fight:list):
     _COMBAT_ACTIONS = ["attack", "inventory", "special", "quit"]
@@ -68,6 +70,7 @@ def player_turn(player:object, enemies_in_fight:list):
             player.gold += target.loot
             del enemies_in_fight[i]
             equipment_drop(player)
+
 
 def equipment_drop(player: object):
     # drop nothing: 3 weight
@@ -163,3 +166,22 @@ def equipment_drop(player: object):
     time.sleep(1)
 
 
+def fight(player: object, num_combatants: int):
+    enemies_in_fight = e.random_encounter(num_combatants, player)
+    player.in_fight = True
+
+    #print player health and level
+    time.sleep(1)
+    print("\n### New Encounter ###")
+    print("\n{0.name}\nHealth: {0.health}\nLevel: {0.class_level}".format(player))
+    time.sleep(1)
+
+    while player.in_fight and player.alive:
+        player_turn(player, enemies_in_fight)
+        if player.cooldown > 0:
+            player.cooldown -= 1
+        time.sleep(1)
+        enemy_turn(player, enemies_in_fight)
+
+        if len(enemies_in_fight) <= 0:
+            player.in_fight = False
