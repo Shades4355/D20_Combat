@@ -31,21 +31,18 @@
     * chance for gold (3/8)
 * [x] protect against shop() being rolled too many times in a row
     * add encounters to a list, if 'shop' is previous, re-roll?
-* [ ] bug: armor name (for purchasing) includes armor bonus
 * [x] create fight(player: object) function
     * create a function to wrap combat logic in
 * [x] Adjust skill check damages (more damage? scaled by level?)
 * [x] lower between fight healing 
     * heal less between fights; heal more in shops
-* [ ] fix inventory display
 * [ ] add special attacks to classes (in addition to weapons)
     * [ ] move 'magic missile' from staff to Wizard
     * [ ] move double strike from unarmed strike to Wanderer
+    * [ ] Fighter: Bash
 * [ ] need a rod weapon
     * [ ] special ability: ____
 * [ ] bug: shop can proc 2x in a row
-* [ ] bug: Fighter doing 8+ damage with a Staff, on a non-Crit hit
-    * enemy take_damage logic error
 * [ ] 
 
 * Add skill encounters:
