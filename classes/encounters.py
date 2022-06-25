@@ -251,7 +251,7 @@ def rubble_encounter(player):
             shop(player)
         else: # fail
             print("You dig until your hands hurt...")
-            damage = dice.roll(1,6)
+            damage = dice.roll(player.class_level, 4)
             player.take_damage(damage)
             time.sleep(1)
             print("But you've made almost no progress.")
@@ -274,7 +274,7 @@ def rubble_encounter(player):
             shop(player)
         else: # fail
             print("The rubble goes out from under you and you fall")
-            damage = dice.roll(1, 6)
+            damage = dice.roll(player.class_level, 4)
             player.take_damage(damage)
             time.sleep(1)
             print("You decide not to try that again,")

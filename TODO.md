@@ -32,9 +32,12 @@
 * [x] protect against shop() being rolled too many times in a row
     * add encounters to a list, if 'shop' is previous, re-roll?
 * [ ] bug: armor name (for purchasing) includes armor bonus
-* [ ] create fight(player: object) function
+* [x] create fight(player: object) function
     * create a function to wrap combat logic in
 * [ ] Adjust skill check damages (more damage? scaled by level?)
+* [ ] lower between fight healing 
+    * only heal in shops?
+    * heal less between fights; heal more in shops?
 
 * Add skill encounters:
     * [x] perception (wis) check:
