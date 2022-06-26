@@ -70,7 +70,11 @@ def shop(player: object):
         {"name": w.HandAxe().name,
          "type": "weapon",
          "price": 3,
-         "equip": w.HandAxe()}
+         "equip": w.HandAxe()},
+         {"name": w.Rod().name,
+          "type": "weapon",
+          "price": 10,
+          "equip": w.Rod()}
     ]
 
     back = {

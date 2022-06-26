@@ -98,7 +98,10 @@ def equipment_drop(player: object):
         "equip": w.Poleaxe()},
         {"name": w.Staff().name,
         "type": "weapon",
-        "equip": w.Staff()}]
+        "equip": w.Staff()},
+        {"name": w.Rod(),
+        "type": "weapon",
+        "equip": w.Rod().name}]
 
     # drop armor:   1 weight
     armor_table = [
