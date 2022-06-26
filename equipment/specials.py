@@ -1,6 +1,13 @@
 import math, random
-from classes import utility_functions as utils
-dice = utils.Util()
+from classes import dice
+
+
+def back_stab(player: object, enemy: object):
+    attack_roll = dice.roll(1, 20) + player.stat_mod(player.dex)
+
+    if attack_roll >= enemy.ac:
+        print("{0.name} didn't see that coming!".format(enemy))
+        enemy.take_damage(player.do_damage(True, player.stat_mod(player.dex)))
 
 def cleave(player: object, enemy: object, enemies_in_fight: list):
     """target up to 3 enemies"""
@@ -75,11 +82,3 @@ def magic_missile(player: object, enemy: object):
     num_of_missiles = math.floor(player.class_level/4) + 3
     damage = dice.roll(num_of_missiles, 4) + num_of_missiles
     enemy.take_damage(damage)
-
-def back_stab(player: object, enemy: object):
-    attack_roll = dice.roll(1, 20) + player.stat_mod(player.dex)
-
-    if attack_roll >= enemy.ac:
-        print("{0.name} didn't see that coming!".format(enemy))
-        enemy.take_damage(player.do_damage(True, player.stat_mod(player.dex)))
-    

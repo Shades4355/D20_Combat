@@ -1,5 +1,4 @@
-import classes.utility_functions as utils
-dice = utils.Util()
+from classes import dice
 
 
 class Potion:

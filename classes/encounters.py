@@ -1,10 +1,10 @@
 import random, time, math
 from classes import enemies as e
 from classes import combat as c
+from classes import dice
 from equipment import weapons as w
 from equipment import armor as a
-import classes.utility_functions as utils
-dice = utils.Util()
+
 
 
 def shop(player: object):
