@@ -72,7 +72,7 @@ def player_turn(player:object, enemies_in_fight:list):
             equipment_drop(player)
 
 
-def equipment_drop(player: object):
+def equipment_drop(player: object, nothing=3, weapon=1, armor=3, gold=3):
     # drop nothing: 3 weight
     nothing_table = [
         {"name": "nothing",
@@ -137,7 +137,7 @@ def equipment_drop(player: object):
          "equip": dice.roll(1, 6)}]
 
     drop_table = random.choices(
-        [nothing_table, weapon_table, armor_table, gold_drop], weights=(3, 1, 1, 3), k=1)[0]
+        [nothing_table, weapon_table, armor_table, gold_drop], weights=(nothing, weapon, armor, gold), k=1)[0]
 
     drop = random.choice(drop_table)
 
