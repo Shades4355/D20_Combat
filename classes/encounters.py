@@ -186,29 +186,28 @@ def listen_check(player: object):
         c.fight(player, num_of_enemies)
 
 
-def eat_mushroom(player: object, luck: int):
-    if luck == 1:
-        print("You eat the mushroom...")
-        time.sleep(1)
-        print("Delicious!")
-        time.sleep(1)
-        xp = dice.roll(1, 4)
-        print()
-        print("You gained {} XP".format(xp))
-        player.gain_xp(xp)
-        time.sleep(1)
-    else:
-        print("You eat the mushroom...")
-        time.sleep(1)
-        print("Your stomach doesn't feel so good...")
-        time.sleep(1)
-        print()
-        damage = dice.roll(1, 6)
-        player.take_damage(damage)
-        time.sleep(1)
-
-
 def mysterious_mushroom(player: object):
+    def eat_mushroom(player: object, luck: int):
+        if luck == 1:
+            print("You eat the mushroom...")
+            time.sleep(1)
+            print("Delicious!")
+            time.sleep(1)
+            xp = dice.roll(1, 4)
+            print()
+            print("You gained {} XP".format(xp))
+            player.gain_xp(xp)
+            time.sleep(1)
+        else:
+            print("You eat the mushroom...")
+            time.sleep(1)
+            print("Your stomach doesn't feel so good...")
+            time.sleep(1)
+            print()
+            damage = dice.roll(1, 6)
+            player.take_damage(damage)
+            time.sleep(1)
+
     luck = dice.roll(1,2) # 1 = good; 2 = bad
     dc = 15
     roll = dice.roll(1,20) + player.stat_mod(player.int)
