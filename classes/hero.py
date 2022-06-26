@@ -4,8 +4,8 @@ from equipment import armor as a
 from equipment import specials as s
 from equipment import potions
 from equipment import scrolls
-import classes.utility_functions as utils
-dice = utils.Util()
+from classes import dice
+
 
 def pick_class(name):
     print("\nNext, pick a class:")

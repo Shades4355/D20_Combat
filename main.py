@@ -1,9 +1,8 @@
 import math
-import classes.combat as c
-import classes.encounters as e
-import classes.hero as player
-import classes.utility_functions as utils
-dice = utils.Util()
+from classes import combat as c
+from classes import encounters as e
+from classes import hero as player
+from classes import dice
 
 
 print("Welcome, hero! What are you called?")

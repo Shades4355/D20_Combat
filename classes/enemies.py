@@ -1,6 +1,5 @@
 import math
-import classes.utility_functions as utils
-dice = utils.Util()
+from classes import dice
 
 
 class Enemy():
@@ -23,11 +22,33 @@ class Enemy():
         self.alive = True
         self.loot = loot
 
+
+    def attack(self, player: object):
+        roll = dice.roll(1, 20)
+        attack_roll = roll + self.attack_bonus + self.str_mod
+
+        damage = 0
+        if roll == 20:
+            damage = self.do_damage(True)
+            print("Critical!")
+            player.take_damage(damage)
+        elif attack_roll > player.ac:
+            damage = self.do_damage(False)
+            player.take_damage(damage)
+        else:
+            print(self.name, "missed", player.name)
+
     def do_damage(self, crit:bool):
         if crit == True:
             return dice.roll(self.number_of_damage_die, self.damage_die) + dice.roll(self.number_of_damage_die, self.damage_die) + self.str_mod
         else:
             return dice.roll(self.number_of_damage_die, self.damage_die) + self.str_mod
+
+    def get_max_health(self):
+        hit_points = 0
+        for i in range(self.level):
+            hit_points += dice.roll(1, self.hit_die) + self.con_mod
+        return hit_points
 
     def take_damage(self, damage:int):
         post_DR_damage = damage - self.damage_reduction
@@ -54,27 +75,6 @@ class Enemy():
                 self.current_hit_points = 0
                 self.alive = False
     
-    def get_max_health(self):
-        hit_points = 0
-        for i in range(self.level):
-            hit_points += dice.roll(1, self.hit_die) + self.con_mod
-        return hit_points
-
-    def attack(self, player: object):
-        roll = dice.roll(1, 20)
-        attack_roll = roll + self.attack_bonus + self.str_mod
-
-        damage = 0
-        if roll == 20:
-            damage = self.do_damage(True)
-            print("Critical!")
-            player.take_damage(damage)
-        elif attack_roll > player.ac:
-            damage = self.do_damage(False)
-            player.take_damage(damage)
-        else:
-            print(self.name, "missed", player.name)
-
 
 class Goblin(Enemy):
     def __init__(self, name='Goblin', health=3, attack_bonus=0, armor=0, number_of_damage_die=1, damage_die=4, level=1, lives=1, grantXP=1, damage_reduction=0, str_mod=-1, dex_mod=2, con_mod=0):
@@ -147,16 +147,6 @@ class Vampire(Undead):
     def __init__(self, name='Undead Template', hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=4, level=3, lives=2, grantXP=2, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
-    def heal_self(self, amount:int):
-        health = self.current_hit_points + amount
-        
-        if health > self.max_hit_points:
-            health = self.max_hit_points
-        
-        self.current_hit_points = health
-
-        print("{0} healed {1} HP from drinking your blood".format(self.name, amount))
-
     def attack(self, player: object):
         roll = dice.roll(1, 20)
         attack_roll = roll + self.attack_bonus + self.str_mod
@@ -171,6 +161,16 @@ class Vampire(Undead):
             player.take_damage(damage)
 
         self.heal_self(math.floor(damage/2))
+
+    def heal_self(self, amount:int):
+        health = self.current_hit_points + amount
+        
+        if health > self.max_hit_points:
+            health = self.max_hit_points
+        
+        self.current_hit_points = health
+
+        print("{0} healed {1} HP from drinking your blood".format(self.name, amount))
 
 
 class VampireLord(Vampire):
@@ -191,3 +191,4 @@ class VampireLord(Vampire):
             player.take_damage(damage)
 
         self.heal_self(damage)
+
