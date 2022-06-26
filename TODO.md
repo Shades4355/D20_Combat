@@ -42,7 +42,7 @@
     * [ ] Fighter: Bash
 * [ ] need a rod weapon
     * [ ] special ability: ____
-* [ ] bug: heal after death in combat
+* [ ] add save/load ability
 
 * Add skill encounters:
     * [x] perception (wis) check:
