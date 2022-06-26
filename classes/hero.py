@@ -163,6 +163,13 @@ class Hero:
             self.xp -= threshold
             self.level_up()
 
+    def heal(self, divisor=2):
+        heal = math.floor(self.max_health/divisor)
+        if self.health + heal >= self.max_health:
+            self.health = self.max_health
+        else:
+            self.health += heal
+
     def increase_level(self):
         self.class_level += 1
     
