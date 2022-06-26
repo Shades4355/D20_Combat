@@ -188,12 +188,13 @@ def fight(player: object, num_combatants: int):
             player.in_fight = False
     
     # heal after combat
-    print("\nAfter the fight, you bandage yourself up")
-    heal = math.floor(player.max_health/4)
+    if player.alive:
+        print("\nAfter the fight, you bandage yourself up")
+        heal = math.floor(player.max_health/4)
 
-    if player.health + heal > player.max_health:
-        heal = player.max_health - player.health
-    
-    player.health += heal
-    print("You recover {} HP, bringing you up to {} HP".format(heal, player.health))
-    time.sleep(2)
+        if player.health + heal > player.max_health:
+            heal = player.max_health - player.health
+        
+        player.health += heal
+        print("You recover {} HP, bringing you up to {} HP".format(heal, player.health))
+    time.sleep(1)
