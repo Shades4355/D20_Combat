@@ -1,8 +1,18 @@
 # D20_Combat
-A simple command line based dungeon crawler
+### Author
+Patrick "Shades" Wetzel-Meyers
 
 
-# classes
+### Description
+A command line based hack-and-slash dungeon crawler, written in Python.
+
+
+### To Play
+* clone repo
+* from your command line, run '''python3 main.py'''
+
+
+### classes
 * Fighter - high damage, high health.
   * Special move: cleave - hit target and adjacent targets
 * Rogue - Higher critical attack chance and dodges some attacks
@@ -12,3 +22,35 @@ A simple command line based dungeon crawler
 * Wanderer - a customizable character. Pick your stats. Starts with average health
   * Special move: Double Strike - attack one target twice
 
+### Screen Shots
+![sample early game play 01]()
+![sample early game play 02]()
+![sample early game play 03]()
+![sample early game play 04]()
+
+
+### Features to Implement
+* [ ] Save/load feature
+* [x] Carry capacity based on str mod
+* [x] Prices based on cha mod
+    * min price = 1 gold
+* [x] Better wis, more items to buy
+* [x] Int bonus to xp gain
+* [x] Wanderer picks starting stats
+* [x] add special attacks to weapons
+* [x] add special attacks to classes
+* Skill Encounters:
+    * [x] perception (wis) check:
+        * success: "You hear a fight ahead. Do you wait for the victory to leave, or attack them while they're weak?"
+            * attack: easy fight
+            * wait: loot drop (gold or items) & xp
+        * failure: tough encounter
+    * [x] Mysterious Fungus: Identify Mushroom (int) or Eat It:
+        * Eat: sometimes gain xp, sometimes take damage
+    * [x] Rubble blocks your path:
+        * Dig Your way out (str) or Climb Over (dex)
+            * success: gain xp + shop
+            * failure:
+                * take damage 
+                * find a different path (new random encounter)
+            * leave: leave (new random encounter)
