@@ -42,8 +42,7 @@
     * [ ] Fighter: Bash
 * [ ] need a rod weapon
     * [ ] special ability: ____
-* [ ] bug: shop can proc 2x in a row
-* [ ] 
+* [ ] bug: heal after death in combat
 
 * Add skill encounters:
     * [x] perception (wis) check:
