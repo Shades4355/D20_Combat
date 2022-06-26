@@ -84,7 +84,7 @@ def WandererStats(name):
 class Hero:
     """basic player hero class"""
 
-    def __init__(self, name="Hero", class_name="Hero", base_health=10, xp=0, weapon=w.Unarmed(), inventory=[], armor=a.Leather(), str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, in_fight=False, cooldown=0):
+    def __init__(self, name="Hero", class_name="Hero", base_health=10, xp=0, weapon=w.Unarmed(), inventory=[], special=[], armor=a.Leather(), str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, in_fight=False, cooldown=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -92,6 +92,7 @@ class Hero:
         self.weapon=weapon
         self.armor = armor
         self.inventory = inventory
+        self.special = special
         self.str = str
         self.dex = dex
         self.con = con
@@ -247,11 +248,17 @@ class Hero:
     def show_specials(self, enemy: object, enemies_in_fight: list, player_turn):
         if self.cooldown <= 0:
             print("Special Moves:")
-            print("\n".join(self.weapon.special))
+            special_list = []
+            for special in self.weapon.special:
+                special_list.append(special)
+            for special in self.special:
+                if special not in special_list:
+                    special_list.append(special)
+            print("\n".join(special_list))
             print("back")
 
             choice = ''
-            while choice not in self.weapon.special and choice != "back":
+            while choice.lower() not in special_list and choice.lower() != "back":
                 choice = input(">> ")
             
             if choice.lower() == "cleave":
@@ -265,10 +272,18 @@ class Hero:
                 self.cooldown = 4
             elif choice.lower() == "flurry":
                 s.flurry(self, enemies_in_fight)
+                self.cooldown = 4
             elif choice.lower() == "magic missile":
                 s.magic_missile(self, enemy)
+                self.cooldown = 4
+            elif choice.lower() == "back stab":
+                s.back_stab(self, enemy)
+                self.cooldown = 4
             elif choice.lower() == "back":
                 player_turn(self, enemies_in_fight)
+            else:
+                print("Special Attack Choice Error!")
+                exit(1)
         else:
             print("Special on cooldown for {} more turns".format(
                 self.cooldown))
@@ -300,7 +315,7 @@ class Hero:
 class Fighter(Hero):
     """tank based class"""
 
-    def __init__(self, name="Hero", class_name="Fighter", base_health=10, weapon=w.LongSword(), inventory=["cure light potion"], armor=a.Leather(), str=15, dex=12, con=13, int=10, wis=11, cha=9, gold=0, cooldown=0):
+    def __init__(self, name="Hero", class_name="Fighter", base_health=10, weapon=w.LongSword(), inventory=["cure light potion"], special=["cleave"], armor=a.Leather(), str=15, dex=12, con=13, int=10, wis=11, cha=9, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -308,6 +323,7 @@ class Fighter(Hero):
         self.weapon = weapon
         self.armor = armor
         self.inventory = inventory
+        self.special = special
         self.str = str
         self.dex = dex
         self.con = con
@@ -330,7 +346,7 @@ class Fighter(Hero):
 class Rogue(Hero):
     """evasion and critical damage based class"""
 
-    def __init__(self, name="Hero", class_name="Rogue", base_health=6, weapon=w.ShortSword(), inventory=["cure light potion", "scroll of escape"], armor=a.Leather(), str=9, dex=15, con=13, int=11, wis=10, cha=12, gold=0, cooldown=0):
+    def __init__(self, name="Hero", class_name="Rogue", base_health=6, weapon=w.ShortSword(), inventory=["cure light potion", "scroll of escape"], special=["back stab"], armor=a.Leather(), str=9, dex=15, con=13, int=11, wis=10, cha=12, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -338,6 +354,7 @@ class Rogue(Hero):
         self.weapon = weapon
         self.armor = armor
         self.inventory = inventory
+        self.special = special
         self.str = str
         self.dex = dex
         self.con = con
@@ -383,7 +400,7 @@ class Rogue(Hero):
 class Wizard(Hero):
     """Fast leveling, AoE based class"""
 
-    def __init__(self, name="Hero", class_name="Wizard", weapon=w.Staff(), inventory=["cure light potion", "scroll of escape"], armor=a.Hide(), base_health=4, str=9, dex=12, con=13, int=15, wis=11, cha=10, gold=0, cooldown=0):
+    def __init__(self, name="Hero", class_name="Wizard", weapon=w.Staff(), inventory=["cure light potion", "scroll of escape"], special=["magic missile"], armor=a.Hide(), base_health=4, str=9, dex=12, con=13, int=15, wis=11, cha=10, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -391,6 +408,7 @@ class Wizard(Hero):
         self.weapon = weapon
         self.armor = armor
         self.inventory = inventory
+        self.special = special
         self.str = str
         self.dex = dex
         self.con = con
@@ -454,7 +472,7 @@ class Wizard(Hero):
 
 class Wanderer(Hero):
     """basic blank slate"""
-    def __init__(self, name="Hero", class_name="Wanderer", weapon=w.Unarmed(), inventory=["cure moderate potion"], armor=a.Leather(), base_health=8, str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, cooldown=0):
+    def __init__(self, name="Hero", class_name="Wanderer", weapon=w.Unarmed(), inventory=["cure moderate potion"], special=["double strike"], armor=a.Leather(), base_health=8, str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
         self.class_level = 1
@@ -462,6 +480,7 @@ class Wanderer(Hero):
         self.weapon = weapon
         self.armor = armor
         self.inventory = inventory
+        self.special = special
         self.str = str
         self.dex = dex
         self.con = con

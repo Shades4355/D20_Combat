@@ -46,7 +46,10 @@ def cleave(player: object, enemy: object, enemies_in_fight: list):
 def double_strike(player: object, enemy: object,
                   enemies_in_fight: list):
     player.attack(enemy, enemies_in_fight)
-    player.attack(enemy, enemies_in_fight)
+    if enemy.alive:
+        player.attack(enemy, enemies_in_fight)
+    else:
+        print("{0.name} punched the corpse of {1.name}".format(player, enemy))
 
 def fireball(player: object, enemies_in_fight: list):
     # attack the enemies
@@ -63,9 +66,20 @@ def flurry(player: object, enemies_in_fight: list):
     num_of_attacks = math.floor(player.class_level / 3) + 3
     for i in range(num_of_attacks):
         enemy = random.choice(enemies_in_fight)
-        player.attack(enemy, enemies_in_fight)
+        if enemy.alive:
+            player.attack(enemy, enemies_in_fight)
+        else:
+            print("{0.name} punched the corpse of {1.name}".format(player, enemy))
 
 def magic_missile(player: object, enemy: object):
     num_of_missiles = math.floor(player.class_level/4) + 3
     damage = dice.roll(num_of_missiles, 4) + num_of_missiles
     enemy.take_damage(damage)
+
+def back_attack(player: object, enemy: object):
+    attack_roll = dice.roll(1, 20) + player.stat_mod(player.dex)
+
+    if attack_roll >= enemy.ac:
+        print("{0.name} didn't see that coming!".format(enemy))
+        enemy.take_damage(player.do_damage(True, player.stat_mod(player.dex)))
+    
