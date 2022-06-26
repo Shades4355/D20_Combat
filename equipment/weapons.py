@@ -9,12 +9,12 @@ class Weapon():
 
 
 class Unarmed(Weapon):
-    def __init__(self, name="unarmed strikes", magic=2, num_damage_dice=1, damage_die=4, special=["double strike", "flurry"]):
+    def __init__(self, name="unarmed strikes", magic=2, num_damage_dice=1, damage_die=4, special=["flurry"]):
         super().__init__(name, magic, num_damage_dice, damage_die, special)
 
 
 class ShortSword(Weapon):
-    def __init__(self, name="short sword", magic=1, num_damage_dice=1, damage_die=6, special=["cleave"]):
+    def __init__(self, name="short sword", magic=1, num_damage_dice=1, damage_die=6, special=["back stab"]):
         super().__init__(name, magic, num_damage_dice, damage_die, special)
 
 
@@ -24,7 +24,7 @@ class LongSword(Weapon):
 
 
 class HandAxe(Weapon):
-    def __init__(self, name="hand axe", magic=0, num_damage_dice=1, damage_die=8, special=[]):
+    def __init__(self, name="hand axe", magic=0, num_damage_dice=1, damage_die=8, special=["cleave"]):
         super().__init__(name, magic, num_damage_dice, damage_die, special)
 
 
@@ -34,7 +34,7 @@ class Poleaxe(Weapon):
 
 
 class Staff(Weapon):
-    def __init__(self, name="staff", magic=0, num_damage_dice=1, damage_die=4, special=["fireball", "magic missile"]):
+    def __init__(self, name="staff", magic=0, num_damage_dice=1, damage_die=4, special=["fireball"]):
         super().__init__(name, magic, num_damage_dice, damage_die, special)
 
 
