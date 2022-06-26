@@ -76,7 +76,7 @@ def magic_missile(player: object, enemy: object):
     damage = dice.roll(num_of_missiles, 4) + num_of_missiles
     enemy.take_damage(damage)
 
-def back_attack(player: object, enemy: object):
+def back_stab(player: object, enemy: object):
     attack_roll = dice.roll(1, 20) + player.stat_mod(player.dex)
 
     if attack_roll >= enemy.ac:
