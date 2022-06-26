@@ -254,6 +254,7 @@ class Hero:
             for special in self.special:
                 if special not in special_list:
                     special_list.append(special)
+            special_list.sort()
             print("\n".join(special_list))
             print("back")
 
