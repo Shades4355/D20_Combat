@@ -156,17 +156,17 @@ def listen_check(player: object):
     print("\nYour senses tingle; did you just hear something?")
     roll = dice.roll(1, 20) + player.stat_mod(player.wis)
     time.sleep(1)
-    print("Perception check:", roll)
+    print("\nPerception check:", roll)
     time.sleep(1)
 
     if roll >= dc: # success
-        print("You hear a fight ahead. Do you wait for the victory to leave, or attack them while they're weak?")
+        print("\nYou hear a fight ahead. Do you wait for the victory to leave, or attack them while they're weak?")
 
         choice = ""
         while choice.lower() not in ["wait", "attack"]:
             print('"wait" or "attack"?')
             choice = input(">> ")
-        
+        print()
         if choice.lower() == "attack":
             print("You wait for the sounds of combat to cease, and then you attack!")
             num_of_enemies = dice.roll(1, math.ceil(player.class_level/4))
@@ -176,13 +176,36 @@ def listen_check(player: object):
             print("You wait for the sounds of combat to cease, and then a minute more")
             print("You round the corner to see the carnage of battle")
             print("Let's see if there's any loot left behind!")
+            time.sleep(1)
             c.equipment_drop(player)
     
     else: # failure
-        print("It's probably just your imagination...")
+        print("\nIt's probably just your imagination...")
         print("You round the corner to find yourself in the middle of a fight!")
         num_of_enemies = dice.roll(1, player.class_level)
         c.fight(player, num_of_enemies)
+
+
+def eat_mushroom(player: object, luck: int):
+    if luck == 1:
+        print("You eat the mushroom...")
+        time.sleep(1)
+        print("Delicious!")
+        time.sleep(1)
+        xp = dice.roll(1, 4)
+        print()
+        print("You gained {} XP".format(xp))
+        player.gain_xp(xp)
+        time.sleep(1)
+    else:
+        print("You eat the mushroom...")
+        time.sleep(1)
+        print("Your stomach doesn't feel so good...")
+        time.sleep(1)
+        print()
+        damage = dice.roll(1, 6)
+        player.take_damage(damage)
+        time.sleep(1)
 
 
 def mysterious_mushroom(player: object):
@@ -193,52 +216,33 @@ def mysterious_mushroom(player: object):
     print("\nYou come across a mysterious mushroom")
     print("Looks tasty...")
     time.sleep(1)
-    print("Identify the mushroom? Or just eat it?")
+    print("\nIdentify the mushroom? Or just eat it?")
     choice = ""
 
     while choice.lower() not in ["identify", "eat"]:
         print('"identify" or "eat"?')
         choice = input(">> ")
     
+    print()
     if choice.lower() == "eat":
-        if luck == 1:
-            print("Delicious!")
-            time.sleep(1)
-            xp = dice.roll(1, 4)
-            print("You gained {} XP".format(xp))
-            player.gain_xp(xp)
-        else:
-            print("You eat the mushroom...")
-            time.sleep(2)
-            print("Your stomach doesn't feel so good...")
-            damage = dice.roll(1, 6)
-            player.take_damage(damage)
+        eat_mushroom(player, luck)
     else:
+        print("Knowledge Nature:", roll)
+        time.sleep(1)
+        print()
         if roll >= dc:
             if luck == 1: # good option
-                print("Seems safe; bottoms up!")
+                print("Seems safe")
                 time.sleep(1)
-                print("Delicious!")
-                xp = dice.roll(1, 4)
-                print("You gained {} XP".format(xp))
-                player.gain_xp(xp)
+                eat_mushroom(player, luck)
             else: # bad mushroom
                 print("This mushroom is no good!")
+                time.sleep(1)
                 print("You throw the mushroom away")
         else:
             print("Eh, it's probably safe")
-            if luck == 1:
-                print("Delicious!")
-                time.sleep(1)
-                xp = dice.roll(1, 4)
-                print("You gained {} XP".format(xp))
-                player.gain_xp(xp)
-            else:
-                print("You eat the mushroom...")
-                time.sleep(2)
-                print("Your stomach doesn't feel so good...")
-                damage = dice.roll(1, 6)
-                player.take_damage(damage)
+            time.sleep(1)
+            eat_mushroom(player, luck)
 
 
 def rubble_encounter(player):
@@ -251,11 +255,15 @@ def rubble_encounter(player):
     while choice.lower() not in ["dig", "climb", "leave"]:
         print('"dig", "climb", "leave"')
         choice = input(">> ")
+        print()
 
     if choice.lower() == "dig":
         print("You start digging through the rubble...")
-        time.sleep(2)
+        time.sleep(1)
         roll = dice.roll(1, 20) + player.stat_mod(player.str)
+        print("Strength:", roll)
+        time.sleep(1)
+        print()
         if roll >= dc: # success
             print("You finish digging your way through, and see a shop ahead")
             time.sleep(1)
@@ -266,17 +274,22 @@ def rubble_encounter(player):
             shop(player)
         else: # fail
             print("You dig until your hands hurt...")
+            print()
             damage = dice.roll(player.class_level, 4)
             player.take_damage(damage)
             time.sleep(1)
+            print()
             print("But you've made almost no progress.")
             print("It's time to call it quits and find another route")
             time.sleep(2)
     elif choice.lower() == "climb":
         print("You begin climbing the rubble")
         print("The rubble starts shifting under your feet")
-        time.sleep(2)
+        time.sleep(1)
         roll = dice.roll(1,20) + player.stat_mod(player.dex)
+        print("Dexterity:", roll)
+        time.sleep(1)
+        print()
         if roll >= dc: # success
             print("But your surefootedness carries you through!")
             time.sleep(1)
@@ -289,9 +302,11 @@ def rubble_encounter(player):
             shop(player)
         else: # fail
             print("The rubble goes out from under you and you fall")
+            print()
             damage = dice.roll(player.class_level, 4)
             player.take_damage(damage)
             time.sleep(1)
+            print()
             print("You decide not to try that again,")
             print("and instead look for another route")
             time.sleep(2)
