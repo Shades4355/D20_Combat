@@ -38,3 +38,6 @@ class Staff(Weapon):
         super().__init__(name, magic, num_damage_dice, damage_die, special)
 
 
+class Rod(Weapon):
+    def __init__(self, name="rod", magic=0, num_damage_dice=1, damage_die=6, special=["magic missile"]):
+        super().__init__(name, magic, num_damage_dice, damage_die, special)
