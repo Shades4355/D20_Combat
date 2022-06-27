@@ -1,3 +1,5 @@
 # Ignore testing file
 testing.py
 
+# Mac system files
+.DS_Store
