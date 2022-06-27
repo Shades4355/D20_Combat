@@ -23,10 +23,10 @@ A command line based hack-and-slash dungeon crawler, written in Python.
   * Special move: Double Strike - attack one target twice
 
 ### Screen Shots
-![sample early game play 01]()
-![sample early game play 02]()
-![sample early game play 03]()
-![sample early game play 04]()
+![sample early game play 01](https://github.com/Shades4355/D20_Combat/blob/main/Screen%20Shots/Screenshot_01.png)
+![sample early game play 02](https://github.com/Shades4355/D20_Combat/blob/main/Screen%20Shots/Screenshot_02.png)
+![sample early game play 03](https://github.com/Shades4355/D20_Combat/blob/main/Screen%20Shots/Screenshot_03.png)
+![sample early game play 04](https://github.com/Shades4355/D20_Combat/blob/main/Screen%20Shots/Screenshot_04.png)
 
 
 ### Features to Implement
