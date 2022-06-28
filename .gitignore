@@ -7,3 +7,5 @@ testing.py
 # text files
 *.txt
 
+# save files
+*.json

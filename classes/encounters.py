@@ -4,6 +4,7 @@ from classes import combat as c
 from classes import dice
 from equipment import weapons as w
 from equipment import armor as a
+import save_load as s
 
 
 
@@ -89,11 +90,8 @@ def shop(player: object):
     while choice.lower() not in ["yes", "no"]:
         print('"Yes" / "No"')
         choice = input(">> ")
-    
     if choice.lower() == "yes":
-        hero_file = open("save_file.txt", "w")
-        hero_file.write(player)
-        hero_file.close()
+        s.save(player)
 
     # heal after combat
     print("\nEntering the clearing, you see a safe place to rest, and a traveling merchant")
