@@ -181,7 +181,7 @@ def listen_check(player: object):
             print("You round the corner to see the carnage of battle")
             print("Let's see if there's any loot left behind!")
             time.sleep(1)
-            c.equipment_drop(player, nothing=1)
+            c.equipment_drop(player, nothing=1, armor=2, weapon=2, gold=4)
     
     else: # failure
         print("\nIt's probably just your imagination...")
