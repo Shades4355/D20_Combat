@@ -6,6 +6,7 @@ from classes import hero as player
 from classes import dice
 
 
+# Load, or New Game?
 choices = ''
 while choices.lower() not in ['new game', 'load']:
     print("'New Game' or 'Load'?")
@@ -13,7 +14,7 @@ while choices.lower() not in ['new game', 'load']:
 
 if choices.lower() == "load":
     try:
-        hero_file = open("save_file", "r")
+        hero_file = open("save_file.txt", "r")
         hero = hero_file
         hero_file.close()
     except:

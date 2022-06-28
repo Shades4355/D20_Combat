@@ -83,6 +83,17 @@ def shop(player: object):
         "price": 0
     }
 
+    # save?
+    print("Save progress?")
+    choice = ""
+    while choice.lower() not in ["yes", "no"]:
+        print('"Yes" / "No"')
+        choice = input(">> ")
+    
+    if choice.lower() == "yes":
+        hero_file = open("save_file.txt", "w")
+        hero_file.write(player)
+
     # heal after combat
     print("\nEntering the clearing, you see a safe place to rest, and a traveling merchant")
     heal = math.floor(player.max_health/4)
