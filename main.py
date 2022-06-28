@@ -1,18 +1,37 @@
 import math
+from secrets import choice
 from classes import combat as c
 from classes import encounters as e
 from classes import hero as player
 from classes import dice
 
 
-print("Welcome, hero! What are you called?")
-name = input('>> ')
+choices = ''
+while choices.lower() not in ['new game', 'load']:
+    print("'New Game' or 'Load'?")
+    choices = input(">> ")
 
-hero = player.pick_class(name)
+if choices.lower() == "load":
+    try:
+        hero_file = open("save_file", "r")
+        hero = hero_file
+        hero_file.close()
+    except:
+        print("I'm sorry, save file can't be found")
+        print("Welcome, hero! What are you called?")
+        name = input('>> ')
 
-hero.gold = 10
-# begin dungeon crawl
+        hero = player.pick_class(name)
+        hero.gold = 10
+else:
+    print("Welcome, hero! What are you called?")
+    name = input('>> ')
+
+    hero = player.pick_class(name)
+    hero.gold = 10
+
 encounters = ""
+# begin dungeon crawl
 while hero.alive:
     # pick number of enemies
     num_combatants = dice.roll(1, math.ceil(hero.class_level/2))
