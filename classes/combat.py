@@ -10,7 +10,7 @@ def enemy_turn(player:object, enemies_in_fight:list):
         enemy.attack(player)
 
 
-def equipment_drop(player: object, nothing=3, weapon=1, armor=3, gold=3):
+def equipment_drop(player: object, nothing=3, weapon=1, armor=1, gold=3):
     # drop nothing: 3 weight
     nothing_table = [
         {"name": "nothing",
