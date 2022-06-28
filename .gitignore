@@ -3,3 +3,7 @@ testing.py
 
 # Mac system files
 .DS_Store
+
+# text files
+*.txt
+

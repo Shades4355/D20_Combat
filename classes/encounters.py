@@ -93,6 +93,7 @@ def shop(player: object):
     if choice.lower() == "yes":
         hero_file = open("save_file.txt", "w")
         hero_file.write(player)
+        hero_file.close()
 
     # heal after combat
     print("\nEntering the clearing, you see a safe place to rest, and a traveling merchant")
