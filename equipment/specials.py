@@ -8,6 +8,8 @@ def back_stab(player: object, enemy: object):
     if attack_roll >= enemy.ac:
         print("{0.name} didn't see that coming!".format(enemy))
         enemy.take_damage(player.do_damage(True, player.stat_mod(player.dex)))
+    else:
+        print("{0.name} saw {1.name} coming and dodged".format(enemy, player))
 
 def cleave(player: object, enemy: object, enemies_in_fight: list):
     """target up to 3 enemies"""
