@@ -30,7 +30,7 @@ A command line based hack-and-slash dungeon crawler, written in Python.
 
 
 ### Features to Implement
-* [ ] Save/load feature
+* [x] Save/load feature
 * [x] Carry capacity based on str mod
 * [x] Prices based on cha mod
     * min price = 1 gold
