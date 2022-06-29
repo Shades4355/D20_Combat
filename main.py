@@ -1,5 +1,5 @@
-import math
-from secrets import choice
+import math, time
+import save_load as s
 from classes import combat as c
 from classes import encounters as e
 from classes import hero as player
@@ -7,18 +7,22 @@ from classes import dice
 
 
 # Load, or New Game?
-choices = ''
-while choices.lower() not in ['new game', 'load']:
+encounters = ''
+choice = ''
+while choice.lower() not in ['new game', 'load']:
     print("'New Game' or 'Load'?")
-    choices = input(">> ")
+    choice = input(">> ")
 
-if choices.lower() == "load":
+if choice.lower() == "load":
     try:
-        hero_file = open("save_file.txt", "r")
-        hero = hero_file
-        hero_file.close()
+        hero = s.load()
+        print("Welcome back,", hero.name)
+        time.sleep(1)
+        encounters = "shop"
+        e.shop(hero)
     except:
         print("I'm sorry, save file can't be found")
+        time.sleep(1)
         print("Welcome, hero! What are you called?")
         name = input('>> ')
 
@@ -31,7 +35,6 @@ else:
     hero = player.pick_class(name)
     hero.gold = 10
 
-encounters = ""
 # begin dungeon crawl
 while hero.alive:
     # pick number of enemies

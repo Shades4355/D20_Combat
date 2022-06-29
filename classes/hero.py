@@ -84,10 +84,10 @@ def WandererStats(name):
 class Hero:
     """basic player hero class"""
 
-    def __init__(self, name="Hero", class_name="Hero", base_health=10, xp=0, weapon=w.Unarmed(), inventory=[], special=[], armor=a.Leather(), str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, in_fight=False, cooldown=0):
+    def __init__(self, name="Hero", class_name="Hero", class_level=1, base_health=10, xp=0, weapon=w.Unarmed(), inventory=[], special=[], armor=a.Leather(), str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, in_fight=False, cooldown=0):
         self.name = name
         self.class_name = class_name
-        self.class_level = 1
+        self.class_level = class_level
         self.xp = xp
         self.weapon=weapon
         self.armor = armor
@@ -316,10 +316,10 @@ class Hero:
 class Fighter(Hero):
     """tank based class"""
 
-    def __init__(self, name="Hero", class_name="Fighter", base_health=10, weapon=w.LongSword(), inventory=["cure light potion"], special=["cleave"], armor=a.Leather(), str=15, dex=12, con=13, int=10, wis=11, cha=9, gold=0, cooldown=0):
+    def __init__(self, name="Hero", class_name="Fighter", class_level=1, base_health=10, weapon=w.LongSword(), inventory=["cure light potion"], special=["cleave"], armor=a.Leather(), str=15, dex=12, con=13, int=10, wis=11, cha=9, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
-        self.class_level = 1
+        self.class_level = class_level
         self.xp = 0
         self.weapon = weapon
         self.armor = armor
@@ -347,10 +347,10 @@ class Fighter(Hero):
 class Rogue(Hero):
     """evasion and critical damage based class"""
 
-    def __init__(self, name="Hero", class_name="Rogue", base_health=6, weapon=w.ShortSword(), inventory=["cure light potion", "scroll of escape"], special=["back stab"], armor=a.Leather(), str=9, dex=15, con=13, int=11, wis=10, cha=12, gold=0, cooldown=0):
+    def __init__(self, name="Hero", class_name="Rogue", class_level=1, base_health=6, weapon=w.ShortSword(), inventory=["cure light potion", "scroll of escape"], special=["back stab"], armor=a.Leather(), str=9, dex=15, con=13, int=11, wis=10, cha=12, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
-        self.class_level = 1
+        self.class_level = class_level
         self.xp = 0
         self.weapon = weapon
         self.armor = armor
@@ -401,10 +401,10 @@ class Rogue(Hero):
 class Wizard(Hero):
     """Fast leveling, AoE based class"""
 
-    def __init__(self, name="Hero", class_name="Wizard", weapon=w.Staff(), inventory=["cure light potion", "scroll of escape"], special=["magic missile"], armor=a.Hide(), base_health=4, str=9, dex=12, con=13, int=15, wis=11, cha=10, gold=0, cooldown=0):
+    def __init__(self, name="Hero", class_name="Wizard", class_level=1, weapon=w.Staff(), inventory=["cure light potion", "scroll of escape"], special=["magic missile"], armor=a.Hide(), base_health=4, str=9, dex=12, con=13, int=15, wis=11, cha=10, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
-        self.class_level = 1
+        self.class_level = class_level
         self.xp = 0
         self.weapon = weapon
         self.armor = armor
@@ -473,10 +473,11 @@ class Wizard(Hero):
 
 class Wanderer(Hero):
     """basic blank slate"""
-    def __init__(self, name="Hero", class_name="Wanderer", weapon=w.Unarmed(), inventory=["cure moderate potion"], special=["double strike"], armor=a.Leather(), base_health=8, str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, cooldown=0):
+
+    def __init__(self, name="Hero", class_name="Wanderer", class_level=1, weapon=w.Unarmed(), inventory=["cure moderate potion"], special=["double strike"], armor=a.Leather(), base_health=8, str=10, dex=10, con=10, int=10, wis=10, cha=10, gold=0, cooldown=0):
         self.name = name
         self.class_name = class_name
-        self.class_level = 1
+        self.class_level = class_level
         self.xp = 0
         self.weapon = weapon
         self.armor = armor

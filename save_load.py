@@ -47,28 +47,30 @@ def load():
     player = json.load(hero_file)
     hero_file.close()
 
-    player_weapon = json.load(player["weapon"])
-    weapon = w.Weapon(name=player_weapon["name"], magic=player_weapon["magic"], num_damage_dice=player_weapon["num_damage_dice"], damage_dice=player_weapon["damage_die,"],special=player_weapon["special"])
+    player_weapon = json.loads(player["weapon"])
 
-    player_armor = json.load(player["armor"])
+    weapon = w.Weapon(name=player_weapon["name"], magic=player_weapon["magic"], num_damage_dice=player_weapon["num_damage_dice"], damage_die=int(player_weapon["damage_dice"]),special=player_weapon["special"])
+
+    player_armor = json.loads(player["armor"])
+    
     armor = a.Armor(name=player_armor["name"], value=player_armor["value"], magic=player_armor["magic"], price=player_armor["price"])
 
     hero = h.Hero(name=player['name'],
         class_name=player["class_name"],
-        class_level=player["class_level"],
-        base_health=player["base_health"],
-        xp=player["xp"],
+        class_level=int(player["class_level"]),
+        base_health=int(player["base_health"]),
+        xp=int(player["xp"]),
         weapon=weapon,
-        inventory=player["inventory,"],
+        inventory=player["inventory"],
         special=player["special"],
         armor=armor,
-        str=player["str"],
-        dex=player["dex"],
-        con=player["con"],
-        int=player["int"],
-        wis=player["wis"],
-        cha=player["cha"],
-        gold=player["gold"]
+        str=int(player["str"]),
+        dex=int(player["dex"]),
+        con=int(player["con"]),
+        int=int(player["int"]),
+        wis=int(player["wis"]),
+        cha=int(player["cha"]),
+        gold=int(player["gold"])
     )
 
     return hero
