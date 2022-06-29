@@ -37,6 +37,8 @@ def save(player: object):
         "int": player.int,
         "wis": player.wis,
         "cha": player.cha,
+        "health": player.health,
+        "max_health": player.max_health,
         "gold": player.gold
     })
     hero_file.write(str(player_obj))
@@ -70,6 +72,8 @@ def load():
         int=int(player["int"]),
         wis=int(player["wis"]),
         cha=int(player["cha"]),
+        health=player["health"],
+        max_health=player["max_health"],
         gold=int(player["gold"])
     )
 
