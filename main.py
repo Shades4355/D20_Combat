@@ -12,6 +12,7 @@ choice = ''
 while choice.lower() not in ['new game', 'load']:
     print("'New Game' or 'Load'?")
     choice = input(">> ")
+print()
 
 if choice.lower() == "load":
     try:

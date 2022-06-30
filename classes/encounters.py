@@ -159,7 +159,7 @@ def shop(player: object):
 
 
 def skill_encounter(player: object):
-    encounters = [listen_check, mysterious_mushroom, rubble_encounter]
+    encounters = [listen_check, mysterious_mushroom, rubble_encounter, boxing_encounter]
 
     random_encounter = random.choices(encounters)[0]
     return random_encounter(player)
@@ -236,7 +236,7 @@ def mysterious_mushroom(player: object):
 
     options = ["identify", "eat", "leave it"]
     while choice.lower() not in options:
-        print(", ".join(options) + "?")
+        print('"identify", "eat", or "leave it"?')
         choice = input(">> ")
     
     print()
@@ -266,6 +266,44 @@ def mysterious_mushroom(player: object):
     else:
         print("Mushroom Error!")
         sys.exit(1)
+
+
+def boxing_encounter(player: object):
+    dc = 12
+    print("You are cordially invited to participate in a boxing competition.")
+    print("The winner will be awarded an amount of gold")
+    
+    choice = ""
+    while choice.lower() not in ["compete", "pass"]:
+        print('"Compete" or "pass"?')
+        choice = input(">> ")
+    
+    if choice.lower() == "compete":
+        roll = dice.roll(1,20) + player.stat_mod(player.con)
+        print("\nCon check:", roll)
+        time.sleep(1)
+        print()
+
+        if roll >= dc:
+            print("You win!")
+            time.sleep(1)
+            reward = dice.roll(2,4)
+            print("You win {} gold!".format(reward))
+            player.gold += reward
+            time.sleep(1)
+            print()
+        else:
+            print("You take a beating and go down in the third round")
+            damage = 0
+            for i in range(player.class_level):
+                damage += dice.roll(2,4)
+            player.take_damage(damage)
+            time.sleep(1)
+            print()
+    else:
+        print("Best not to risk this pretty face")
+        time.sleep(1)
+        print()
 
 
 def rubble_encounter(player):
