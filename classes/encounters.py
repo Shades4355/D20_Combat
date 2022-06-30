@@ -212,6 +212,7 @@ def mysterious_mushroom(player: object):
             print("You gained {} XP".format(xp))
             player.gain_xp(xp)
             time.sleep(1)
+            print()
         else:
             print("You eat the mushroom...")
             time.sleep(1)
@@ -221,6 +222,7 @@ def mysterious_mushroom(player: object):
             damage = dice.roll(1, 6)
             player.take_damage(damage)
             time.sleep(1)
+            print()
 
     luck = dice.roll(1,2) # 1 = good; 2 = bad
     dc = 15
