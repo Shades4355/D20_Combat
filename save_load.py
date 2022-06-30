@@ -1,11 +1,22 @@
-import imp
+import time
 import json
 from classes import hero as h
 from equipment import weapons as w
 from equipment import armor as a
 
 def save(player: object):
-    hero_file = open("save_file.json", "w")
+    print("Where would you like to save?")
+    
+    save_slot = 0
+    while save_slot not in range(1,10):
+        print("1-10")
+        save_slot = input(">> ")
+        try:
+            save_slot = int(save_slot)
+        except:
+            pass
+
+    hero_file = open("save_file_{}.json".format(save_slot), "w")
     player_weapon = json.JSONEncoder().encode({
         "name": player.weapon.name,
         "magic": player.weapon.magic,
@@ -45,9 +56,29 @@ def save(player: object):
     hero_file.close()
 
 def load():
-    hero_file = open("save_file.json", "r")
-    player = json.load(hero_file)
-    hero_file.close()
+    print("Which save slot would you like to load?")
+    time.sleep(1)
+
+    loading = True
+    while loading:
+        save_slot = 0
+        while save_slot not in range(1, 10):
+            print("\n1-10")
+            save_slot = input(">> ")
+            try:
+                save_slot = int(save_slot)
+            except:
+                pass
+        
+        try:
+            hero_file = open("save_file_{}.json".format(save_slot), "r")
+            loading = False
+            player = json.load(hero_file)
+            hero_file.close()
+        except:
+            print("\nI'm sorry, there's no data in that slot")
+            time.sleep(1)
+    
 
     player_weapon = json.loads(player["weapon"])
 
