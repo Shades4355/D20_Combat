@@ -1,4 +1,4 @@
-import random, time, math
+import random, time, math, sys
 from classes import enemies as e
 from classes import combat as c
 from classes import dice
@@ -212,6 +212,7 @@ def mysterious_mushroom(player: object):
             print("You gained {} XP".format(xp))
             player.gain_xp(xp)
             time.sleep(1)
+            print()
         else:
             print("You eat the mushroom...")
             time.sleep(1)
@@ -221,6 +222,7 @@ def mysterious_mushroom(player: object):
             damage = dice.roll(1, 6)
             player.take_damage(damage)
             time.sleep(1)
+            print()
 
     luck = dice.roll(1,2) # 1 = good; 2 = bad
     dc = 15
@@ -229,17 +231,18 @@ def mysterious_mushroom(player: object):
     print("\nYou come across a mysterious mushroom")
     print("Looks tasty...")
     time.sleep(1)
-    print("\nIdentify the mushroom? Or just eat it?")
+    print("\nIdentify the mushroom, eat it, or leave it?")
     choice = ""
 
-    while choice.lower() not in ["identify", "eat"]:
-        print('"identify" or "eat"?')
+    options = ["identify", "eat", "leave it"]
+    while choice.lower() not in options:
+        print(", ".join(options) + "?")
         choice = input(">> ")
     
     print()
     if choice.lower() == "eat":
         eat_mushroom(player, luck)
-    else:
+    elif choice.lower() == "identify":
         print("Knowledge Nature:", roll)
         time.sleep(1)
         print()
@@ -253,9 +256,16 @@ def mysterious_mushroom(player: object):
                 time.sleep(1)
                 print("You throw the mushroom away")
         else:
-            print("Eh, it's probably safe")
+            print("Better not to risk it")
             time.sleep(1)
-            eat_mushroom(player, luck)
+            print()
+    elif choice.lower() == "leave it":
+        print("You leave the mushroom unpicked and continue on")
+        time.sleep(1)
+        print()
+    else:
+        print("Mushroom Error!")
+        sys.exit(1)
 
 
 def rubble_encounter(player):
