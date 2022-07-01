@@ -385,7 +385,7 @@ def random_encounter(num_combatants: int, player: object):
         encounters = [goblin_encounter, goblin_horde_encounter, 
                       wolf_encounter, undead_encounter, zombie_encounter]
     else:
-        encounters = [goblin_encounter, wolf_encounter,
+        encounters = [goblin_horde_encounter, wolf_encounter,
                       undead_encounter, zombie_horde_encounter, vampire_horde_encounter, vampire_encounter]
 
     # pick encounter
@@ -420,6 +420,9 @@ def goblin_encounter(num_of_foes: int):
 
 
 def goblin_horde_encounter(num_of_foes: int):
+    """A table for random goblin encounter
+
+    includes only goblins"""
     g = 0
 
     encounter = []
@@ -489,6 +492,9 @@ def zombie_encounter(num_of_foes: int):
 
 
 def zombie_horde_encounter(num_of_foes: int):
+    """A table for random Zombie horde encounter
+
+    includes 2x as many Zombies"""
     return zombie_encounter(num_of_foes * 2)
 
 
