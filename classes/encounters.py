@@ -381,12 +381,12 @@ def random_encounter(num_combatants: int, player: object):
 
     if player.class_level <= 3:
         encounters = [goblin_encounter, goblin_horde_encounter]
-    elif player.class_level <= 6:
+    elif player.class_level <= 9:
         encounters = [goblin_encounter, goblin_horde_encounter, 
                       wolf_encounter, undead_encounter, zombie_encounter]
     else:
         encounters = [goblin_encounter, wolf_encounter,
-                      undead_encounter, zombie_horde_encounter, vampire_horde]
+                      undead_encounter, zombie_horde_encounter, vampire_horde_encounter, vampire_encounter]
 
     # pick encounter
     randomChoice = random.choices(encounters)[0]
@@ -486,13 +486,13 @@ def zombie_encounter(num_of_foes: int):
         z += 1
         encounter.append(e.Zombie(name="Zombie {}".format(z)))
     return encounter
-    
+
 
 def zombie_horde_encounter(num_of_foes: int):
     return zombie_encounter(num_of_foes * 2)
 
 
-def vampire_horde(num_of_foes: int):
+def vampire_horde_encounter(num_of_foes: int):
     """a table for a random vampire encounter
     
     includes vampires and a vampire lord"""
@@ -500,7 +500,7 @@ def vampire_horde(num_of_foes: int):
     v = 0
     l = 0
 
-    for i in range(num_of_foes):
+    for i in range(math.ceil(num_of_foes/2)):
         if l < 1:
             rand_num = dice.roll(1, 2)
             if rand_num == 1:
@@ -513,3 +513,35 @@ def vampire_horde(num_of_foes: int):
             v += 1
             encounter.append(e.Vampire(name="Vampire {}".format(v)))
     return encounter
+
+
+def vampire_encounter(num_of_foes: int):
+    """a table for a random vampire encounter
+    
+    includes vampires, a vampire lord, and thralls"""
+    encounter = []
+    v = 0
+    l = 0
+    t = 0
+
+    for i in range(math.ceil(num_of_foes/2)):
+        if l < 1:
+            rand_num = dice.roll(1, 4)
+            if rand_num == 1:
+                l += 1
+                encounter.append(e.VampireLord(name="Vampire Lord"))
+            elif rand_num == 2:
+                v += 1
+                encounter.append(e.Vampire(name="Vampire {}".format(v)))
+            else:
+                t += 1
+                encounter.append(e.Thrall(name="Thrall {}".format(t)))
+        else:
+            if rand_num == 1:
+                v += 1
+                encounter.append(e.Vampire(name="Vampire {}".format(v)))
+            else:
+                t += 1
+                encounter.append(e.Thrall(name="Thrall {}".format(t)))
+    return encounter
+

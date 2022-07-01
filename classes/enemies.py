@@ -144,7 +144,7 @@ class Ghoul(Undead):
 
 
 class Vampire(Undead):
-    def __init__(self, name='Undead Template', hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=4, level=3, lives=2, grantXP=2, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
+    def __init__(self, name='Undead Template', hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=6, level=3, lives=2, grantXP=2, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
     def attack(self, player: object):
@@ -174,7 +174,7 @@ class Vampire(Undead):
 
 
 class VampireLord(Vampire):
-    def __init__(self, name='Undead Template', hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=4, level=5, lives=3, grantXP=4, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
+    def __init__(self, name='Undead Template', hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=8, level=5, lives=3, grantXP=4, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
     def attack(self, player: object):
@@ -192,3 +192,6 @@ class VampireLord(Vampire):
 
         self.heal_self(damage)
 
+class Thrall(Vampire):
+    def __init__(self, name='Undead Template', hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=4, level=3, lives=1, grantXP=2, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
+        super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
