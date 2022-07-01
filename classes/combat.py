@@ -37,9 +37,9 @@ def equipment_drop(player: object, nothing=3, weapon=1, armor=1, gold=3):
         {"name": w.Staff().name,
          "type": "weapon",
          "equip": w.Staff()},
-        {"name": w.Rod(),
+        {"name": w.Rod().name,
          "type": "weapon",
-         "equip": w.Rod().name}]
+         "equip": w.Rod()}]
 
     # drop armor:   1 weight
     armor_table = [
