@@ -124,7 +124,7 @@ class Zombie(Undead):
                 self.name, hurt, self.current_hit_points))
         else:
             revival_chance = dice.roll(1, 100)
-            if revival_chance <= 10:
+            if revival_chance <= 30:
                 self.current_hit_points = self.max_hit_points
                 print("{0.name} got back up".format(self))
             else:
