@@ -386,7 +386,7 @@ def random_encounter(num_combatants: int, player: object):
                       wolf_encounter, undead_encounter, zombie_encounter]
     else:
         encounters = [goblin_encounter, wolf_encounter,
-                      undead_encounter, zombie_horde_encounter, vampire_encounter]
+                      undead_encounter, zombie_horde_encounter, vampire_horde]
 
     # pick encounter
     randomChoice = random.choices(encounters)[0]
@@ -492,7 +492,7 @@ def zombie_horde_encounter(num_of_foes: int):
     return zombie_encounter(num_of_foes * 2)
 
 
-def vampire_encounter(num_of_foes: int):
+def vampire_horde(num_of_foes: int):
     """a table for a random vampire encounter
     
     includes vampires and a vampire lord"""
