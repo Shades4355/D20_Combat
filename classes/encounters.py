@@ -7,8 +7,7 @@ from equipment import armor as a
 import save_load as s
 
 
-
-def shop(player: object):
+def shop(player: object, save: bool =True):
     items = [
         {"name": "cure light potion",
          "type": "item",
@@ -84,14 +83,15 @@ def shop(player: object):
         "price": 0
     }
 
-    # save?
-    print("Save progress?")
-    choice = ""
-    while choice.lower() not in ["yes", "no"]:
-        print('"Yes" / "No"')
-        choice = input(">> ")
-    if choice.lower() == "yes":
-        s.save(player)
+    if save == True:
+        # save?
+        print("Save progress?")
+        choice = ""
+        while choice.lower() not in ["yes", "no"]:
+            print('"Yes" / "No"')
+            choice = input(">> ")
+        if choice.lower() == "yes":
+            s.save(player)
 
     # heal after combat
     print("\nEntering the clearing, you see a safe place to rest, and a traveling merchant")

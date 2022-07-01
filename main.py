@@ -21,7 +21,7 @@ if choice.lower() == "load":
         time.sleep(1)
         print()
         encounters = "shop"
-        e.shop(hero)
+        e.shop(hero, False)
     except:
         print("I'm sorry, save file can't be found")
         print("Welcome, hero! What are you called?")
