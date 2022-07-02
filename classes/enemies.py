@@ -159,8 +159,11 @@ class Vampire(Undead):
         elif attack_roll > player.ac:
             damage = self.do_damage(False)
             player.take_damage(damage)
+        else:
+            print(self.name, "missed", player.name)
 
-        self.heal_self(math.floor(damage/2))
+        if damage > 0:
+           self.heal_self(math.floor(damage/2))
 
     def heal_self(self, amount:int):
         health = self.current_hit_points + amount
@@ -189,9 +192,12 @@ class VampireLord(Vampire):
         elif attack_roll > player.ac:
             damage = self.do_damage(False)
             player.take_damage(damage)
+        else:
+            print(self.name, "missed", player.name)
 
-        self.heal_self(damage)
+        if damage > 0:
+            self.heal_self(damage)
 
 class Thrall(Vampire):
-    def __init__(self, name="Thrall", hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=4, level=3, lives=1, grantXP=2, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
+    def __init__(self, name="Thrall", hit_die=4, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=4, level=2, lives=1, grantXP=2, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
