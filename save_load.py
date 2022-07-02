@@ -1,5 +1,4 @@
-import time
-import json
+import time, json, sys
 from classes import hero as h
 from equipment import weapons as w
 from equipment import armor as a
@@ -60,23 +59,26 @@ def load():
 
     loading = True
     while loading:
-        save_slot = 0
-        while save_slot not in range(1, 10):
-            print("\n1-10")
+        save_slot = -1
+        while save_slot not in range(0, 10):
+            print("\nPlease pick a save slot: 1-10 (or 0 to cancel)")
             save_slot = input(">> ")
             try:
                 save_slot = int(save_slot)
             except:
                 pass
-        
-        try:
-            hero_file = open("save_file_{}.json".format(save_slot), "r")
-            loading = False
-            player = json.load(hero_file)
-            hero_file.close()
-        except:
-            print("\nI'm sorry, there's no data in that slot")
-            time.sleep(1)
+        if save_slot == 0:
+            print("Please reload game and try again")
+            sys.exit(0)
+        else:
+            try:
+                hero_file = open("save_file_{}.json".format(save_slot), "r")
+                loading = False
+                player = json.load(hero_file)
+                hero_file.close()
+            except:
+                print("\nI'm sorry, there's no data in that slot")
+                time.sleep(1)
     
 
     player_weapon = json.loads(player["weapon"])

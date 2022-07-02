@@ -15,22 +15,12 @@ while choice.lower() not in ["new game", "load"]:
 print()
 
 if choice.lower() == "load":
-    try:
-        hero = s.load()
-        print("Welcome back,", hero.name)
-        time.sleep(1)
-        print()
-        encounters = "shop"
-        e.shop(hero, False)
-    except:
-        print("I'm sorry, save file can't be found")
-        print("Welcome, hero! What are you called?")
-        name = input(">> ")
-
-        hero = player.pick_class(name)
-        time.sleep(1)
-        print()
-        hero.gold = 10
+    hero = s.load()
+    print("Welcome back,", hero.name)
+    time.sleep(1)
+    print()
+    encounters = "shop"
+    e.shop(hero, False)
 else:
     print("Welcome, hero! What are you called?")
     name = input(">> ")
