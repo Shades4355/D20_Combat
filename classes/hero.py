@@ -261,7 +261,7 @@ class Hero:
             print("\n".join(special_list))
             print("back")
 
-            choice = ''
+            choice = ""
             while choice.lower() not in special_list and choice.lower() != "back":
                 choice = input(">> ")
             
