@@ -205,7 +205,7 @@ class Thrall(Vampire):
 
 
 class Boss(VampireLord):
-    def __init__(self, name="The Boss", hit_die=8, attack_bonus=5, armor=3, number_of_damage_die=2, damage_die=6, level=10, lives=2, grantXP=0, damage_reduction=3, str_mod=2, dex_mod=3, con_mod=3):
+    def __init__(self, name="Final Boss", hit_die=8, attack_bonus=5, armor=3, number_of_damage_die=2, damage_die=6, level=10, lives=2, grantXP=0, damage_reduction=3, str_mod=2, dex_mod=3, con_mod=3):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
     def take_damage(self, damage: int):
@@ -225,7 +225,7 @@ class Boss(VampireLord):
                 self.name, hurt, self.current_hit_points))
         else:
             revival_chance = dice.roll(1, 100)
-            if revival_chance <= 60:
+            if revival_chance <= 50:
                 self.current_hit_points = self.max_hit_points
                 print("{0.name} got back up".format(self))
             else:

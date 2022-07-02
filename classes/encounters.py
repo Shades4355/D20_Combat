@@ -553,6 +553,6 @@ def vampire_encounter(num_of_foes: int):
 
 def boss_encounter(num_of_foes: int):
     encounter = zombie_horde_encounter(num_of_foes)
-    encounter.append(e.Boss(name="Final Boss"))
+    encounter.append(e.Boss())
 
     return encounter
