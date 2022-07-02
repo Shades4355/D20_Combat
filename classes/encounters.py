@@ -115,7 +115,7 @@ def shop(player: object, save: bool =True):
     # choose an item to buy; or leave
     inShop = True
     while inShop == True:
-        choice = ''
+        choice = ""
         while choice not in [i["name"] for i in forSaleList]:
             print()
             print("Player gold: " + str(player.gold))
@@ -154,7 +154,7 @@ def shop(player: object, save: bool =True):
             forSaleList.remove(choice)
         else:
             print("You can't afford that.\n")
-            choice = ''
+            choice = ""
         player.check_inventory()
 
 

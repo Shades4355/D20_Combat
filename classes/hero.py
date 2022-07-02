@@ -36,42 +36,42 @@ def WandererStats(name):
 
     time.sleep(1)
     
-    strength = ''
+    strength = ""
     while strength not in stats:
         print("\nWhat is your Strength?")
         print(", ".join(stats))
         strength = input(">> ")
     stats.remove(strength)
 
-    dex = ''
+    dex = ""
     while dex not in stats:
         print("\nWhat is your Dexterity?")
         print(", ".join(stats))
         dex = input(">> ")
     stats.remove(dex)
 
-    con = ''
+    con = ""
     while con not in stats:
         print("\nWhat is your Constitution?")
         print(", ".join(stats))
         con = input(">> ")
     stats.remove(con)
 
-    wis = ''
+    wis = ""
     while wis not in stats:
         print("\nWhat is your Wisdom?")
         print(", ".join(stats))
         wis = input(">> ")
     stats.remove(wis)
 
-    intelligence = ''
+    intelligence = ""
     while intelligence not in stats:
         print("\nWhat is your Intelligence?")
         print(", ".join(stats))
         intelligence = input(">> ")
     stats.remove(intelligence)
 
-    cha = ''
+    cha = ""
     while cha not in stats:
         print("\nWhat is your Charisma?")
         print(", ".join(stats))
