@@ -381,12 +381,14 @@ def random_encounter(num_combatants: int, player: object):
     elif player.class_level <= 9:
         encounters = [goblin_encounter, goblin_horde_encounter, 
                       wolf_encounter, undead_encounter, zombie_encounter]
-    else:
+    elif player.class_level < 20:
         encounters = [goblin_horde_encounter, wolf_encounter,
                       undead_encounter, zombie_horde_encounter, vampire_horde_encounter, vampire_encounter]
+    else:
+        encounters = [boss_encounter]
 
     # pick encounter
-    randomChoice = random.choices(encounters)[0]
+    randomChoice = random.choice(encounters)
 
     return randomChoice(num_combatants)
 
@@ -548,3 +550,9 @@ def vampire_encounter(num_of_foes: int):
                 encounter.append(e.Thrall(name="Thrall {}".format(t)))
     return encounter
 
+
+def boss_encounter(num_of_foes: int):
+    encounter = zombie_horde_encounter(num_of_foes)
+    encounter.append(e.Boss(name="Final Boss"))
+
+    return encounter
