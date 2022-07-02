@@ -172,9 +172,10 @@ def listen_check(player: object):
     time.sleep(1)
     print("\nPerception check:", roll)
     time.sleep(1)
+    print()
 
     if roll >= dc: # success
-        print("\nYou hear a fight ahead. Do you wait for the victory to leave, or attack them while they're weak?")
+        print("You hear a fight ahead. Do you wait for the victory to leave, or attack them while they're weak?")
 
         choice = ""
         while choice.lower() not in ["wait", "attack"]:
@@ -192,12 +193,12 @@ def listen_check(player: object):
             print("Let's see if there's any loot left behind!")
             time.sleep(1)
             c.equipment_drop(player, nothing=1, armor=2, weapon=2, gold=4)
-    
     else: # failure
         print("\nIt's probably just your imagination...")
         print("You round the corner to find yourself in the middle of a fight!")
         num_of_enemies = dice.roll(1, player.class_level)
         c.fight(player, num_of_enemies)
+    print()
 
 
 def mysterious_mushroom(player: object):
@@ -212,7 +213,6 @@ def mysterious_mushroom(player: object):
             print("You gained {} XP".format(xp))
             player.gain_xp(xp)
             time.sleep(1)
-            print()
         else:
             print("You eat the mushroom...")
             time.sleep(1)
@@ -222,7 +222,6 @@ def mysterious_mushroom(player: object):
             damage = dice.roll(1, 6)
             player.take_damage(damage)
             time.sleep(1)
-            print()
 
     luck = dice.roll(1,2) # 1 = good; 2 = bad
     dc = 15
@@ -231,15 +230,15 @@ def mysterious_mushroom(player: object):
     print("\nYou come across a mysterious mushroom")
     print("Looks tasty...")
     time.sleep(1)
-    print("\nIdentify the mushroom, eat it, or leave it?")
+    print()
+    print("Identify the mushroom, eat it, or leave it?")
     choice = ""
-
     options = ["identify", "eat", "leave it"]
     while choice.lower() not in options:
         print('"identify", "eat", or "leave it"?')
         choice = input(">> ")
-    
     print()
+
     if choice.lower() == "eat":
         eat_mushroom(player, luck)
     elif choice.lower() == "identify":
@@ -258,32 +257,31 @@ def mysterious_mushroom(player: object):
         else:
             print("Better not to risk it")
             time.sleep(1)
-            print()
     elif choice.lower() == "leave it":
         print("You leave the mushroom unpicked and continue on")
         time.sleep(1)
-        print()
     else:
         print("Mushroom Error!")
         sys.exit(1)
+    print()
 
 
 def boxing_encounter(player: object):
     dc = 12
     print("You are cordially invited to participate in a boxing competition.")
     print("The winner will be awarded an amount of gold")
-    
+    time.sleep(1)
+
     choice = ""
     while choice.lower() not in ["compete", "pass"]:
         print('"Compete" or "pass"?')
         choice = input(">> ")
+    print()
     
     if choice.lower() == "compete":
         roll = dice.roll(1,20) + player.stat_mod(player.con)
         print("\nCon check:", roll)
         time.sleep(1)
-        print()
-
         if roll >= dc:
             print("You win!")
             time.sleep(1)
@@ -291,7 +289,6 @@ def boxing_encounter(player: object):
             print("You win {} gold!".format(reward))
             player.gold += reward
             time.sleep(1)
-            print()
         else:
             print("You take a beating and go down in the third round")
             damage = 0
@@ -299,11 +296,10 @@ def boxing_encounter(player: object):
                 damage += dice.roll(2,4)
             player.take_damage(damage)
             time.sleep(1)
-            print()
     else:
         print("Best not to risk this pretty face")
         time.sleep(1)
-        print()
+    print()
 
 
 def rubble_encounter(player):
@@ -374,6 +370,7 @@ def rubble_encounter(player):
     elif choice.lower() == "leave":
         print("You turn around and leave")
         time.sleep(2)
+    print()
 
 
 def random_encounter(num_combatants: int, player: object):
