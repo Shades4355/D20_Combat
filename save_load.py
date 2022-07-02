@@ -5,7 +5,7 @@ from equipment import weapons as w
 from equipment import armor as a
 
 def save(player: object):
-    print("Where would you like to save?")
+    print("\nWhere would you like to save?")
     
     save_slot = 0
     while save_slot not in range(1,10):
@@ -57,7 +57,6 @@ def save(player: object):
 
 def load():
     print("Which save slot would you like to load?")
-    time.sleep(1)
 
     loading = True
     while loading:
