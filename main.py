@@ -8,9 +8,9 @@ import save_load as s
 
 # Load, or New Game?
 encounters = ""
-choice = ''
-while choice.lower() not in ['new game', 'load']:
-    print("'New Game' or 'Load'?")
+choice = ""
+while choice.lower() not in ["new game", "load"]:
+    print('"New Game" or "Load"?')
     choice = input(">> ")
 print()
 
@@ -25,7 +25,7 @@ if choice.lower() == "load":
     except:
         print("I'm sorry, save file can't be found")
         print("Welcome, hero! What are you called?")
-        name = input('>> ')
+        name = input(">> ")
 
         hero = player.pick_class(name)
         time.sleep(1)
@@ -33,7 +33,7 @@ if choice.lower() == "load":
         hero.gold = 10
 else:
     print("Welcome, hero! What are you called?")
-    name = input('>> ')
+    name = input(">> ")
 
     hero = player.pick_class(name)
     time.sleep(1)

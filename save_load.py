@@ -87,7 +87,7 @@ def load():
     
     armor = a.Armor(name=player_armor["name"], value=player_armor["value"], magic=player_armor["magic"], price=player_armor["price"])
 
-    hero = h.Hero(name=player['name'],
+    hero = h.Hero(name=player["name"],
         class_name=player["class_name"],
         class_level=int(player["class_level"]),
         base_health=int(player["base_health"]),
