@@ -1,4 +1,4 @@
-import math
+import math, sys
 from classes import dice
 
 
@@ -111,7 +111,7 @@ class Zombie(Undead):
         post_DR_damage = damage - self.damage_reduction
         if post_DR_damage > 0:
             if self.current_hit_points - post_DR_damage > 0:
-                hurt = self.current_hit_points - post_DR_damage
+                hurt = post_DR_damage
             else:
                 hurt = self.current_hit_points
         else:
@@ -198,6 +198,40 @@ class VampireLord(Vampire):
         if damage > 0:
             self.heal_self(damage)
 
+
 class Thrall(Vampire):
     def __init__(self, name="Thrall", hit_die=4, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=4, level=2, lives=1, grantXP=2, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
+
+
+class Boss(VampireLord):
+    def __init__(self, name="Final Boss", hit_die=8, attack_bonus=5, armor=3, number_of_damage_die=2, damage_die=6, level=10, lives=2, grantXP=0, damage_reduction=3, str_mod=2, dex_mod=3, con_mod=3):
+        super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
+
+    def take_damage(self, damage: int):
+        post_DR_damage = damage - self.damage_reduction
+        if post_DR_damage > 0:
+            if self.current_hit_points - post_DR_damage > 0:
+                hurt = post_DR_damage
+            else:
+                hurt = self.current_hit_points
+        else:
+            hurt = 0
+
+        remaining_points = self.current_hit_points - hurt
+        if remaining_points > 0:
+            self.current_hit_points = remaining_points
+            print("{} took {} damage, and have {} HP left".format(
+                self.name, hurt, self.current_hit_points))
+        else:
+            revival_chance = dice.roll(1, 100)
+            if revival_chance <= 50:
+                self.current_hit_points = self.max_hit_points
+                print("{0.name} got back up".format(self))
+            else:
+                print("{0.name} is dead".format(self))
+                self.current_hit_points = 0
+                self.alive = False
+                print("You Win!")
+                input("[Enter]")
+                sys.exit(0)
