@@ -3,7 +3,7 @@ from classes import dice
 
 
 class Enemy():
-    def __init__(self, name="template", hit_die=4, attack_bonus=0, armor=0, number_of_damage_die=1, damage_die=4, level=1, lives=1, grantXP=1, damage_reduction=0, str_mod=0, dex_mod=0, con_mod=0, loot=1):
+    def __init__(self, name="template", hit_die=4, attack_bonus=2, armor=0, number_of_damage_die=1, damage_die=4, level=1, lives=1, grantXP=1, damage_reduction=0, str_mod=0, dex_mod=0, con_mod=0, loot=1):
         self.name = name
         self.level = level
         self.hit_die = hit_die
@@ -83,18 +83,18 @@ class Goblin(Enemy):
 
 
 class Hobgoblin(Goblin):
-    def __init__(self, name="Hobgoblin", health=1, attack_bonus=1, armor=0, number_of_damage_die=1, damage_die=4, level=2, lives=1, grantXP=1, damage_reduction=0, str_mod=-1, dex_mod=2, con_mod=0):
+    def __init__(self, name="Hobgoblin", health=6, attack_bonus=2, armor=0, number_of_damage_die=1, damage_die=4, level=2, lives=1, grantXP=1, damage_reduction=0, str_mod=1, dex_mod=1, con_mod=1):
         super().__init__(name, health, attack_bonus, armor, number_of_damage_die, damage_die,
                          level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
 
 class Wolf(Enemy):
-    def __init__(self, name="Wolf", health=4, attack_bonus=1, armor=0, number_of_damage_die=1, damage_die=6, level=2, lives=1, grantXP=2, damage_reduction=0, str_mod=1, dex_mod=2, con_mod=1):
+    def __init__(self, name="Wolf", health=6, attack_bonus=3, armor=0, number_of_damage_die=1, damage_die=6, level=2, lives=1, grantXP=2, damage_reduction=0, str_mod=1, dex_mod=2, con_mod=1):
         super().__init__(name, health, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
 
 class DireWolf(Wolf):
-    def __init__(self, name="Dire Wolf", health=4, attack_bonus=2, armor=0, number_of_damage_die=2, damage_die=4, level=3, lives=1, grantXP=2, damage_reduction=0, str_mod=3, dex_mod=2, con_mod=2):
+    def __init__(self, name="Dire Wolf", health=8, attack_bonus=2, armor=0, number_of_damage_die=2, damage_die=4, level=3, lives=1, grantXP=2, damage_reduction=0, str_mod=3, dex_mod=2, con_mod=2):
         super().__init__(name, health, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
 
@@ -104,7 +104,7 @@ class Undead(Enemy):
 
 
 class Zombie(Undead):
-    def __init__(self, name="Zombie", hit_die=6, attack_bonus=1, armor=3, number_of_damage_die=1, damage_die=6, level=3, lives=1, grantXP=2, damage_reduction=0, str_mod=0, dex_mod=0, con_mod=0):
+    def __init__(self, name="Zombie", hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=6, level=3, lives=1, grantXP=2, damage_reduction=0, str_mod=1, dex_mod=-2, con_mod=3):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
     def take_damage(self, damage: int):
@@ -123,10 +123,10 @@ class Zombie(Undead):
             print("{} took {} damage, and have {} HP left".format(
                 self.name, hurt, self.current_hit_points))
         else:
-            revival_chance = dice.roll(1, 100)
-            if revival_chance <= 30:
-                self.current_hit_points = self.max_hit_points
-                print("{0.name} got back up".format(self))
+            revival_chance = dice.roll(1, 20) + self.con_mod
+            if revival_chance >= damage + 5:
+                self.current_hit_points = 1
+                print("{0.name} got back up, albeit damaged".format(self))
             else:
                 print("{0.name} is dead".format(self))
                 self.current_hit_points = 0
@@ -134,17 +134,17 @@ class Zombie(Undead):
 
 
 class Skeleton(Undead):
-    def __init__(self, name="Skeleton", hit_die=8, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=6, level=3, lives=2, grantXP=3, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
+    def __init__(self, name="Skeleton", hit_die=8, attack_bonus=4, armor=3, number_of_damage_die=1, damage_die=6, level=2, lives=2, grantXP=3, damage_reduction=2, str_mod=0, dex_mod=2, con_mod=2):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
 
 class Ghoul(Undead):
-    def __init__(self, name="Ghoul", hit_die=8, attack_bonus=2, armor=3, number_of_damage_die=2, damage_die=4, level=3, lives=1, grantXP=2, damage_reduction=0, str_mod=0, dex_mod=0, con_mod=0):
+    def __init__(self, name="Ghoul", hit_die=8, attack_bonus=1, armor=3, number_of_damage_die=2, damage_die=4, level=5, lives=1, grantXP=2, damage_reduction=1, str_mod=1, dex_mod=2, con_mod=0):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
 
 class Vampire(Undead):
-    def __init__(self, name="Vampire", hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=6, level=3, lives=2, grantXP=2, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
+    def __init__(self, name="Vampire", hit_die=6, attack_bonus=3, armor=3, number_of_damage_die=1, damage_die=6, level=3, lives=2, grantXP=2, damage_reduction=2, str_mod=4, dex_mod=4, con_mod=4):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
     def attack(self, player: object):
@@ -177,7 +177,7 @@ class Vampire(Undead):
 
 
 class VampireLord(Vampire):
-    def __init__(self, name="Vampire Lord", hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=8, level=5, lives=3, grantXP=4, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
+    def __init__(self, name="Vampire Lord", hit_die=6, attack_bonus=4, armor=3, number_of_damage_die=1, damage_die=8, level=5, lives=3, grantXP=4, damage_reduction=2, str_mod=4, dex_mod=4, con_mod=4):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
     def attack(self, player: object):
@@ -200,12 +200,12 @@ class VampireLord(Vampire):
 
 
 class Thrall(Vampire):
-    def __init__(self, name="Thrall", hit_die=4, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=4, level=2, lives=1, grantXP=2, damage_reduction=2, str_mod=0, dex_mod=0, con_mod=0):
+    def __init__(self, name="Thrall", hit_die=4, attack_bonus=3, armor=3, number_of_damage_die=1, damage_die=4, level=2, lives=1, grantXP=2, damage_reduction=2, str_mod=3, dex_mod=3, con_mod=3):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
 
 class Boss(VampireLord):
-    def __init__(self, name="Final Boss", hit_die=8, attack_bonus=5, armor=3, number_of_damage_die=2, damage_die=6, level=10, lives=2, grantXP=0, damage_reduction=3, str_mod=2, dex_mod=3, con_mod=3):
+    def __init__(self, name="Final Boss", hit_die=8, attack_bonus=5, armor=3, number_of_damage_die=2, damage_die=6, level=10, lives=2, grantXP=0, damage_reduction=3, str_mod=5, dex_mod=5, con_mod=5):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
     def take_damage(self, damage: int):
@@ -224,10 +224,10 @@ class Boss(VampireLord):
             print("{} took {} damage, and have {} HP left".format(
                 self.name, hurt, self.current_hit_points))
         else:
-            revival_chance = dice.roll(1, 100)
-            if revival_chance <= 50:
-                self.current_hit_points = self.max_hit_points
-                print("{0.name} got back up".format(self))
+            revival_chance = dice.roll(1, 20) + self.con_mod
+            if revival_chance >= damage + 3:
+                self.current_hit_points = dice.roll(1,6)
+                print("{0.name} got back up, albeit damaged".format(self))
             else:
                 print("{0.name} is dead".format(self))
                 self.current_hit_points = 0

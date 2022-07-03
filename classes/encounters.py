@@ -376,10 +376,13 @@ def rubble_encounter(player):
 def random_encounter(num_combatants: int, player: object):
     encounters = []
 
-    if player.class_level <= 3:
+    if player.class_level <= 4:
         encounters = [goblin_encounter, goblin_horde_encounter]
     elif player.class_level <= 9:
         encounters = [goblin_encounter, goblin_horde_encounter, 
+                      wolf_encounter, zombie_encounter]
+    elif player.class_level <= 15:
+        encounters = [goblin_encounter, goblin_horde_encounter,
                       wolf_encounter, undead_encounter, zombie_encounter]
     elif player.class_level < 20:
         encounters = [goblin_horde_encounter, wolf_encounter,
