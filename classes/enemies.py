@@ -257,7 +257,11 @@ class Boss(VampireLord):
         crit = damage_and_type[1]
         type = damage_and_type[2]
 
-        post_DR_damage = damage - self.damage_reduction
+        post_DR_damage = 0
+        if type != "slashing":
+            post_DR_damage = damage - self.damage_reduction
+        else:
+            post_DR_damage = damage
         if post_DR_damage > 0:
             if self.current_hit_points - post_DR_damage > 0:
                 hurt = post_DR_damage
@@ -272,7 +276,7 @@ class Boss(VampireLord):
             print("{0.name} took {1} damage, and has {0.current_hit_points} HP left".format(self, hurt))
         else:
             revival_chance = dice.roll(1, 20) + self.con_mod
-            if revival_chance >= damage + 5 and not crit and type != "magic":
+            if revival_chance >= damage + 5 and not crit:
                 self.current_hit_points = dice.roll(1,6)
                 print("{0.name} took {1} damage, but got back up, albeit damaged".format(self, damage))
             else:
