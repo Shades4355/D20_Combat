@@ -153,7 +153,7 @@ class Hero:
             damage = dice.roll(self.weapon.num_damage_dice,
                                self.weapon.damage_die) + stat_mod
 
-        return damage
+        return [damage, crit, self.weapon.damage_type]
 
     def gain_xp(self, xp: int):
         mod = self.stat_mod(self.int)

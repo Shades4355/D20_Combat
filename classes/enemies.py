@@ -50,7 +50,9 @@ class Enemy():
             hit_points += dice.roll(1, self.hit_die) + self.con_mod
         return hit_points
 
-    def take_damage(self, damage:int):
+    def take_damage(self, damage_and_type: list):
+        damage = damage_and_type[0]
+        
         post_DR_damage = damage - self.damage_reduction
         if post_DR_damage > 0:
             if self.current_hit_points - post_DR_damage > 0:
@@ -102,13 +104,55 @@ class Undead(Enemy):
     def __init__(self, name="Undead Template", hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=4, level=3, lives=1, grantXP=2, damage_reduction=0, str_mod=0, dex_mod=0, con_mod=0):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
+    def take_damage(self, damage_and_type: list):
+        damage = damage_and_type[0]
+        type = damage_and_type[2]
+
+        post_DR_damage = 0
+        if type != "bludgeoning":
+            post_DR_damage = damage - self.damage_reduction
+        else:
+            post_DR_damage = damage
+        
+        if post_DR_damage > 0:
+            if self.current_hit_points - post_DR_damage > 0:
+                hurt = post_DR_damage
+            else:
+                hurt = self.current_hit_points
+        else:
+            hurt = 0
+
+        remaining_points = self.current_hit_points - hurt
+        if remaining_points > 0:
+            self.current_hit_points = remaining_points
+            print("{} took {} damage, and have {} HP left".format(
+                self.name, hurt, self.current_hit_points))
+        else:
+            self.lives -= 1
+            if self.lives > 0:
+                self.current_hit_points = self.max_hit_points
+                print("{0.name} lost a life".format(self))
+            else:
+                print("{0.name} is dead".format(self))
+                self.current_hit_points = 0
+                self.alive = False
+
 
 class Zombie(Undead):
     def __init__(self, name="Zombie", hit_die=6, attack_bonus=2, armor=3, number_of_damage_die=1, damage_die=6, level=3, lives=1, grantXP=2, damage_reduction=0, str_mod=1, dex_mod=-2, con_mod=3):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
-    def take_damage(self, damage: int):
-        post_DR_damage = damage - self.damage_reduction
+    def take_damage(self, damage_and_type: list):
+        damage = damage_and_type[0]
+        crit = damage_and_type[1]
+        type = damage_and_type[2]
+
+        post_DR_damage = 0
+        if type != "bludgeoning":
+            post_DR_damage = damage - self.damage_reduction
+        else:
+            post_DR_damage = damage
+
         if post_DR_damage > 0:
             if self.current_hit_points - post_DR_damage > 0:
                 hurt = post_DR_damage
@@ -124,9 +168,9 @@ class Zombie(Undead):
                 self.name, hurt, self.current_hit_points))
         else:
             revival_chance = dice.roll(1, 20) + self.con_mod
-            if revival_chance >= damage + 5:
+            if revival_chance >= damage + 5 and not crit and type != "magic":
                 self.current_hit_points = 1
-                print("{0.name} got back up, albeit damaged".format(self))
+                print("{0.name} took {1} damage, but got back up, albeit damaged".format(self, damage))
             else:
                 print("{0.name} is dead".format(self))
                 self.current_hit_points = 0
@@ -208,7 +252,11 @@ class Boss(VampireLord):
     def __init__(self, name="Final Boss", hit_die=8, attack_bonus=5, armor=3, number_of_damage_die=2, damage_die=6, level=10, lives=2, grantXP=0, damage_reduction=3, str_mod=5, dex_mod=5, con_mod=5):
         super().__init__(name, hit_die, attack_bonus, armor, number_of_damage_die, damage_die, level, lives, grantXP, damage_reduction, str_mod, dex_mod, con_mod)
 
-    def take_damage(self, damage: int):
+    def take_damage(self, damage_and_type: list):
+        damage = damage_and_type[0]
+        crit = damage_and_type[1]
+        type = damage_and_type[2]
+
         post_DR_damage = damage - self.damage_reduction
         if post_DR_damage > 0:
             if self.current_hit_points - post_DR_damage > 0:
@@ -221,13 +269,12 @@ class Boss(VampireLord):
         remaining_points = self.current_hit_points - hurt
         if remaining_points > 0:
             self.current_hit_points = remaining_points
-            print("{} took {} damage, and have {} HP left".format(
-                self.name, hurt, self.current_hit_points))
+            print("{0.name} took {1} damage, and has {0.current_hit_points} HP left".format(self, hurt))
         else:
             revival_chance = dice.roll(1, 20) + self.con_mod
-            if revival_chance >= damage + 3:
+            if revival_chance >= damage + 5 and not crit and type != "magic":
                 self.current_hit_points = dice.roll(1,6)
-                print("{0.name} got back up, albeit damaged".format(self))
+                print("{0.name} took {1} damage, but got back up, albeit damaged".format(self, damage))
             else:
                 print("{0.name} is dead".format(self))
                 self.current_hit_points = 0
