@@ -140,6 +140,7 @@ def fight(player: object, num_combatants: int):
         print("You recover {} HP, bringing you up to {} HP".format(
             heal, player.health))
     time.sleep(1)
+    print()
 
 
 def player_turn(player:object, enemies_in_fight:list):

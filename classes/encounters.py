@@ -156,6 +156,8 @@ def shop(player: object, save: bool =True):
             print("You can't afford that.\n")
             choice = ""
         player.check_inventory()
+        time.sleep(1)
+        print()
 
 
 def skill_encounter(player: object):
