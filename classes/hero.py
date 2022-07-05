@@ -144,7 +144,7 @@ class Hero:
                 choice = input(">> ")
             self.inventory.remove(choice)
 
-    def do_damage(self, crit: bool, stat_mod: int):
+    def do_damage(self, crit: bool, stat_mod: int, damage_type_override: str=""):
         damage = 0
         if crit == True:
             damage = dice.roll(self.weapon.num_damage_dice, self.weapon.damage_die) + dice.roll(
@@ -152,8 +152,10 @@ class Hero:
         else:
             damage = dice.roll(self.weapon.num_damage_dice,
                                self.weapon.damage_die) + stat_mod
-
-        return damage
+        if damage_type_override == "":
+            return [damage, crit, self.weapon.damage_type]
+        else:
+            return [damage, crit, damage_type_override]
 
     def gain_xp(self, xp: int):
         mod = self.stat_mod(self.int)

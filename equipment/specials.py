@@ -69,18 +69,28 @@ def fireball(player: object, enemies_in_fight: list):
                 True, player.stat_mod(player.int)))
         else:
             target.take_damage(player.do_damage(
-                False, player.stat_mod(player.int)))
+                False, player.stat_mod(player.int), "magic"))
 
 def flurry(player: object, enemies_in_fight: list):
     num_of_attacks = math.floor(player.class_level / 3) + 3
     for i in range(num_of_attacks):
         enemy = random.choice(enemies_in_fight)
         if enemy.alive:
-            player.attack(enemy, enemies_in_fight)
+            roll = dice.roll(1, 20)
+            attack = roll + player.stat_mod(player.dex)
+            if roll == 20:
+                print("Critical!")
+                damage = player.do_damage(True, player.stat_mod(player.dex), "bludgeoning")
+                enemy.take_damage(damage)
+            elif attack >= enemy.ac:
+                damage = player.do_damage(False, player.stat_mod(player.dex), "bludgeoning")
+                enemy.take_damage(damage)
+            else:
+                print(player.name, "missed", enemy.name)
         else:
             print("{0.name} punched the corpse of {1.name}".format(player, enemy))
 
 def magic_missile(player: object, enemy: object):
     num_of_missiles = math.floor(player.class_level/4) + 3
     damage = dice.roll(num_of_missiles, 4) + num_of_missiles
-    enemy.take_damage(damage)
+    enemy.take_damage(damage, False, "magic")
