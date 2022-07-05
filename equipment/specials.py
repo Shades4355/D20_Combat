@@ -76,7 +76,17 @@ def flurry(player: object, enemies_in_fight: list):
     for i in range(num_of_attacks):
         enemy = random.choice(enemies_in_fight)
         if enemy.alive:
-            player.attack(enemy, enemies_in_fight, "bludgeoning")
+            roll = dice.roll(1, 20)
+            attack = roll + player.stat_mod(player.dex)
+            if roll == 20:
+                print("Critical!")
+                damage = player.do_damage(True, player.stat_mod(player.dex), "bludgeoning")
+                enemy.take_damage(damage)
+            elif attack >= enemy.ac:
+                damage = player.do_damage(False, player.stat_mod(player.dex), "bludgeoning")
+                enemy.take_damage(damage)
+            else:
+                print(player.name, "missed", enemy.name)
         else:
             print("{0.name} punched the corpse of {1.name}".format(player, enemy))
 
