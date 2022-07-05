@@ -21,7 +21,8 @@ def save(player: object):
         "magic": player.weapon.magic,
         "num_damage_dice": player.weapon.num_damage_dice,
         "damage_dice": player.weapon.damage_die,
-        "special": player.weapon.special
+        "special": player.weapon.special,
+        "damage_type": player.weapon.damage_type
     })
 
     player_armor = json.JSONEncoder().encode({
@@ -83,7 +84,7 @@ def load():
 
     player_weapon = json.loads(player["weapon"])
 
-    weapon = w.Weapon(name=player_weapon["name"], magic=player_weapon["magic"], num_damage_dice=player_weapon["num_damage_dice"], damage_die=int(player_weapon["damage_dice"]),special=player_weapon["special"])
+    weapon = w.Weapon(name=player_weapon["name"], magic=player_weapon["magic"], num_damage_dice=player_weapon["num_damage_dice"], damage_die=player_weapon["damage_dice"], special=player_weapon["special"], damage_type=player_weapon["damage_type"])
 
     player_armor = json.loads(player["armor"])
     
