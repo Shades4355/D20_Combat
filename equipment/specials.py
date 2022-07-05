@@ -66,7 +66,7 @@ def fireball(player: object, enemies_in_fight: list):
         roll = dice.roll(1, 20)
         if roll == 20:
             target.take_damage(player.do_damage(
-                True, player.stat_mod(player.int)))
+                True, player.stat_mod(player.int), "magic"))
         else:
             target.take_damage(player.do_damage(
                 False, player.stat_mod(player.int), "magic"))

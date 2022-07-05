@@ -35,7 +35,7 @@ class Poleaxe(Weapon):
 
 
 class Staff(Weapon):
-    def __init__(self, name="staff", magic=0, num_damage_dice=1, damage_die=4, special=["fireball"], damage_type="magic"):
+    def __init__(self, name="staff", magic=0, num_damage_dice=1, damage_die=4, special=["fireball"], damage_type="bludgeoning"):
         super().__init__(name, magic, num_damage_dice, damage_die, special, damage_type)
 
 
