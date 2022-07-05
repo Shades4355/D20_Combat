@@ -69,7 +69,7 @@ def fireball(player: object, enemies_in_fight: list):
                 True, player.stat_mod(player.int)))
         else:
             target.take_damage(player.do_damage(
-                False, player.stat_mod(player.int)))
+                False, player.stat_mod(player.int), "magic"))
 
 def flurry(player: object, enemies_in_fight: list):
     num_of_attacks = math.floor(player.class_level / 3) + 3
