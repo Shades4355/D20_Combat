@@ -76,7 +76,7 @@ def flurry(player: object, enemies_in_fight: list):
     for i in range(num_of_attacks):
         enemy = random.choice(enemies_in_fight)
         if enemy.alive:
-            player.attack(enemy, enemies_in_fight)
+            player.attack(enemy, enemies_in_fight, "bludgeoning")
         else:
             print("{0.name} punched the corpse of {1.name}".format(player, enemy))
 
