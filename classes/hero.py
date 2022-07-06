@@ -269,22 +269,25 @@ class Hero:
             
             if choice.lower() == "cleave":
                 s.cleave(self, enemy, enemies_in_fight)
-                self.cooldown = 4
+                self.cooldown = 6
             elif choice.lower() == "fireball":
                 s.fireball(self, enemies_in_fight)
-                self.cooldown = 4
+                self.cooldown = 6
             elif choice.lower() == "double strike":
                 s.double_strike(self, enemy, enemies_in_fight)
-                self.cooldown = 4
+                self.cooldown = 6
             elif choice.lower() == "flurry":
                 s.flurry(self, enemies_in_fight)
-                self.cooldown = 4
+                self.cooldown = 6
             elif choice.lower() == "magic missile":
                 s.magic_missile(self, enemy)
-                self.cooldown = 4
+                self.cooldown = 6
             elif choice.lower() == "back stab":
                 s.back_stab(self, enemy)
-                self.cooldown = 4
+                self.cooldown = 6
+            elif choice.lower() == "thrust":
+                s.thrust(self, enemy)
+                self.cooldown = 6
             elif choice.lower() == "back":
                 player_turn(self, enemies_in_fight)
             else:
