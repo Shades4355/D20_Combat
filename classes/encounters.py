@@ -406,19 +406,23 @@ def goblin_encounter(num_of_foes: int):
     g = 0
     h = 0
     w = 0
+    h = 0
 
     for i in range (num_of_foes):
-        rand_num = dice.roll(1, 3)
+        rand_num = dice.roll(1, 9)
 
-        if rand_num == 1:
+        if rand_num in [1, 2, 3]:
             g += 1
             encounter.append(e.Goblin(name="Goblin {}".format(g)))
-        elif rand_num == 2:
+        elif rand_num in [4, 5, 6]:
             h += 1
             encounter.append(e.Hobgoblin(name="Hobgoblin {}".format(h)))
-        elif rand_num == 3:
+        elif rand_num in [7, 8]:
             w += 1
             encounter.append(e.Wolf(name="Wolf {}".format(w)))
+        elif rand_num in [9]:
+            h += 1
+            encounter.append(e.ArmoredHulk(name="Armored Hobgoblin {}".format(h), damage_reduction=3))
     
     return encounter
 

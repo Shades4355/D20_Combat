@@ -143,6 +143,42 @@ def fight(player: object, num_combatants: int):
     print()
 
 
+def test_fight(player: object, num_combatants: int, encounter):
+    enemies_in_fight = encounter(num_combatants)
+    player.in_fight = True
+
+    #print player health and level
+    time.sleep(1)
+    print("\n### New Encounter ###")
+    print("\n{0.name}\nHealth: {0.health}\nLevel: {0.class_level}".format(player))
+    time.sleep(1)
+
+    while player.in_fight and player.alive:
+        player_turn(player, enemies_in_fight)
+        if player.cooldown > 0:
+            player.cooldown -= 1
+        time.sleep(1)
+        enemy_turn(player, enemies_in_fight)
+        time.sleep(1)
+
+        if len(enemies_in_fight) <= 0:
+            player.in_fight = False
+
+    # heal after combat
+    if player.alive:
+        print("\nAfter the fight, you bandage yourself up")
+        heal = math.floor(player.max_health/4)
+
+        if player.health + heal > player.max_health:
+            heal = player.max_health - player.health
+
+        player.health += heal
+        print("You recover {} HP, bringing you up to {} HP".format(
+            heal, player.health))
+    time.sleep(1)
+    print()
+
+
 def player_turn(player:object, enemies_in_fight:list):
     _COMBAT_ACTIONS = ["attack", "inventory", "special", "quit"]
 

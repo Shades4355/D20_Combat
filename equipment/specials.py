@@ -129,10 +129,10 @@ def thrust(player: object, enemy: object):
 
     if roll == 20:
         print("Critical!")
-        damage = player.do_damage(True, dex_mod, "pierce")
+        damage = player.do_damage(True, dex_mod, "piercing")
         enemy.take_damage(damage)
     elif attack_roll >= enemy.ac:
-        damage = player.do_damage(False, dex_mod, "pierce")
+        damage = player.do_damage(False, dex_mod, "piercing")
         enemy.take_damage(damage)
     else:
         print(player.name, "missed", enemy.name)
