@@ -200,7 +200,8 @@ def player_turn(player:object, enemies_in_fight:list):
       try:
           target = int(target)
       except:
-          target = 0
+        print("Pick a number between 1 and {}".format(len(enemies_in_fight)))
+        target = 0
 
     enemy = enemies_in_fight[target - 1]
 
