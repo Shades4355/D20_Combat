@@ -102,7 +102,7 @@ def equipment_drop(player: object, nothing=3, weapon=1, armor=1, gold=3):
             # acquire gold
             elif drop["type"] == "gold":
                 gold_dropped = drop["equip"]
-                print("gold dropped {}".format(gold_dropped))
+                print("gold obtained {}".format(gold_dropped))
                 player.gold += gold_dropped
     time.sleep(1)
 

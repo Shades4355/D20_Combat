@@ -78,7 +78,7 @@ def shop(player: object, save: bool =True):
     ]
 
     back = {
-        "name": "back",
+        "name": "leave",
         "type": "back",
         "price": 0
     }
@@ -125,7 +125,7 @@ def shop(player: object, save: bool =True):
             time.sleep(1)
 
             for item in forSaleList:
-                if item["name"] != "back":
+                if item["name"] != "leave":
                     price = item["price"] - player.stat_mod(player.cha)
                     if price <= 1:
                         price = 1
@@ -140,7 +140,7 @@ def shop(player: object, save: bool =True):
         index = [i["name"] for i in forSaleList].index(choice)
         choice = forSaleList[index]
 
-        if choice["name"] == "back":  # leave shop
+        if choice["name"] == "leave":  # leave shop
             inShop = False
         elif player.gold >= choice["price"]:
             player.gold -= choice["price"]
