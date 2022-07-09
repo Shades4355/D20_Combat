@@ -115,8 +115,8 @@ def shop(player: object, save: bool =True):
     # choose an item to buy; or leave
     inShop = True
     while inShop == True:
-        choice = ""
-        while choice not in [i["name"] for i in forSaleList]:
+        choice = None
+        while choice not in [i["name"] for i in forSaleList] and choice not in range(1, len(forSaleList) + 1):
             print()
             print("Player gold: " + str(player.gold))
             print("Equipped Weapon: {}".format(player.weapon.name))
@@ -124,6 +124,7 @@ def shop(player: object, save: bool =True):
             print()
             time.sleep(1)
 
+            n=0
             for item in forSaleList:
                 if item["name"] != "leave":
                     price = item["price"] - player.stat_mod(player.cha)
@@ -134,27 +135,40 @@ def shop(player: object, save: bool =True):
 
                 item["price"] = price
 
-                print(item["name"] + "\n\tPrice: " + str(price))
+                n+=1
+                print(str(n) + ": " + item["name"] + "\n\tPrice: " + str(price))
+            
             choice = input("What would you like to buy?\n>> ")
+            num = False
+            try:
+                choice = int(choice)
+                num = True
+            except:
+                num = False
 
-        index = [i["name"] for i in forSaleList].index(choice)
-        choice = forSaleList[index]
+        indexed_choice = None
+        if num == False:
+            index = [i["name"] for i in forSaleList].index(choice)
+            indexed_choice = forSaleList[index]
+        elif num == True:
+            indexed_choice = forSaleList[choice - 1]
 
-        if choice["name"] == "leave":  # leave shop
+        if indexed_choice["name"] == "leave":  # leave shop
             inShop = False
-        elif player.gold >= choice["price"]:
-            player.gold -= choice["price"]
-            if choice["type"] == "item":
-                player.inventory.append(choice["name"])
-            elif choice["type"] == "armor":
-                player.armor = choice["armor"]
+        elif player.gold >= indexed_choice["price"]:
+            player.gold -= indexed_choice["price"]
+            if indexed_choice["type"] == "item":
+                player.inventory.append(indexed_choice["name"])
+            elif indexed_choice["type"] == "armor":
+                player.armor = indexed_choice["armor"]
                 player.update_ac()
-            elif choice["type"] == "weapon":
-                player.weapon = choice["equip"]
-            forSaleList.remove(choice)
+            elif indexed_choice["type"] == "weapon":
+                player.weapon = indexed_choice["equip"]
+            forSaleList.remove(indexed_choice)
         else:
             print("You can't afford that.\n")
             choice = ""
+            indexed_choice = None
         player.check_inventory()
         time.sleep(1)
         print()
