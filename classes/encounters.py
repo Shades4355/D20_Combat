@@ -201,7 +201,7 @@ def listen_check(player: object):
         if choice.lower() == "attack":
             print("You wait for the sounds of combat to cease, and then you attack!")
             num_of_enemies = dice.roll(1, math.ceil(player.class_level/4))
-            c.fight(player, num_of_enemies)
+            c.fight(player, num_of_enemies, False)
         
         elif choice.lower() == "wait":
             print("You wait for the sounds of combat to cease, and then a minute more")
@@ -213,7 +213,7 @@ def listen_check(player: object):
         print("\nIt's probably just your imagination...")
         print("You round the corner to find yourself in the middle of a fight!")
         num_of_enemies = dice.roll(1, player.class_level)
-        c.fight(player, num_of_enemies)
+        c.fight(player, num_of_enemies, False)
     print()
 
 
@@ -389,7 +389,7 @@ def rubble_encounter(player):
     print()
 
 
-def random_encounter(num_combatants: int, player: object):
+def random_encounter(num_combatants: int, player: object, fluff_text: bool=True):
     encounters = []
 
     if player.class_level <= 4:
@@ -409,7 +409,71 @@ def random_encounter(num_combatants: int, player: object):
     # pick encounter
     randomChoice = random.choice(encounters)
 
-    return randomChoice(num_combatants)
+    def goblin():
+        print("You see a goblinoid army, before they see you")
+        time.sleep(1)
+        print("You fire an arrow, scaring most of the army into running")
+        time.sleep(1)
+        print("The remaining goblinoids turn and attack you")
+   
+    def wolf():
+        print("You hear growling behind you")
+        time.sleep(1)
+        print("You turn to see wolves prowling nearby")
+        time.sleep(1)
+        print("Some of them lung at you...")
+
+    def undead():
+        print("The smell of rot and death assails your senses")
+        time.sleep(1)
+        print("You hear a sound behind you, you turn and see...")
+
+    def zombie():
+        print("You see the bodies of people who have been fed upon")
+        time.sleep(1)
+        print("The smell of rot and decay grows stronger")
+        time.sleep(1)
+        print("You hear groaning in the distance, but, it's too late to run")
+
+    def vampire():
+        print("You enter an ornate house")
+        time.sleep(1)
+        print("The staff seems...sluggish and off")
+        time.sleep(1)
+        print("Too late you realize the Lord of the House isn't quite human...")
+
+    def final_boss():
+        print("Finally, after many trials and tribulations, you reach the Dark Lord's Castle")
+        time.sleep(1)
+        print("Inside, the place is a mess")
+        time.sleep(1)
+        print("There is no staff")
+        time.sleep(1)
+        print("There is blood on the floors and walls")
+        time.sleep(1)
+        print("You make your way to the Throne Room to find the Lord and his missing staff...")
+
+    def error():
+        print("Fluff error")
+        sys.exit(1)
+
+    fluff = None
+    if randomChoice == goblin_encounter or randomChoice == goblin_horde_encounter:
+        fluff = goblin
+    elif randomChoice == wolf_encounter:
+        fluff = wolf
+    elif randomChoice == undead_encounter:
+        fluff = undead
+    elif randomChoice == zombie_encounter or randomChoice == zombie_horde_encounter:
+        fluff = zombie
+    elif randomChoice == vampire_encounter or randomChoice == vampire_horde_encounter:
+        fluff = vampire
+    elif randomChoice == boss_encounter:
+        fluff = final_boss
+    else:
+        fluff = error
+    
+    return [randomChoice(num_combatants), fluff]
 
 
 def goblin_encounter(num_of_foes: int):
@@ -576,6 +640,6 @@ def vampire_encounter(num_of_foes: int):
 
 def boss_encounter(num_of_foes: int):
     encounter = zombie_horde_encounter(num_of_foes)
-    encounter.append(e.Boss())
+    encounter.append(e.Boss(name="The Dark Lord"))
 
     return encounter
