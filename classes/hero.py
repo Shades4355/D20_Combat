@@ -230,24 +230,34 @@ class Hero:
         scroll_escape = scrolls.Escape()
 
         print("\nInventory:")
-        print("\n".join(self.inventory))
+        n = 0
+        self.inventory.sort()
+        for item in self.inventory:
+            n += 1
+            print("{}: {}".format(n, item))
         print("back")
 
         choice = ""
-        while choice not in self.inventory and choice.lower() != "back":
+        while choice not in self.inventory and choice not in range(1, len(self.inventory)) and choice != "back":
             choice = input(">> ")
 
-        if choice in self.inventory:
-            if choice == "cure light potion":
+            try: 
+                choice = int(choice)
+                choice = self.inventory[int(choice) - 1]
+            except:
+                pass
+
+        if choice.lower() in self.inventory:
+            if choice.lower() == "cure light potion":
                 cure_light.heal(self)
-            elif choice == "cure moderate potion":
+            elif choice.lower() == "cure moderate potion":
                 cure_moderate.heal(self)
-            elif choice == "cure serious potion":
+            elif choice.lower() == "cure serious potion":
                 cure_serious.heal(self)
-            elif choice == "scroll of escape":
+            elif choice.lower() == "scroll of escape":
                 scroll_escape.escape(self)
             self.inventory.remove(choice)
-        elif choice == "back":
+        elif choice.lower() == "back":
             player_turn(self, enemies_in_fight)
 
     def show_specials(self, enemy: object, enemies_in_fight: list, player_turn):
