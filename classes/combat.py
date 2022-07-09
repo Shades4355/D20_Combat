@@ -102,7 +102,7 @@ def equipment_drop(player: object, nothing=3, weapon=1, armor=1, gold=3):
             # acquire gold
             elif drop["type"] == "gold":
                 gold_dropped = drop["equip"]
-                print("gold dropped {}".format(gold_dropped))
+                print("gold obtained {}".format(gold_dropped))
                 player.gold += gold_dropped
     time.sleep(1)
 
@@ -200,7 +200,8 @@ def player_turn(player:object, enemies_in_fight:list):
       try:
           target = int(target)
       except:
-          target = 0
+        print("Pick a number between 1 and {}".format(len(enemies_in_fight)))
+        target = 0
 
     enemy = enemies_in_fight[target - 1]
 

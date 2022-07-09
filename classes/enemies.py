@@ -23,7 +23,6 @@ class Enemy():
         self.alive = True
         self.loot = loot
 
-
     def attack(self, player: object):
         roll = dice.roll(1, 20)
         attack_roll = roll + self.attack_bonus + self.str_mod
