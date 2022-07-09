@@ -107,13 +107,18 @@ def equipment_drop(player: object, nothing=3, weapon=1, armor=1, gold=3):
     time.sleep(1)
 
 
-def fight(player: object, num_combatants: int):
-    enemies_in_fight = e.random_encounter(num_combatants, player)
+def fight(player: object, num_combatants: int, fluff_text: bool=True):
+    fighty_fluff = e.random_encounter(num_combatants, player)
+    enemies_in_fight = fighty_fluff[0]
+    fluff = fighty_fluff[1]
     player.in_fight = True
 
     #print player health and level
     time.sleep(1)
     print("\n### New Encounter ###")
+    if fluff_text == True:
+        fluff()
+
     print("\n{0.name}\nHealth: {0.health}\nLevel: {0.class_level}".format(player))
     time.sleep(1)
 
@@ -144,12 +149,15 @@ def fight(player: object, num_combatants: int):
 
 
 def test_fight(player: object, num_combatants: int, encounter):
-    enemies_in_fight = encounter(num_combatants)
+    fighty_fluff = e.random_encounter(num_combatants, player)
+    enemies_in_fight = fighty_fluff[0]
+    fluff = fighty_fluff[1]
     player.in_fight = True
 
     #print player health and level
     time.sleep(1)
     print("\n### New Encounter ###")
+    fluff
     print("\n{0.name}\nHealth: {0.health}\nLevel: {0.class_level}".format(player))
     time.sleep(1)
 
