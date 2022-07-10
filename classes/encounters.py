@@ -284,36 +284,46 @@ def mysterious_mushroom(player: object):
 
 def boxing_encounter(player: object):
     dc = 12
+    multiplier = 3
     print("You are cordially invited to participate in a boxing competition.")
-    print("The winner will be awarded an amount of gold")
+    print("You could win {}x what you wager".format(multiplier))
     time.sleep(1)
 
     choice = ""
     while choice.lower() not in ["compete", "pass"]:
         print('"Compete" or "pass"?')
         choice = input(">> ")
-    print()
     
     if choice.lower() == "compete":
+        bet = -1
+        while bet not in range(0, player.gold + 1):
+            print("\nHow much of your gold would you like to wager?")
+            print("You have {} gold to wager".format(player.gold))
+            try:
+                bet = int(input(">> "))
+            except:
+                bet = -1
+        player.gold -= bet
+        
         roll = dice.roll(1,20) + player.stat_mod(player.con)
         print("\nCon check:", roll)
         time.sleep(1)
         if roll >= dc:
             print("You win!")
             time.sleep(1)
-            reward = dice.roll(2,4)
+            reward = bet * multiplier
             print("You win {} gold!".format(reward))
             player.gold += reward
             time.sleep(1)
         else:
             print("You take a beating and go down in the third round")
             damage = 0
-            for i in range(player.class_level):
+            for i in range(math.ceil(player.class_level/2)):
                 damage += dice.roll(2,4)
             player.take_damage(damage)
             time.sleep(1)
     else:
-        print("Best not to risk this pretty face")
+        print("\nBest not to risk this pretty face")
         time.sleep(1)
     print()
 
