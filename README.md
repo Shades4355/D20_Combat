@@ -1,6 +1,6 @@
 # D20_Combat
 ### Author
-Patrick "Shades" Wetzel-Meyers
+Patrick "Shades" Meyers
 
 
 ### Description
