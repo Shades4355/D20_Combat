@@ -54,3 +54,11 @@ A command line based hack-and-slash dungeon crawler, written in Python.
                 * take damage 
                 * find a different path (new random encounter)
             * leave: leave (new random encounter)
+* [ ] add special attacks to enemies
+* [ ] make enemy attack type (attack  vs special) semi-random
+* [ ] allow for a party of Players
+* [ ] make enemies target semi-randomly
+    * give +weight for:
+        * dealt damage recently
+        * took an aggressive action recently
+        * went recently
